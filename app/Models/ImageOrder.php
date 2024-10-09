@@ -9,7 +9,7 @@ class ImageOrder extends Model
 {
     use HasFactory;
 
-    protected $table = 'imageorder';
+    protected $table = 'image_order';
 
     public function image()
     {
