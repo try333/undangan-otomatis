@@ -13,12 +13,11 @@ class Image extends Model
 
     public function form()
     {
-        return $this->belongsTo(Form::class, 'idForm', 'id'); // 'idForm' in Image links to 'id' in Form
+        return $this->belongsTo(Form::class, 'idForm'); // Link to Form model using 'idForm' as foreign key
     }
 
-    // Define the relationship with ImageOrder
     public function imageOrder()
     {
-        return $this->hasOne(ImageOrder::class, 'idImage', 'id'); // 'idImage' in ImageOrder links to 'id' in Image
+        return $this->hasOne(ImageOrder::class, 'idImage'); // Link to ImageOrder using 'idImage' as foreign key
     }
 }

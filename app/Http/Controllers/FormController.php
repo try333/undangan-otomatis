@@ -11,19 +11,25 @@ class FormController extends Controller
 {
     public function index()
     {
-        // Get all data from the 'forms' table (or your custom table)
-        $forms = Form::all(); // You can also use Form::paginate() for paginated data
-
-        // Pass the data to the Blade view
+        $forms = Form::all(); // Retrieve all forms
         return view('welcome', compact('forms'));
     }
-    public function show($id)
-    {
-        // Get a single form record by ID
-        $form = Form::with('images.imageOrder')->find($id);
     
+    public function show($slug)
+    {
+        // Fetch the form ID based on the slug
+        $id = Form::where('slug', $slug)->value('id');
+
+        // If no form with the given slug is found, return a 404 error
+        if (!$id) {
+            return response()->json(['error' => 'Form not found'], 404);
+        }
+
+        // Fetch the form along with related images and image orders
+        $form = Form::with('images.imageOrder')->find($id);
+
         try {
-            // Fetch image orders related to this form via the images
+            // Fetch related image orders for the form
             $imageOrders = ImageOrder::with(['image' => function ($query) use ($id) {
                 $query->where('idForm', $id)->select('idForm', 'fileImage', 'id');
             }])
@@ -32,30 +38,17 @@ class FormController extends Controller
                 })
                 ->orderBy('id', 'asc')
                 ->get();
-    
-            // If no image orders found, fetch from images directly
+
+            // If no image orders are found, return a 404 response
             if ($imageOrders->isEmpty()) {
-                $images = Image::where('idForm', $id)->get();
-    
-                // Transform each image object
-                $formattedImages = $images->map(function ($image) {
-                    return [
-                        'id' => $image->id,
-                        'fileImage' => $image->fileImage,
-                        'idForm' => $image->idForm,
-                    ];
-                });
-    
-                // Pass the form data and formatted images to the Blade view
-                return view('welcome', compact('form', 'formattedImages'));
+                return response()->json(['error' => 'No images found for this form.'], 404);
             }
-    
-            // Pass the form data and image orders to the Blade view
+
+            // Pass the form and image orders data to the Blade view
             return view('welcome', compact('form', 'imageOrders'));
         } catch (\Exception $e) {
-            // Handle any errors
+            // Handle unexpected errors with a 500 response
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
 }

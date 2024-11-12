@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\RsvpController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,4 +10,11 @@ Route::get('/', function () {
 });
 
 Route::get('/forms', [FormController::class, 'index']);
-Route::get('/form/{id}', [FormController::class, 'show']);
+Route::get('/{slug}', [FormController::class, 'show']);
+
+//RSVP
+Route::post('/submit-rsvp/{slug}', [RsvpController::class, 'store'])->name('rsvp.store');
+
+//COMMENTS
+Route::get('/comments/{slug}', [CommentsController::class, 'index']);
+Route::post('/comments/{slug}', [CommentsController::class, 'store']);

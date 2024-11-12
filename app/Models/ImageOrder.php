@@ -13,6 +13,6 @@ class ImageOrder extends Model
 
     public function image()
     {
-        return $this->belongsTo(Image::class, 'idImage', 'id'); // 'idImage' in ImageOrder links to 'id' in Image
+        return $this->belongsTo(Image::class, 'idImage'); // Link to Image using 'idImage' as foreign key
     }
 }

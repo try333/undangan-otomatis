@@ -13,6 +13,16 @@ class Form extends Model
 
     public function images()
     {
-        return $this->hasMany(Image::class, 'idForm', 'id'); // 'idForm' in Image links to 'id' in Form
+        return $this->hasMany(Image::class, 'idForm'); // Link to Image model using 'idForm' as foreign key
+    }
+
+    public function rsvps()
+    {
+        return $this->hasMany(Rsvp::class, 'formId');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class, 'idForm');
     }
 }
