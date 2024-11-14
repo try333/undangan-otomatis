@@ -1,31 +1,86 @@
 {{-- TEMA 37 --}}
 @php
-
     use Carbon\Carbon;
 
-    // Example date
-    $date = $form->datetimeResepsi;
-
-    // Convert to Unix timestamp using Carbon
-    $timestamp = Carbon::parse($date)->timestamp;
-
-    // Example datetime
+    // Parse the datetime fields using Carbon
     $datetimeAkad = Carbon::parse($form->datetimeAkad);
-    // Example datetime
     $datetimeResepsi = Carbon::parse($form->datetimeResepsi);
 
+    $timestamp = $datetimeAkad->timestamp;
+
+    // Day and Month mappings (localized to Indonesian)
+    $days = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu',
+    ];
+
+    $months = [
+        'January' => 'Januari',
+        'February' => 'Februari',
+        'March' => 'Maret',
+        'April' => 'April',
+        'May' => 'Mei',
+        'June' => 'Juni',
+        'July' => 'Juli',
+        'August' => 'Agustus',
+        'September' => 'September',
+        'October' => 'Oktober',
+        'November' => 'November',
+        'December' => 'Desember',
+    ];
+
+    // Format Akad and Resepsi date in Indonesian
+    $formatDate = function ($datetime) use ($days, $months) {
+        $englishDay = $datetime->format('l'); // Get the day (e.g., Sunday)
+        $englishMonth = $datetime->format('F'); // Get the month (e.g., January)
+        $indonesianDay = $days[$englishDay];
+        $indonesianMonth = $months[$englishMonth];
+
+        // Return formatted date in 'Day, d Month Y' format
+        return ucfirst($indonesianDay) .
+            ', ' .
+            $datetime->format('d') .
+            ' ' .
+            $indonesianMonth .
+            ' ' .
+            $datetime->format('Y');
+    };
+
+    // Get Indonesian month names for both Akad and Resepsi
+    $getIndonesianMonth = function ($datetime) use ($months) {
+        $englishMonth = $datetime->format('F'); // Get the month in English (e.g., January)
+        return $months[$englishMonth]; // Return the corresponding Indonesian month
+    };
+
+    $formattedDateAkad = $formatDate($datetimeAkad);
+    $formattedDateResepsi = $formatDate($datetimeResepsi);
+
+    // Indonesian month names only
+    $indonesianMonthAkad = $getIndonesianMonth($datetimeAkad);
+    $indonesianMonthResepsi = $getIndonesianMonth($datetimeResepsi);
 @endphp
-<!DOCTYPE html>
-<html lang="en-US">
 @php
     $nama_tamu = request('to');
 @endphp
 
+<!DOCTYPE html>
+<html lang="en-US">
+
 <head>
     <meta charset="UTF-8">
-    <title>Thema 37 -</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <title>
+        @if ($form->penempatanTulisan == 'Pria')
+            {{ $form->namaPanggilanPria }} & {{ $form->namaPanggilanWanita }}
+        @else
+            {{ $form->namaPanggilanWanita }} & {{ $form->namaPanggilanPria }}
+        @endif
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
         .wdp-comment-text img {
 
@@ -33,35 +88,41 @@
 
         }
     </style>
-
-    <meta name='robots' content='noindex, nofollow' />
-
-    <!-- This site is optimized with the Yoast SEO plugin v22.2 - https://yoast.com/wordpress/plugins/seo/ -->
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Thema 37 -" />
+    <meta name="robots" content="noindex, nofollow">
+    <!-- This site is optimized with the Yoast SEO plugin v23.8 - https://yoast.com/wordpress/plugins/seo/ -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ $form->namaPanggilanPria }} dan {{ $form->namaPanggilanWanita }}">
     <meta property="og:description"
-        content="{{ $form->namaPanggilanPria }} &#038; {{ $form->namaPanggilanWanita }}  INVITE YOU TO CELEBRATE AT THEIR WEDDING SPECIAL INVITATION : BUKA UNDANGAN {{ $form->namaPanggilanPria }}  &#038; {{ $form->namaPanggilanWanita }}  Join on Our Big Day {{ $datetimeResepsi->format('d F Y') }} {{ $form->alamatResepsi }} &#8211; PROMISE &#8211; Maha Suci Allah yang telah menciptakan manusia dengan berpasang-pasangan. Dengan memohon Rahmat dan Ridho Allah SWT, kami bermaksud mengundang Saudara/i dalam acara resepsi [&hellip;]" />
-    <meta property="og:url" content="https://buka.undanganku.store/thema-37/" />
-    <meta property="article:published_time" content="2024-09-02T09:12:20+00:00" />
-    <meta property="article:modified_time" content="2024-09-02T09:12:59+00:00" />
-    <meta property="og:image" content="https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg" />
-    <meta name="author" content="Admin" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="Admin" />
-    <meta name="twitter:label2" content="Est. reading time" />
-    <meta name="twitter:data2" content="9 minutes" />
-    <script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://buka.undanganku.store/thema-37/","url":"https://buka.undanganku.store/thema-37/","name":"Thema 37 -","isPartOf":{"@id":"https://buka.undanganku.store/#website"},"primaryImageOfPage":{"@id":"https://buka.undanganku.store/thema-37/#primaryimage"},"image":{"@id":"https://buka.undanganku.store/thema-37/#primaryimage"},"thumbnailUrl":"https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg","datePublished":"2024-09-02T09:12:20+00:00","dateModified":"2024-09-02T09:12:59+00:00","author":{"@id":"https://buka.undanganku.store/#/schema/person/5a03783691fee219df468136fff3fdc1"},"breadcrumb":{"@id":"https://buka.undanganku.store/thema-37/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://buka.undanganku.store/thema-37/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://buka.undanganku.store/thema-37/#primaryimage","url":"https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg","contentUrl":"https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg","width":2324,"height":2560},{"@type":"BreadcrumbList","@id":"https://buka.undanganku.store/thema-37/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://buka.undanganku.store/"},{"@type":"ListItem","position":2,"name":"Thema 37"}]},{"@type":"WebSite","@id":"https://buka.undanganku.store/#website","url":"https://buka.undanganku.store/","name":"","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://buka.undanganku.store/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Person","@id":"https://buka.undanganku.store/#/schema/person/5a03783691fee219df468136fff3fdc1","name":"Admin","image":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://buka.undanganku.store/#/schema/person/image/","url":"https://secure.gravatar.com/avatar/268d5af7a54b201067579b0715452843?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/268d5af7a54b201067579b0715452843?s=96&d=mm&r=g","caption":"Admin"},"sameAs":["http://sewaundangan.online"],"url":"https://buka.undanganku.store/author/admin/"}]}</script>
-    <!-- / Yoast SEO plugin. -->
-
-
+        content="{{ $form->namaPanggilanPria }} &#038; {{ $form->namaPanggilanWanita }}  INVITE YOU TO CELEBRATE AT THEIR WEDDING SPECIAL INVITATION : BUKA UNDANGAN {{ $form->namaPanggilanPria }}  &#038; {{ $form->namaPanggilanWanita }}  Join on Our Big Day {{ $datetimeResepsi->format('d F Y') }} {{ $form->alamatResepsi }} &#8211; PROMISE &#8211; Maha Suci Allah yang telah menciptakan manusia dengan berpasang-pasangan. Dengan memohon Rahmat dan Ridho Allah SWT, kami bermaksud mengundang Saudara/i dalam acara resepsi [&hellip;]">
+    <meta property="og:url" content="https://buka.undanganku.store/thema-37/">
+    <meta property="article:published_time" content="2024-09-02T09:12:20+00:00">
+    <meta property="article:modified_time" content="2024-09-02T09:12:59+00:00">
+    <meta property="og:image" content="
+    @if (isset($imageOrders) && $imageOrders->isNotEmpty())
+        @foreach ($imageOrders as $order)
+            @if (isset($order->image->fileImage) && $order->partName === 'cover')
+                {{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}
+                @break
+            @endif
+        @endforeach
+    @endif
+">
+    <meta name="author" content="Admin">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Admin">
+    <meta name="twitter:label2" content="Est. reading time">
+    <meta name="twitter:data2" content="9 minutes">
+    <script type="application/ld+json" class="yoast-schema-graph">
+			{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://buka.undanganku.store/thema-37/","url":"https://buka.undanganku.store/thema-37/","name":"Thema 37 -","isPartOf":{"@id":"https://buka.undanganku.store/#website"},"primaryImageOfPage":{"@id":"https://buka.undanganku.store/thema-37/#primaryimage"},"image":{"@id":"https://buka.undanganku.store/thema-37/#primaryimage"},"thumbnailUrl":"https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg","datePublished":"2024-09-02T09:12:20+00:00","dateModified":"2024-09-02T09:12:59+00:00","author":{"@id":"https://buka.undanganku.store/#/schema/person/5a03783691fee219df468136fff3fdc1"},"breadcrumb":{"@id":"https://buka.undanganku.store/thema-37/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://buka.undanganku.store/thema-37/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://buka.undanganku.store/thema-37/#primaryimage","url":"https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg","contentUrl":"https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg","width":2324,"height":2560},{"@type":"BreadcrumbList","@id":"https://buka.undanganku.store/thema-37/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://buka.undanganku.store/"},{"@type":"ListItem","position":2,"name":"Thema 37"}]},{"@type":"WebSite","@id":"https://buka.undanganku.store/#website","url":"https://buka.undanganku.store/","name":"","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://buka.undanganku.store/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"},{"@type":"Person","@id":"https://buka.undanganku.store/#/schema/person/5a03783691fee219df468136fff3fdc1","name":"Admin","image":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://buka.undanganku.store/#/schema/person/image/","url":"https://secure.gravatar.com/avatar/268d5af7a54b201067579b0715452843?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/268d5af7a54b201067579b0715452843?s=96&d=mm&r=g","caption":"Admin"},"sameAs":["http://sewaundangan.online"],"url":"https://buka.undanganku.store/author/admin/"}]}
+		</script> <!-- / Yoast SEO plugin. -->
     <title>Thema 37 -</title>
-    <link rel="alternate" type="application/rss+xml" title=" &raquo; Feed" href="https://buka.undanganku.store/feed/" />
-    <link rel="alternate" type="application/rss+xml" title=" &raquo; Comments Feed"
-        href="https://buka.undanganku.store/comments/feed/" />
-    <link rel="alternate" type="application/rss+xml" title=" &raquo; Thema 37 Comments Feed"
-        href="https://buka.undanganku.store/thema-37/feed/" />
+    <link rel="alternate" type="application/rss+xml" title=" » Feed" href="https://buka.undanganku.store/feed/">
+    <link rel="alternate" type="application/rss+xml" title=" » Comments Feed"
+        href="https://buka.undanganku.store/comments/feed/">
+    <link rel="alternate" type="application/rss+xml" title=" » Thema 37 Comments Feed"
+        href="https://buka.undanganku.store/thema-37/feed/">
     <script>
         window._wpemojiSettings = {
             "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/",
@@ -69,7 +130,7 @@
             "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/",
             "svgExt": ".svg",
             "source": {
-                "concatemoji": "https:\/\/buka.undanganku.store\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.5.5"
+                "concatemoji": "https:\/\/buka.undanganku.store\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7"
             }
         };
         /*! This file is auto-generated */
@@ -178,7 +239,7 @@
             }))
         }((window, document), window._wpemojiSettings);
     </script>
-    <style id='wp-emoji-styles-inline-css'>
+    <style id="wp-emoji-styles-inline-css">
         img.wp-smiley,
         img.emoji {
             display: inline !important;
@@ -192,7 +253,7 @@
             padding: 0 !important;
         }
     </style>
-    <style id='wp-block-library-inline-css'>
+    <style id="wp-block-library-inline-css">
         :root {
             --wp-admin-theme-color: #007cba;
             --wp-admin-theme-color--rgb: 0, 124, 186;
@@ -203,7 +264,7 @@
             --wp-admin-border-width-focus: 2px;
             --wp-block-synced-color: #7a00df;
             --wp-block-synced-color--rgb: 122, 0, 223;
-            --wp-bound-block-color: #9747ff
+            --wp-bound-block-color: var(--wp-block-synced-color)
         }
 
         @media (min-resolution:192dpi) {
@@ -320,7 +381,6 @@
         .screen-reader-text {
             border: 0;
             clip: rect(1px, 1px, 1px, 1px);
-            -webkit-clip-path: inset(50%);
             clip-path: inset(50%);
             height: 1px;
             margin: -1px;
@@ -334,7 +394,6 @@
         .screen-reader-text:focus {
             background-color: #ddd;
             clip: auto !important;
-            -webkit-clip-path: none;
             clip-path: none;
             color: #444;
             display: block;
@@ -408,8 +467,15 @@
             }
         }
     </style>
-    <style id='global-styles-inline-css'>
-        body {
+    <style id="global-styles-inline-css">
+        :root {
+            --wp--preset--aspect-ratio--square: 1;
+            --wp--preset--aspect-ratio--4-3: 4/3;
+            --wp--preset--aspect-ratio--3-4: 3/4;
+            --wp--preset--aspect-ratio--3-2: 3/2;
+            --wp--preset--aspect-ratio--2-3: 2/3;
+            --wp--preset--aspect-ratio--16-9: 16/9;
+            --wp--preset--aspect-ratio--9-16: 9/16;
             --wp--preset--color--black: #000000;
             --wp--preset--color--cyan-bluish-gray: #abb8c3;
             --wp--preset--color--white: #ffffff;
@@ -465,12 +531,14 @@
             --wp--preset--font-family--heading: Cardo;
             --wp--preset--font-family--system-sans-serif: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
             --wp--preset--font-family--system-serif: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-            --wp--preset--spacing--10: 1rem;
             --wp--preset--spacing--20: min(1.5rem, 2vw);
             --wp--preset--spacing--30: min(2.5rem, 3vw);
             --wp--preset--spacing--40: min(4rem, 5vw);
             --wp--preset--spacing--50: min(6.5rem, 8vw);
             --wp--preset--spacing--60: min(10.5rem, 13vw);
+            --wp--preset--spacing--70: 3.38rem;
+            --wp--preset--spacing--80: 5.06rem;
+            --wp--preset--spacing--10: 1rem;
             --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
             --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
             --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
@@ -478,10 +546,13 @@
             --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
         }
 
-        body {
-            margin: 0;
+        :root {
             --wp--style--global--content-size: 620px;
             --wp--style--global--wide-size: 1280px;
+        }
+
+        :where(body) {
+            margin: 0;
         }
 
         .wp-site-blocks {
@@ -494,29 +565,19 @@
             padding-left: var(--wp--style--root--padding-left);
         }
 
-        .has-global-padding :where(.has-global-padding:not(.wp-block-block)) {
-            padding-right: 0;
-            padding-left: 0;
-        }
-
         .has-global-padding>.alignfull {
             margin-right: calc(var(--wp--style--root--padding-right) * -1);
             margin-left: calc(var(--wp--style--root--padding-left) * -1);
         }
 
-        .has-global-padding :where(.has-global-padding:not(.wp-block-block))>.alignfull {
-            margin-right: 0;
-            margin-left: 0;
-        }
-
-        .has-global-padding>.alignfull:where(:not(.has-global-padding):not(.is-layout-flex):not(.is-layout-grid))> :where([class*="wp-block-"]:not(.alignfull):not([class*="__"]), p, h1, h2, h3, h4, h5, h6, ul, ol) {
-            padding-right: var(--wp--style--root--padding-right);
-            padding-left: var(--wp--style--root--padding-left);
-        }
-
-        .has-global-padding :where(.has-global-padding)>.alignfull:where(:not(.has-global-padding))> :where([class*="wp-block-"]:not(.alignfull):not([class*="__"]), p, h1, h2, h3, h4, h5, h6, ul, ol) {
+        .has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) {
             padding-right: 0;
             padding-left: 0;
+        }
+
+        .has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull))>.alignfull {
+            margin-left: 0;
+            margin-right: 0;
         }
 
         .wp-site-blocks>.alignleft {
@@ -540,93 +601,93 @@
             margin-block-end: 0;
         }
 
-        :where(.wp-site-blocks)> :first-child:first-child {
+        :where(.wp-site-blocks)> :first-child {
             margin-block-start: 0;
         }
 
-        :where(.wp-site-blocks)> :last-child:last-child {
+        :where(.wp-site-blocks)> :last-child {
             margin-block-end: 0;
         }
 
-        body {
+        :root {
             --wp--style--block-gap: 1.2rem;
         }
 
-        :where(body .is-layout-flow)> :first-child:first-child {
+        :root :where(.is-layout-flow)> :first-child {
             margin-block-start: 0;
         }
 
-        :where(body .is-layout-flow)> :last-child:last-child {
+        :root :where(.is-layout-flow)> :last-child {
             margin-block-end: 0;
         }
 
-        :where(body .is-layout-flow)>* {
+        :root :where(.is-layout-flow)>* {
             margin-block-start: 1.2rem;
             margin-block-end: 0;
         }
 
-        :where(body .is-layout-constrained)> :first-child:first-child {
+        :root :where(.is-layout-constrained)> :first-child {
             margin-block-start: 0;
         }
 
-        :where(body .is-layout-constrained)> :last-child:last-child {
+        :root :where(.is-layout-constrained)> :last-child {
             margin-block-end: 0;
         }
 
-        :where(body .is-layout-constrained)>* {
+        :root :where(.is-layout-constrained)>* {
             margin-block-start: 1.2rem;
             margin-block-end: 0;
         }
 
-        :where(body .is-layout-flex) {
+        :root :where(.is-layout-flex) {
             gap: 1.2rem;
         }
 
-        :where(body .is-layout-grid) {
+        :root :where(.is-layout-grid) {
             gap: 1.2rem;
         }
 
-        body .is-layout-flow>.alignleft {
+        .is-layout-flow>.alignleft {
             float: left;
             margin-inline-start: 0;
             margin-inline-end: 2em;
         }
 
-        body .is-layout-flow>.alignright {
+        .is-layout-flow>.alignright {
             float: right;
             margin-inline-start: 2em;
             margin-inline-end: 0;
         }
 
-        body .is-layout-flow>.aligncenter {
+        .is-layout-flow>.aligncenter {
             margin-left: auto !important;
             margin-right: auto !important;
         }
 
-        body .is-layout-constrained>.alignleft {
+        .is-layout-constrained>.alignleft {
             float: left;
             margin-inline-start: 0;
             margin-inline-end: 2em;
         }
 
-        body .is-layout-constrained>.alignright {
+        .is-layout-constrained>.alignright {
             float: right;
             margin-inline-start: 2em;
             margin-inline-end: 0;
         }
 
-        body .is-layout-constrained>.aligncenter {
+        .is-layout-constrained>.aligncenter {
             margin-left: auto !important;
             margin-right: auto !important;
         }
 
-        body .is-layout-constrained> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+        .is-layout-constrained> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
             max-width: var(--wp--style--global--content-size);
             margin-left: auto !important;
             margin-right: auto !important;
         }
 
-        body .is-layout-constrained>.alignwide {
+        .is-layout-constrained>.alignwide {
             max-width: var(--wp--style--global--wide-size);
         }
 
@@ -634,12 +695,12 @@
             display: flex;
         }
 
-        body .is-layout-flex {
+        .is-layout-flex {
             flex-wrap: wrap;
             align-items: center;
         }
 
-        body .is-layout-flex>* {
+        .is-layout-flex> :is(*, div) {
             margin: 0;
         }
 
@@ -647,7 +708,7 @@
             display: grid;
         }
 
-        body .is-layout-grid>* {
+        .is-layout-grid> :is(*, div) {
             margin: 0;
         }
 
@@ -670,7 +731,7 @@
             text-decoration: underline;
         }
 
-        a:where(:not(.wp-element-button)):hover {
+        :root :where(a:where(:not(.wp-element-button)):hover) {
             text-decoration: none;
         }
 
@@ -711,8 +772,7 @@
             font-size: var(--wp--preset--font-size--small);
         }
 
-        .wp-element-button,
-        .wp-block-button__link {
+        :root :where(.wp-element-button, .wp-block-button__link) {
             background-color: var(--wp--preset--color--contrast);
             border-radius: .33rem;
             border-color: var(--wp--preset--color--contrast);
@@ -730,15 +790,13 @@
             text-decoration: none;
         }
 
-        .wp-element-button:hover,
-        .wp-block-button__link:hover {
+        :root :where(.wp-element-button:hover, .wp-block-button__link:hover) {
             background-color: var(--wp--preset--color--contrast-2);
             border-color: var(--wp--preset--color--contrast-2);
             color: var(--wp--preset--color--base);
         }
 
-        .wp-element-button:focus,
-        .wp-block-button__link:focus {
+        :root :where(.wp-element-button:focus, .wp-block-button__link:focus) {
             background-color: var(--wp--preset--color--contrast-2);
             border-color: var(--wp--preset--color--contrast-2);
             color: var(--wp--preset--color--base);
@@ -748,19 +806,12 @@
             outline-width: 1px;
         }
 
-        .wp-element-button:active,
-        .wp-block-button__link:active {
+        :root :where(.wp-element-button:active, .wp-block-button__link:active) {
             background-color: var(--wp--preset--color--contrast);
             color: var(--wp--preset--color--base);
         }
 
-        .wp-element-caption,
-        .wp-block-audio figcaption,
-        .wp-block-embed figcaption,
-        .wp-block-gallery figcaption,
-        .wp-block-image figcaption,
-        .wp-block-table figcaption,
-        .wp-block-video figcaption {
+        :root :where(.wp-element-caption, .wp-block-audio figcaption, .wp-block-embed figcaption, .wp-block-gallery figcaption, .wp-block-image figcaption, .wp-block-table figcaption, .wp-block-video figcaption) {
             color: var(--wp--preset--color--contrast-2);
             font-family: var(--wp--preset--font-family--body);
             font-size: 0.8rem;
@@ -1161,92 +1212,8 @@
         .has-system-serif-font-family {
             font-family: var(--wp--preset--font-family--system-serif) !important;
         }
-
-        .wp-block-calendar.wp-block-calendar table:where(:not(.has-text-color)) th {
-            background-color: var(--wp--preset--color--contrast-2);
-            color: var(--wp--preset--color--base);
-            border-color: var(--wp--preset--color--contrast-2)
-        }
-
-        .wp-block-calendar table:where(:not(.has-text-color)) td {
-            border-color: var(--wp--preset--color--contrast-2)
-        }
-
-        .wp-block-categories {}
-
-        .wp-block-categories {
-            list-style-type: none;
-        }
-
-        .wp-block-categories li {
-            margin-bottom: 0.5rem;
-        }
-
-        .wp-block-post-comments-form {}
-
-        .wp-block-post-comments-form textarea,
-        .wp-block-post-comments-form input {
-            border-radius: .33rem
-        }
-
-        .wp-block-loginout {}
-
-        .wp-block-loginout input {
-            border-radius: .33rem;
-            padding: calc(0.667em + 2px);
-            border: 1px solid #949494;
-        }
-
-        .wp-block-post-terms {}
-
-        .wp-block-post-terms .wp-block-post-terms__prefix {
-            color: var(--wp--preset--color--contrast-2);
-        }
-
-        .wp-block-query-title {}
-
-        .wp-block-query-title span {
-            font-style: italic;
-        }
-
-        .wp-block-quote {}
-
-        .wp-block-quote :where(p) {
-            margin-block-start: 0;
-            margin-block-end: calc(var(--wp--preset--spacing--10) + 0.5rem);
-        }
-
-        .wp-block-quote :where(:last-child) {
-            margin-block-end: 0;
-        }
-
-        .wp-block-quote.has-text-align-right.is-style-plain,
-        .rtl .is-style-plain.wp-block-quote:not(.has-text-align-center):not(.has-text-align-left) {
-            border-width: 0 2px 0 0;
-            padding-left: calc(var(--wp--preset--spacing--20) + 0.5rem);
-            padding-right: calc(var(--wp--preset--spacing--20) + 0.5rem);
-        }
-
-        .wp-block-quote.has-text-align-left.is-style-plain,
-        body:not(.rtl) .is-style-plain.wp-block-quote:not(.has-text-align-center):not(.has-text-align-right) {
-            border-width: 0 0 0 2px;
-            padding-left: calc(var(--wp--preset--spacing--20) + 0.5rem);
-            padding-right: calc(var(--wp--preset--spacing--20) + 0.5rem)
-        }
-
-        .wp-block-search {}
-
-        .wp-block-search .wp-block-search__input {
-            border-radius: .33rem
-        }
-
-        .wp-block-separator {}
-
-        .wp-block-separator:not(.is-style-wide):not(.is-style-dots):not(.alignwide):not(.alignfull) {
-            width: var(--wp--preset--spacing--60)
-        }
     </style>
-    <style id='wp-block-template-skip-link-inline-css'>
+    <style id="wp-block-template-skip-link-inline-css">
         .skip-link.screen-reader-text {
             border: 0;
             clip: rect(1px, 1px, 1px, 1px);
@@ -1277,10 +1244,10 @@
             z-index: 100000;
         }
     </style>
-    <link rel='stylesheet' id='wdp_style-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//css/wdp_style.css?ver=2.7.6'
-        media='screen' />
-    <style id='wdp_style-inline-css'>
+    <link rel="stylesheet" id="wdp_style-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//css/wdp_style.css?ver=2.7.6"
+        media="screen">
+    <style id="wdp_style-inline-css">
         .wdp-wrapper {
 
             font-size: 14px
@@ -1318,62 +1285,115 @@
 
         }
     </style>
-    <link rel='stylesheet' id='wdp-centered-css-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp-centered-timeline.min.css?ver=6.5.5'
-        media='all' />
-    <link rel='stylesheet' id='wdp-horizontal-css-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp-horizontal-styles.min.css?ver=6.5.5'
-        media='all' />
-    <link rel='stylesheet' id='wdp-fontello-css-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp-fontello.css?ver=6.5.5'
-        media='all' />
-    <link rel='stylesheet' id='exad-main-style-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/exad-styles.min.css?ver=6.5.5'
-        media='all' />
-    <link rel='stylesheet' id='elementor-frontend-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.19.4'
-        media='all' />
-    <link rel='stylesheet' id='swiper-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/swiper/v8/css/swiper.min.css?ver=8.4.5'
-        media='all' />
-    <link rel='stylesheet' id='elementor-post-7-css'
-        href='https://buka.undanganku.store/wp-content/uploads/elementor/css/post-7.css?ver=1710989542'
-        media='all' />
-    <link rel='stylesheet' id='weddingpress-wdp-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp.css?ver=3.0.1'
-        media='all' />
-    <link rel='stylesheet' id='kirim-kit-css'
-        href='https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/guest-book.css?ver=3.0.1'
-        media='all' />
-    <link rel='stylesheet' id='elementor-pro-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/frontend-lite.min.css?ver=3.19.0'
-        media='all' />
-    <link rel='stylesheet' id='elementor-global-css'
-        href='https://buka.undanganku.store/wp-content/uploads/elementor/css/global.css?ver=1710989555'
-        media='all' />
-    <link rel='stylesheet' id='elementor-post-42019-css'
-        href='https://buka.undanganku.store/wp-content/uploads/elementor/css/post-42019.css?ver=1725268380'
-        media='all' />
-    <link rel='stylesheet' id='elementor-post-23160-css'
-        href='https://buka.undanganku.store/wp-content/uploads/elementor/css/post-23160.css?ver=1718703114'
-        media='all' />
-    <link rel='stylesheet' id='google-fonts-1-css'
-        href='https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CDM+Sans%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CLora%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CDidact+Gothic%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CGreat+Vibes%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CDosis%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap&#038;ver=6.5.5'
-        media='all' />
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="stylesheet" id="wdp-centered-css-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp-centered-timeline.min.css?ver=6.7"
+        media="all">
+    <link rel="stylesheet" id="wdp-horizontal-css-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp-horizontal-styles.min.css?ver=6.7"
+        media="all">
+    <link rel="stylesheet" id="wdp-fontello-css-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp-fontello.css?ver=6.7"
+        media="all">
+    <link rel="stylesheet" id="exad-main-style-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/exad-styles.min.css?ver=6.7"
+        media="all">
+    <link rel="stylesheet" id="elementor-frontend-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/frontend.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-spacer-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/widget-spacer.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-heading-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/widget-heading.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-divider-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/widget-divider.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-animation-fadeIn-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/styles/fadeIn.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-animation-slideInUp-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/styles/slideInUp.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="swiper-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/swiper/v8/css/swiper.min.css?ver=8.4.5"
+        media="all">
+    <link rel="stylesheet" id="e-swiper-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/conditionals/e-swiper.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="elementor-post-7-css"
+        href="https://buka.undanganku.store/wp-content/uploads/elementor/css/post-7.css?ver=1730614620"
+        media="all">
+    <link rel="stylesheet" id="weddingpress-wdp-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/wdp.css?ver=3.0.1"
+        media="all">
+    <link rel="stylesheet" id="kirim-kit-css"
+        href="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/css/guest-book.css?ver=3.0.1"
+        media="all">
+    <link rel="stylesheet" id="e-animation-zoomIn-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/styles/zoomIn.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-animation-fadeInDown-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/styles/fadeInDown.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-text-editor-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/widget-text-editor.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-shapes-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/conditionals/shapes.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-image-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/widget-image.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-social-icons-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-apple-webkit-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-animation-pulse-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/styles/e-animation-pulse.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="e-animation-fadeInUp-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/styles/fadeInUp.min.css?ver=3.25.3"
+        media="all">
+    <link rel="stylesheet" id="widget-countdown-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/widget-countdown.min.css?ver=3.25.0"
+        media="all">
+    <link rel="stylesheet" id="widget-lottie-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/widget-lottie.min.css?ver=3.25.0"
+        media="all">
+    <link rel="stylesheet" id="widget-gallery-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/widget-gallery.min.css?ver=3.25.0"
+        media="all">
+    <link rel="stylesheet" id="elementor-gallery-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/e-gallery/css/e-gallery.min.css?ver=1.2.0"
+        media="all">
+    <link rel="stylesheet" id="e-transitions-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/transitions.min.css?ver=3.25.0"
+        media="all">
+    <link rel="stylesheet" id="elementor-post-42019-css" href="{{ asset('css/post-42019.css') }}" media="all">
+    <link rel="stylesheet" id="elementor-post-23160-css"
+        href="https://buka.undanganku.store/wp-content/uploads/elementor/css/post-23160.css?ver=1730614620"
+        media="all">
+    <link rel="stylesheet" id="google-fonts-1-css"
+        href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CDM+Sans%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CLora%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CDidact+Gothic%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CGreat+Vibes%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CDosis%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=swap&amp;ver=6.7"
+        media="all">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
     <script src="https://buka.undanganku.store/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
     <script src="https://buka.undanganku.store/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"
         id="jquery-migrate-js"></script>
-    <link rel="https://api.w.org/" href="https://buka.undanganku.store/wp-json/" />
-    <link rel="alternate" type="application/json" href="https://buka.undanganku.store/wp-json/wp/v2/posts/42019" />
+    <link rel="https://api.w.org/" href="https://buka.undanganku.store/wp-json/">
+    <link rel="alternate" title="JSON" type="application/json"
+        href="https://buka.undanganku.store/wp-json/wp/v2/posts/42019">
     <link rel="EditURI" type="application/rsd+xml" title="RSD"
-        href="https://buka.undanganku.store/xmlrpc.php?rsd" />
-    <meta name="generator" content="WordPress 6.5.5" />
-    <link rel='shortlink' href='https://buka.undanganku.store/?p=42019' />
-    <link rel="alternate" type="application/json+oembed"
-        href="https://buka.undanganku.store/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbuka.undanganku.store%2Fthema-37%2F" />
-    <link rel="alternate" type="text/xml+oembed"
-        href="https://buka.undanganku.store/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbuka.undanganku.store%2Fthema-37%2F&#038;format=xml" />
+        href="https://buka.undanganku.store/xmlrpc.php?rsd">
+    <meta name="generator" content="WordPress 6.7">
+    <link rel="shortlink" href="https://buka.undanganku.store/?p=42019">
+    <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed"
+        href="https://buka.undanganku.store/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbuka.undanganku.store%2Fthema-37%2F">
+    <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed"
+        href="https://buka.undanganku.store/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbuka.undanganku.store%2Fthema-37%2F&amp;format=xml">
     <link rel="apple-touch-icon" sizes="180x180" href="/wp-content/uploads/fbrfg/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/wp-content/uploads/fbrfg/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/wp-content/uploads/fbrfg/favicon-16x16.png">
@@ -1384,8 +1404,30 @@
     <meta name="msapplication-config" content="/wp-content/uploads/fbrfg/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <meta name="generator"
-        content="Elementor 3.19.4; features: e_optimized_assets_loading, e_optimized_css_loading, e_font_icon_svg, additional_custom_breakpoints, block_editor_assets_optimize, e_image_loading_optimization; settings: css_print_method-external, google_font-enabled, font_display-swap">
-    <style id='wp-fonts-local'>
+        content="Elementor 3.25.3; features: e_font_icon_svg, additional_custom_breakpoints, e_optimized_control_loading; settings: css_print_method-external, google_font-enabled, font_display-swap">
+    <style>
+        .e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
+        .e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
+            background-image: none !important;
+        }
+
+        @media screen and (max-height: 1024px) {
+
+            .e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload),
+            .e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
+                background-image: none !important;
+            }
+        }
+
+        @media screen and (max-height: 640px) {
+
+            .e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload),
+            .e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
+                background-image: none !important;
+            }
+        }
+    </style>
+    <style class="wp-fonts-local">
         @font-face {
             font-family: Inter;
             font-style: normal;
@@ -1419,18 +1461,22 @@
             src: url('https://buka.undanganku.store/wp-content/themes/twentytwentyfour/assets/fonts/cardo/cardo_normal_700.woff2') format('woff2');
         }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 </head>
 
-<body data-rsssl=1
+<body data-rsssl="1"
     class="post-template post-template-elementor_canvas single single-post postid-42019 single-format-standard wp-embed-responsive elementor-default elementor-template-canvas elementor-kit-7 elementor-page elementor-page-42019">
     <div data-elementor-type="wp-post" data-elementor-id="42019" class="elementor elementor-42019"
         data-elementor-post-type="post">
-        <section {{-- BG-HEADER --}}
+        <section {{-- COVER --}}
             class="elementor-section elementor-top-section elementor-element elementor-element-3ff1fd68 elementor-section-full_width elementor-section-height-min-height elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no elementor-invisible"
             data-id="3ff1fd68" data-element_type="section"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeInDown&quot;,&quot;animation_mobile&quot;:&quot;none&quot;,&quot;animation_delay&quot;:200}"
-            style="background-image: url('http://localhost:5000/images/a5m6ah5uy1_2024-08-27T08-06-08.625Z.jpg'); background-size: cover; background-position: center;">
+            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                        @if (isset($order->image->fileImage) && $order->partName === 'cover')
+                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> @endif
+            @endforeach
+            @endif
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-502d43e3 wdp-sticky-section-no"
@@ -1439,213 +1485,27 @@
                         <div class="elementor-element elementor-element-7d5ee06c wdp-sticky-section-no elementor-widget elementor-widget-heading"
                             data-id="7d5ee06c" data-element_type="widget" data-widget_type="heading.default">
                             <div class="elementor-widget-container">
-                                <style>
-                                    /*! elementor - v3.19.0 - 28-02-2024 */
-                                    .elementor-heading-title {
-                                        padding: 0;
-                                        margin: 0;
-                                        line-height: 1
-                                    }
-
-                                    .elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a {
-                                        color: inherit;
-                                        font-size: inherit;
-                                        line-height: inherit
-                                    }
-
-                                    .elementor-widget-heading .elementor-heading-title.elementor-size-small {
-                                        font-size: 15px
-                                    }
-
-                                    .elementor-widget-heading .elementor-heading-title.elementor-size-medium {
-                                        font-size: 19px
-                                    }
-
-                                    .elementor-widget-heading .elementor-heading-title.elementor-size-large {
-                                        font-size: 29px
-                                    }
-
-                                    .elementor-widget-heading .elementor-heading-title.elementor-size-xl {
-                                        font-size: 39px
-                                    }
-
-                                    .elementor-widget-heading .elementor-heading-title.elementor-size-xxl {
-                                        font-size: 59px
-                                    }
-                                </style>
                                 <h2 class="elementor-heading-title elementor-size-default">
+                                    {{-- COVER --}}
                                     @if ($form->penempatanTulisan == 'Pria')
                                         {{ $form->namaPanggilanPria }} & {{ $form->namaPanggilanWanita }}
                                     @else
                                         {{ $form->namaPanggilanWanita }} & {{ $form->namaPanggilanPria }}
                                     @endif
-
                                 </h2>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-7ea51dc3 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
                             data-id="7ea51dc3" data-element_type="widget" data-widget_type="divider.default">
                             <div class="elementor-widget-container">
-                                <style>
-                                    /*! elementor - v3.19.0 - 28-02-2024 */
-                                    .elementor-widget-divider {
-                                        --divider-border-style: none;
-                                        --divider-border-width: 1px;
-                                        --divider-color: #0c0d0e;
-                                        --divider-icon-size: 20px;
-                                        --divider-element-spacing: 10px;
-                                        --divider-pattern-height: 24px;
-                                        --divider-pattern-size: 20px;
-                                        --divider-pattern-url: none;
-                                        --divider-pattern-repeat: repeat-x
-                                    }
-
-                                    .elementor-widget-divider .elementor-divider {
-                                        display: flex
-                                    }
-
-                                    .elementor-widget-divider .elementor-divider__text {
-                                        font-size: 15px;
-                                        line-height: 1;
-                                        max-width: 95%
-                                    }
-
-                                    .elementor-widget-divider .elementor-divider__element {
-                                        margin: 0 var(--divider-element-spacing);
-                                        flex-shrink: 0
-                                    }
-
-                                    .elementor-widget-divider .elementor-icon {
-                                        font-size: var(--divider-icon-size)
-                                    }
-
-                                    .elementor-widget-divider .elementor-divider-separator {
-                                        display: flex;
-                                        margin: 0;
-                                        direction: ltr
-                                    }
-
-                                    .elementor-widget-divider--view-line_icon .elementor-divider-separator,
-                                    .elementor-widget-divider--view-line_text .elementor-divider-separator {
-                                        align-items: center
-                                    }
-
-                                    .elementor-widget-divider--view-line_icon .elementor-divider-separator:after,
-                                    .elementor-widget-divider--view-line_icon .elementor-divider-separator:before,
-                                    .elementor-widget-divider--view-line_text .elementor-divider-separator:after,
-                                    .elementor-widget-divider--view-line_text .elementor-divider-separator:before {
-                                        display: block;
-                                        content: "";
-                                        border-block-end: 0;
-                                        flex-grow: 1;
-                                        border-block-start: var(--divider-border-width) var(--divider-border-style) var(--divider-color)
-                                    }
-
-                                    .elementor-widget-divider--element-align-left .elementor-divider .elementor-divider-separator>.elementor-divider__svg:first-of-type {
-                                        flex-grow: 0;
-                                        flex-shrink: 100
-                                    }
-
-                                    .elementor-widget-divider--element-align-left .elementor-divider-separator:before {
-                                        content: none
-                                    }
-
-                                    .elementor-widget-divider--element-align-left .elementor-divider__element {
-                                        margin-left: 0
-                                    }
-
-                                    .elementor-widget-divider--element-align-right .elementor-divider .elementor-divider-separator>.elementor-divider__svg:last-of-type {
-                                        flex-grow: 0;
-                                        flex-shrink: 100
-                                    }
-
-                                    .elementor-widget-divider--element-align-right .elementor-divider-separator:after {
-                                        content: none
-                                    }
-
-                                    .elementor-widget-divider--element-align-right .elementor-divider__element {
-                                        margin-right: 0
-                                    }
-
-                                    .elementor-widget-divider--element-align-start .elementor-divider .elementor-divider-separator>.elementor-divider__svg:first-of-type {
-                                        flex-grow: 0;
-                                        flex-shrink: 100
-                                    }
-
-                                    .elementor-widget-divider--element-align-start .elementor-divider-separator:before {
-                                        content: none
-                                    }
-
-                                    .elementor-widget-divider--element-align-start .elementor-divider__element {
-                                        margin-inline-start: 0
-                                    }
-
-                                    .elementor-widget-divider--element-align-end .elementor-divider .elementor-divider-separator>.elementor-divider__svg:last-of-type {
-                                        flex-grow: 0;
-                                        flex-shrink: 100
-                                    }
-
-                                    .elementor-widget-divider--element-align-end .elementor-divider-separator:after {
-                                        content: none
-                                    }
-
-                                    .elementor-widget-divider--element-align-end .elementor-divider__element {
-                                        margin-inline-end: 0
-                                    }
-
-                                    .elementor-widget-divider:not(.elementor-widget-divider--view-line_text):not(.elementor-widget-divider--view-line_icon) .elementor-divider-separator {
-                                        border-block-start: var(--divider-border-width) var(--divider-border-style) var(--divider-color)
-                                    }
-
-                                    .elementor-widget-divider--separator-type-pattern {
-                                        --divider-border-style: none
-                                    }
-
-                                    .elementor-widget-divider--separator-type-pattern.elementor-widget-divider--view-line .elementor-divider-separator,
-                                    .elementor-widget-divider--separator-type-pattern:not(.elementor-widget-divider--view-line) .elementor-divider-separator:after,
-                                    .elementor-widget-divider--separator-type-pattern:not(.elementor-widget-divider--view-line) .elementor-divider-separator:before,
-                                    .elementor-widget-divider--separator-type-pattern:not([class*=elementor-widget-divider--view]) .elementor-divider-separator {
-                                        width: 100%;
-                                        min-height: var(--divider-pattern-height);
-                                        -webkit-mask-size: var(--divider-pattern-size) 100%;
-                                        mask-size: var(--divider-pattern-size) 100%;
-                                        -webkit-mask-repeat: var(--divider-pattern-repeat);
-                                        mask-repeat: var(--divider-pattern-repeat);
-                                        background-color: var(--divider-color);
-                                        -webkit-mask-image: var(--divider-pattern-url);
-                                        mask-image: var(--divider-pattern-url)
-                                    }
-
-                                    .elementor-widget-divider--no-spacing {
-                                        --divider-pattern-size: auto
-                                    }
-
-                                    .elementor-widget-divider--bg-round {
-                                        --divider-pattern-repeat: round
-                                    }
-
-                                    .rtl .elementor-widget-divider .elementor-divider__text {
-                                        direction: rtl
-                                    }
-
-                                    .e-con-inner>.elementor-widget-divider,
-                                    .e-con>.elementor-widget-divider {
-                                        width: var(--container-widget-width, 100%);
-                                        --flex-grow: var(--container-widget-flex-grow)
-                                    }
-                                </style>
-                                <div class="elementor-divider">
-                                    <span class="elementor-divider-separator">
-                                    </span>
+                                <div class="elementor-divider"> <span class="elementor-divider-separator"> </span>
                                 </div>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-7d92b85a elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
                             data-id="7d92b85a" data-element_type="widget" data-widget_type="divider.default">
                             <div class="elementor-widget-container">
-                                <div class="elementor-divider">
-                                    <span class="elementor-divider-separator">
-                                    </span>
+                                <div class="elementor-divider"> <span class="elementor-divider-separator"> </span>
                                 </div>
                             </div>
                         </div>
@@ -1659,59 +1519,6 @@
                         <div class="elementor-element elementor-element-6c16ea24 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
                             data-id="6c16ea24" data-element_type="widget" data-widget_type="spacer.default">
                             <div class="elementor-widget-container">
-                                <style>
-                                    /*! elementor - v3.19.0 - 28-02-2024 */
-                                    .elementor-column .elementor-spacer-inner {
-                                        height: var(--spacer-size)
-                                    }
-
-                                    .e-con {
-                                        --container-widget-width: 100%
-                                    }
-
-                                    .e-con-inner>.elementor-widget-spacer,
-                                    .e-con>.elementor-widget-spacer {
-                                        width: var(--container-widget-width, var(--spacer-size));
-                                        --align-self: var(--container-widget-align-self, initial);
-                                        --flex-shrink: 0
-                                    }
-
-                                    .e-con-inner>.elementor-widget-spacer>.elementor-widget-container,
-                                    .e-con>.elementor-widget-spacer>.elementor-widget-container {
-                                        height: 100%;
-                                        width: 100%
-                                    }
-
-                                    .e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer,
-                                    .e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer {
-                                        height: 100%
-                                    }
-
-                                    .e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner,
-                                    .e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner {
-                                        height: var(--container-widget-height, var(--spacer-size))
-                                    }
-
-                                    .e-con-inner>.elementor-widget-spacer.elementor-widget-empty,
-                                    .e-con>.elementor-widget-spacer.elementor-widget-empty {
-                                        position: relative;
-                                        min-height: 22px;
-                                        min-width: 22px
-                                    }
-
-                                    .e-con-inner>.elementor-widget-spacer.elementor-widget-empty .elementor-widget-empty-icon,
-                                    .e-con>.elementor-widget-spacer.elementor-widget-empty .elementor-widget-empty-icon {
-                                        position: absolute;
-                                        top: 0;
-                                        bottom: 0;
-                                        left: 0;
-                                        right: 0;
-                                        margin: auto;
-                                        padding: 0;
-                                        width: 22px;
-                                        height: 22px
-                                    }
-                                </style>
                                 <div class="elementor-spacer">
                                     <div class="elementor-spacer-inner"></div>
                                 </div>
@@ -1734,21 +1541,18 @@
                             data-settings="{&quot;_animation&quot;:&quot;zoomIn&quot;,&quot;_animation_delay&quot;:2}"
                             data-widget_type="button.default">
                             <div class="elementor-widget-container">
-                                <div class="elementor-button-wrapper">
-                                    <a class="elementor-button elementor-button-link elementor-size-sm" href="#cover"
-                                        id="tombol-buka">
-                                        <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-icon elementor-align-icon-left">
-                                                <svg aria-hidden="true" class="e-font-icon-svg e-fab-envira"
-                                                    viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                <div class="elementor-button-wrapper"> <a
+                                        class="elementor-button elementor-button-link elementor-size-sm"
+                                        href="#cover" id="tombol-buka"> <span
+                                            class="elementor-button-content-wrapper"> <span
+                                                class="elementor-button-icon"> <svg aria-hidden="true"
+                                                    class="e-font-icon-svg e-fab-envira" viewBox="0 0 448 512"
+                                                    xmlns="http://www.w3.org/2000/svg">
                                                     <path
                                                         d="M0 32c477.6 0 366.6 317.3 367.1 366.3L448 480h-26l-70.4-71.2c-39 4.2-124.4 34.5-214.4-37C47 300.3 52 214.7 0 32zm79.7 46c-49.7-23.5-5.2 9.2-5.2 9.2 45.2 31.2 66 73.7 90.2 119.9 31.5 60.2 79 139.7 144.2 167.7 65 28 34.2 12.5 6-8.5-28.2-21.2-68.2-87-91-130.2-31.7-60-61-118.6-144.2-158.1z">
                                                     </path>
-                                                </svg> </span>
-                                            <span class="elementor-button-text">BUKA UNDANGAN</span>
-                                        </span>
-                                    </a>
-                                </div>
+                                                </svg> </span> <span class="elementor-button-text">BUKA UNDANGAN</span>
+                                        </span> </a> </div>
                             </div>
                         </div>
                         <section
@@ -1757,13 +1561,11 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-24a2e123 wdp-sticky-section-no"
                                     data-id="24a2e123" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-2b141cd9 wdp-sticky-section-no"
                                     data-id="2b141cd9" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -1783,11 +1585,17 @@
                 </div>
             </div>
         </section>
-        <section {{-- BG-MAIN --}}
+        <section
             class="elementor-section elementor-top-section elementor-element elementor-element-6163a1f6 elementor-section-height-min-height animated-slow notranslate elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no elementor-invisible"
             data-id="6163a1f6" data-element_type="section" id="cover"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeIn&quot;,&quot;animation_tablet&quot;:&quot;fadeIn&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:450}"
-            style="background-image: url('http://localhost:5000/images/r80m2rtg09_2024-08-27T08-05-45.928Z.jpg'); background-size: cover; background-position: center;">
+            {{-- subcover --}}
+            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                        @if (isset($order->image->fileImage) && $order->partName === 'subcover')
+                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> @endif
+            @endforeach
+            @endif
+
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-90ec174 wdp-sticky-section-no"
@@ -1802,19 +1610,15 @@
                                     @else
                                         {{ $form->namaPanggilanWanita }} & {{ $form->namaPanggilanPria }}
                                     @endif
-
                                 </h2>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-6c51a6ae elementor-widget-divider--view-line_text elementor-widget-divider--element-align-center wdp-sticky-section-no elementor-widget elementor-widget-divider"
                             data-id="6c51a6ae" data-element_type="widget" data-widget_type="divider.default">
                             <div class="elementor-widget-container">
-                                <div class="elementor-divider">
-                                    <span class="elementor-divider-separator">
-                                        <span class="elementor-divider__text elementor-divider__element">
-                                            Join on Our Big Day </span>
-                                    </span>
-                                </div>
+                                <div class="elementor-divider"> <span class="elementor-divider-separator"> <span
+                                            class="elementor-divider__text elementor-divider__element"> Join on Our Big
+                                            Day </span> </span> </div>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-17cbfa7 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
@@ -1828,40 +1632,23 @@
                         <div class="elementor-element elementor-element-22ec13d5 wdp-sticky-section-no elementor-widget elementor-widget-html"
                             data-id="22ec13d5" data-element_type="widget" data-widget_type="html.default">
                             <div class="elementor-widget-container">
-                                <html lang="en" class="notranslate" translate="no">
-
-                                <head>
-                                    <meta name="google" content="notranslate" />
-                                </head>
-
-                                </html>
+                                <meta name="google" content="notranslate">
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-96791e3 wdp-sticky-section-no elementor-widget elementor-widget-heading"
                             data-id="96791e3" data-element_type="widget" data-widget_type="heading.default">
                             <div class="elementor-widget-container">
                                 <h2 class="elementor-heading-title elementor-size-default">
-                                    {{ strtoupper($datetimeResepsi->format('d F Y')) }}
+                                    {{ strtoupper($formattedDateAkad) }}
                                 </h2>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-350f75cb wdp-sticky-section-no elementor-widget elementor-widget-heading"
                             data-id="350f75cb" data-element_type="widget" data-widget_type="heading.default">
                             <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">KECAMATAN - KOTA</h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-614611fa elementor-align-center wdp-sticky-section-no elementor-widget elementor-widget-button"
-                            data-id="614611fa" data-element_type="widget" data-widget_type="button.default">
-                            <div class="elementor-widget-container">
-                                <div class="elementor-button-wrapper">
-                                    <a class="elementor-button elementor-button-link elementor-size-sm"
-                                        href="#terimakasih">
-                                        <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-text"></span>
-                                        </span>
-                                    </a>
-                                </div>
+                                <h2 class="elementor-heading-title elementor-size-default">
+                                    {{ $form->kota }} - {{ $form->provinsi }}
+                                </h2>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-7a2386db wdp-sticky-section-no elementor-widget elementor-widget-html"
@@ -1925,12 +1712,11 @@
             class="elementor-section elementor-top-section elementor-element elementor-element-49285cc7 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="49285cc7" data-element_type="section"
             data-settings="{&quot;shape_divider_bottom&quot;:&quot;curve-asymmetrical&quot;,&quot;background_background&quot;:&quot;classic&quot;,&quot;shape_divider_bottom_negative&quot;:&quot;yes&quot;}">
-            <div class="elementor-shape elementor-shape-bottom" data-negative="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <div class="elementor-shape elementor-shape-bottom" data-negative="true"> <svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
                     <path class="elementor-shape-fill"
-                        d="M615.2,96.7C240.2,97.8,0,18.9,0,0v100h1000V0C1000,19.2,989.8,96,615.2,96.7z" />
-                </svg>
-            </div>
+                        d="M615.2,96.7C240.2,97.8,0,18.9,0,0v100h1000V0C1000,19.2,989.8,96,615.2,96.7z"></path>
+                </svg> </div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-26dd01d0 wdp-sticky-section-no"
                     data-id="26dd01d0" data-element_type="column">
@@ -1957,8 +1743,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-51dcfd17 wdp-sticky-section-no"
                                     data-id="51dcfd17" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-6ec9719c animated-slow wdp-sticky-section-no elementor-invisible"
                                     data-id="6ec9719c" data-element_type="column"
@@ -1968,44 +1753,11 @@
                                             data-id="680849a" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <style>
-                                                    /*! elementor - v3.19.0 - 28-02-2024 */
-                                                    .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap {
-                                                        background-color: #69727d;
-                                                        color: #fff
-                                                    }
-
-                                                    .elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap {
-                                                        color: #69727d;
-                                                        border: 3px solid;
-                                                        background-color: transparent
-                                                    }
-
-                                                    .elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap {
-                                                        margin-top: 8px
-                                                    }
-
-                                                    .elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter {
-                                                        width: 1em;
-                                                        height: 1em
-                                                    }
-
-                                                    .elementor-widget-text-editor .elementor-drop-cap {
-                                                        float: left;
-                                                        text-align: center;
-                                                        line-height: 1;
-                                                        font-size: 50px
-                                                    }
-
-                                                    .elementor-widget-text-editor .elementor-drop-cap-letter {
-                                                        display: inline-block
-                                                    }
-                                                </style>
                                                 <p>Maha Suci Allah yang telah menciptakan manusia dengan
                                                     berpasang-pasangan. Dengan memohon Rahmat dan Ridho Allah SWT, kami
                                                     bermaksud mengundang Saudara/i dalam acara resepsi pernikahan kami.
                                                 </p>
-                                                <p> </p>
+                                                <p>&nbsp;</p>
                                                 <p><em><strong>(QS Ar-Rum : 21)</strong></em></p>
                                             </div>
                                         </div>
@@ -2013,8 +1765,7 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4440989 wdp-sticky-section-no"
                                     data-id="4440989" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -2060,8 +1811,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-2120b9bc wdp-sticky-section-no"
                                     data-id="2120b9bc" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4fb3fdb5 animated-slow wdp-sticky-section-no elementor-invisible"
                                     data-id="4fb3fdb5" data-element_type="column"
@@ -2071,37 +1821,28 @@
                                             data-id="61e2f944" data-element_type="widget"
                                             data-settings="{&quot;_animation&quot;:&quot;none&quot;,&quot;motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_effect&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_affectedRange&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:45,&quot;end&quot;:58}},&quot;motion_fx_rotateZ_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;]}"
                                             data-widget_type="image.default">
-                                            <div class="elementor-widget-container">
-                                                <style>
-                                                    /*! elementor - v3.19.0 - 28-02-2024 */
-                                                    .elementor-widget-image {
-                                                        text-align: center
-                                                    }
+                                            <div class="elementor-widget-container"> <img fetchpriority="high"
+                                                    decoding="async" width="272" height="300"
+                                                    class="attachment-medium size-medium wp-image-345" alt=""
+                                                    {{-- FOTO MEMPELAI --}}
+                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                    @if ($form->penempatanTulisan == 'Pria')
+                                                    @if (isset($order->image->fileImage) && $order->partName === 'mempelai-pria')
+                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}" /> @endif
+                                                @else
+                                                    @if (isset($order->image->fileImage) && $order->partName === 'mempelai-wanita') src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}" /> @endif
+                                                    @endif
+                                                @endforeach
+                                                @endif
 
-                                                    .elementor-widget-image a {
-                                                        display: inline-block
-                                                    }
-
-                                                    .elementor-widget-image a img[src$=".svg"] {
-                                                        width: 48px
-                                                    }
-
-                                                    .elementor-widget-image img {
-                                                        vertical-align: middle;
-                                                        display: inline-block
-                                                    }
-                                                </style> <img fetchpriority="high" decoding="async" width="272"
-                                                    height="300"
-                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/cew-1-scaled-7.jpg"
-                                                    class="attachment-medium size-medium wp-image-345"
-                                                    alt="" />
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-2953c3af wdp-sticky-section-no elementor-widget elementor-widget-heading"
                                             data-id="2953c3af" data-element_type="widget"
                                             data-widget_type="heading.default">
                                             <div class="elementor-widget-container">
-                                                <h2 class="elementor-heading-title elementor-size-default">-
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    -
                                                     @if ($form->penempatanTulisan == 'Pria')
                                                         {{ $form->namaLengkapPria }}
                                                     @else
@@ -2142,348 +1883,49 @@
                                             data-id="32b9adfb" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-10e9464f wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
                                             data-id="10e9464f" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <p class="m-0">Jl. Majapahit 43, Sleman, Yogyakarta</p>
+                                                <p class="m-0">
+                                                    @if ($form->penempatanTulisan == 'Pria')
+                                                        {{ $form->alamatPria }}
+                                                    @else
+                                                        {{ $form->alamatWanita }}
+                                                    @endif
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-70d16b8d elementor-shape-square elementor-grid-0 e-grid-align-center wdp-sticky-section-no elementor-widget elementor-widget-social-icons"
                                             data-id="70d16b8d" data-element_type="widget"
                                             data-widget_type="social-icons.default">
                                             <div class="elementor-widget-container">
-                                                <style>
-                                                    /*! elementor - v3.19.0 - 28-02-2024 */
-                                                    .elementor-widget-social-icons.elementor-grid-0 .elementor-widget-container,
-                                                    .elementor-widget-social-icons.elementor-grid-mobile-0 .elementor-widget-container,
-                                                    .elementor-widget-social-icons.elementor-grid-tablet-0 .elementor-widget-container {
-                                                        line-height: 1;
-                                                        font-size: 0
-                                                    }
-
-                                                    .elementor-widget-social-icons:not(.elementor-grid-0):not(.elementor-grid-tablet-0):not(.elementor-grid-mobile-0) .elementor-grid {
-                                                        display: inline-grid
-                                                    }
-
-                                                    .elementor-widget-social-icons .elementor-grid {
-                                                        grid-column-gap: var(--grid-column-gap, 5px);
-                                                        grid-row-gap: var(--grid-row-gap, 5px);
-                                                        grid-template-columns: var(--grid-template-columns);
-                                                        justify-content: var(--justify-content, center);
-                                                        justify-items: var(--justify-content, center)
-                                                    }
-
-                                                    .elementor-icon.elementor-social-icon {
-                                                        font-size: var(--icon-size, 25px);
-                                                        line-height: var(--icon-size, 25px);
-                                                        width: calc(var(--icon-size, 25px) + 2 * var(--icon-padding, .5em));
-                                                        height: calc(var(--icon-size, 25px) + 2 * var(--icon-padding, .5em))
-                                                    }
-
-                                                    .elementor-social-icon {
-                                                        --e-social-icon-icon-color: #fff;
-                                                        display: inline-flex;
-                                                        background-color: #69727d;
-                                                        align-items: center;
-                                                        justify-content: center;
-                                                        text-align: center;
-                                                        cursor: pointer
-                                                    }
-
-                                                    .elementor-social-icon i {
-                                                        color: var(--e-social-icon-icon-color)
-                                                    }
-
-                                                    .elementor-social-icon svg {
-                                                        fill: var(--e-social-icon-icon-color)
-                                                    }
-
-                                                    .elementor-social-icon:last-child {
-                                                        margin: 0
-                                                    }
-
-                                                    .elementor-social-icon:hover {
-                                                        opacity: .9;
-                                                        color: #fff
-                                                    }
-
-                                                    .elementor-social-icon-android {
-                                                        background-color: #a4c639
-                                                    }
-
-                                                    .elementor-social-icon-apple {
-                                                        background-color: #999
-                                                    }
-
-                                                    .elementor-social-icon-behance {
-                                                        background-color: #1769ff
-                                                    }
-
-                                                    .elementor-social-icon-bitbucket {
-                                                        background-color: #205081
-                                                    }
-
-                                                    .elementor-social-icon-codepen {
-                                                        background-color: #000
-                                                    }
-
-                                                    .elementor-social-icon-delicious {
-                                                        background-color: #39f
-                                                    }
-
-                                                    .elementor-social-icon-deviantart {
-                                                        background-color: #05cc47
-                                                    }
-
-                                                    .elementor-social-icon-digg {
-                                                        background-color: #005be2
-                                                    }
-
-                                                    .elementor-social-icon-dribbble {
-                                                        background-color: #ea4c89
-                                                    }
-
-                                                    .elementor-social-icon-elementor {
-                                                        background-color: #d30c5c
-                                                    }
-
-                                                    .elementor-social-icon-envelope {
-                                                        background-color: #ea4335
-                                                    }
-
-                                                    .elementor-social-icon-facebook,
-                                                    .elementor-social-icon-facebook-f {
-                                                        background-color: #3b5998
-                                                    }
-
-                                                    .elementor-social-icon-flickr {
-                                                        background-color: #0063dc
-                                                    }
-
-                                                    .elementor-social-icon-foursquare {
-                                                        background-color: #2d5be3
-                                                    }
-
-                                                    .elementor-social-icon-free-code-camp,
-                                                    .elementor-social-icon-freecodecamp {
-                                                        background-color: #006400
-                                                    }
-
-                                                    .elementor-social-icon-github {
-                                                        background-color: #333
-                                                    }
-
-                                                    .elementor-social-icon-gitlab {
-                                                        background-color: #e24329
-                                                    }
-
-                                                    .elementor-social-icon-globe {
-                                                        background-color: #69727d
-                                                    }
-
-                                                    .elementor-social-icon-google-plus,
-                                                    .elementor-social-icon-google-plus-g {
-                                                        background-color: #dd4b39
-                                                    }
-
-                                                    .elementor-social-icon-houzz {
-                                                        background-color: #7ac142
-                                                    }
-
-                                                    .elementor-social-icon-instagram {
-                                                        background-color: #262626
-                                                    }
-
-                                                    .elementor-social-icon-jsfiddle {
-                                                        background-color: #487aa2
-                                                    }
-
-                                                    .elementor-social-icon-link {
-                                                        background-color: #818a91
-                                                    }
-
-                                                    .elementor-social-icon-linkedin,
-                                                    .elementor-social-icon-linkedin-in {
-                                                        background-color: #0077b5
-                                                    }
-
-                                                    .elementor-social-icon-medium {
-                                                        background-color: #00ab6b
-                                                    }
-
-                                                    .elementor-social-icon-meetup {
-                                                        background-color: #ec1c40
-                                                    }
-
-                                                    .elementor-social-icon-mixcloud {
-                                                        background-color: #273a4b
-                                                    }
-
-                                                    .elementor-social-icon-odnoklassniki {
-                                                        background-color: #f4731c
-                                                    }
-
-                                                    .elementor-social-icon-pinterest {
-                                                        background-color: #bd081c
-                                                    }
-
-                                                    .elementor-social-icon-product-hunt {
-                                                        background-color: #da552f
-                                                    }
-
-                                                    .elementor-social-icon-reddit {
-                                                        background-color: #ff4500
-                                                    }
-
-                                                    .elementor-social-icon-rss {
-                                                        background-color: #f26522
-                                                    }
-
-                                                    .elementor-social-icon-shopping-cart {
-                                                        background-color: #4caf50
-                                                    }
-
-                                                    .elementor-social-icon-skype {
-                                                        background-color: #00aff0
-                                                    }
-
-                                                    .elementor-social-icon-slideshare {
-                                                        background-color: #0077b5
-                                                    }
-
-                                                    .elementor-social-icon-snapchat {
-                                                        background-color: #fffc00
-                                                    }
-
-                                                    .elementor-social-icon-soundcloud {
-                                                        background-color: #f80
-                                                    }
-
-                                                    .elementor-social-icon-spotify {
-                                                        background-color: #2ebd59
-                                                    }
-
-                                                    .elementor-social-icon-stack-overflow {
-                                                        background-color: #fe7a15
-                                                    }
-
-                                                    .elementor-social-icon-steam {
-                                                        background-color: #00adee
-                                                    }
-
-                                                    .elementor-social-icon-stumbleupon {
-                                                        background-color: #eb4924
-                                                    }
-
-                                                    .elementor-social-icon-telegram {
-                                                        background-color: #2ca5e0
-                                                    }
-
-                                                    .elementor-social-icon-thumb-tack {
-                                                        background-color: #1aa1d8
-                                                    }
-
-                                                    .elementor-social-icon-tripadvisor {
-                                                        background-color: #589442
-                                                    }
-
-                                                    .elementor-social-icon-tumblr {
-                                                        background-color: #35465c
-                                                    }
-
-                                                    .elementor-social-icon-twitch {
-                                                        background-color: #6441a5
-                                                    }
-
-                                                    .elementor-social-icon-twitter {
-                                                        background-color: #1da1f2
-                                                    }
-
-                                                    .elementor-social-icon-viber {
-                                                        background-color: #665cac
-                                                    }
-
-                                                    .elementor-social-icon-vimeo {
-                                                        background-color: #1ab7ea
-                                                    }
-
-                                                    .elementor-social-icon-vk {
-                                                        background-color: #45668e
-                                                    }
-
-                                                    .elementor-social-icon-weibo {
-                                                        background-color: #dd2430
-                                                    }
-
-                                                    .elementor-social-icon-weixin {
-                                                        background-color: #31a918
-                                                    }
-
-                                                    .elementor-social-icon-whatsapp {
-                                                        background-color: #25d366
-                                                    }
-
-                                                    .elementor-social-icon-wordpress {
-                                                        background-color: #21759b
-                                                    }
-
-                                                    .elementor-social-icon-xing {
-                                                        background-color: #026466
-                                                    }
-
-                                                    .elementor-social-icon-yelp {
-                                                        background-color: #af0606
-                                                    }
-
-                                                    .elementor-social-icon-youtube {
-                                                        background-color: #cd201f
-                                                    }
-
-                                                    .elementor-social-icon-500px {
-                                                        background-color: #0099e5
-                                                    }
-
-                                                    .elementor-shape-rounded .elementor-icon.elementor-social-icon {
-                                                        border-radius: 10%
-                                                    }
-
-                                                    .elementor-shape-circle .elementor-icon.elementor-social-icon {
-                                                        border-radius: 50%
-                                                    }
-                                                </style>
-                                                <div class="elementor-social-icons-wrapper elementor-grid">
-                                                    <span class="elementor-grid-item">
-                                                        <a class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
-                                                            target="_blank">
-                                                            <span class="elementor-screen-only">Instagram</span>
-                                                            <svg class="e-font-icon-svg e-fab-instagram"
+                                                <div class="elementor-social-icons-wrapper elementor-grid"> <span
+                                                        class="elementor-grid-item"> <a
+                                                            class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
+                                                            target="_blank"> <span
+                                                                class="elementor-screen-only">Instagram</span> <svg
+                                                                class="e-font-icon-svg e-fab-instagram"
                                                                 viewBox="0 0 448 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
                                                                 </path>
-                                                            </svg> </a>
-                                                    </span>
-                                                    <span class="elementor-grid-item">
-                                                        <a class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-5d238e2"
-                                                            target="_blank">
-                                                            <span class="elementor-screen-only">Twitter</span>
-                                                            <svg class="e-font-icon-svg e-fab-twitter"
+                                                            </svg> </a> </span> <span class="elementor-grid-item"> <a
+                                                            class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-5d238e2"
+                                                            target="_blank"> <span
+                                                                class="elementor-screen-only">Twitter</span> <svg
+                                                                class="e-font-icon-svg e-fab-twitter"
                                                                 viewBox="0 0 512 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z">
                                                                 </path>
-                                                            </svg> </a>
-                                                    </span>
-                                                </div>
+                                                            </svg> </a> </span> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2498,16 +1940,25 @@
                                             data-widget_type="image.default">
                                             <div class="elementor-widget-container">
                                                 <img decoding="async" width="272" height="300"
-                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/cow-1-scaled-7.jpg"
-                                                    class="attachment-medium size-medium wp-image-346"
-                                                    alt="" />
+                                                    class="attachment-medium size-medium wp-image-346" alt=""
+                                                    {{-- FOTO MEMPELAI --}}
+                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                @if ($form->penempatanTulisan == 'Pria')
+                                                @if (isset($order->image->fileImage) && $order->partName === 'mempelai-wanita')
+                                                        src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}" /> @endif
+                                                @else
+                                                    @if (isset($order->image->fileImage) && $order->partName === 'mempelai-pria') src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}" /> @endif
+                                                    @endif
+                                                @endforeach
+                                                @endif
                                             </div>
                                         </div>
-                                        <div class="elementor-element elementor-element-2953c3af wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                            data-id="2953c3af" data-element_type="widget"
+                                        <div class="elementor-element elementor-element-72e19f6e wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                            data-id="72e19f6e" data-element_type="widget"
                                             data-widget_type="heading.default">
                                             <div class="elementor-widget-container">
-                                                <h2 class="elementor-heading-title elementor-size-default">-
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    -
                                                     @if ($form->penempatanTulisan == 'Pria')
                                                         {{ $form->namaLengkapWanita }}
                                                     @else
@@ -2517,8 +1968,8 @@
                                                 </h2>
                                             </div>
                                         </div>
-                                        <div class="elementor-element elementor-element-7cf0448b wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
-                                            data-id="7cf0448b" data-element_type="widget"
+                                        <div class="elementor-element elementor-element-c06f17 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
+                                            data-id="c06f17" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
                                                 <p>
@@ -2531,8 +1982,8 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="elementor-element elementor-element-51fa6663 elementor-widget elementor-widget-text-editor"
-                                            data-id="51fa6663" data-element_type="widget"
+                                        <div class="elementor-element elementor-element-3f2537c8 elementor-widget elementor-widget-text-editor"
+                                            data-id="3f2537c8" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
                                                 <p>
@@ -2548,57 +1999,56 @@
                                             data-id="7f7abf4b" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-5a80cf9 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
                                             data-id="5a80cf9" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <p>Jl. Kedondong 15C, Sleman, Yogyakarta</p>
+                                                <p>
+                                                    @if ($form->penempatanTulisan == 'Pria')
+                                                        {{ $form->alamatWanita }}
+                                                    @else
+                                                        {{ $form->alamatPria }}
+                                                    @endif
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-a6cea23 elementor-shape-square elementor-grid-0 e-grid-align-center wdp-sticky-section-no elementor-widget elementor-widget-social-icons"
                                             data-id="a6cea23" data-element_type="widget"
                                             data-widget_type="social-icons.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-social-icons-wrapper elementor-grid">
-                                                    <span class="elementor-grid-item">
-                                                        <a class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
-                                                            target="_blank">
-                                                            <span class="elementor-screen-only">Instagram</span>
-                                                            <svg class="e-font-icon-svg e-fab-instagram"
+                                                <div class="elementor-social-icons-wrapper elementor-grid"> <span
+                                                        class="elementor-grid-item"> <a
+                                                            class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
+                                                            target="_blank"> <span
+                                                                class="elementor-screen-only">Instagram</span> <svg
+                                                                class="e-font-icon-svg e-fab-instagram"
                                                                 viewBox="0 0 448 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
                                                                 </path>
-                                                            </svg> </a>
-                                                    </span>
-                                                    <span class="elementor-grid-item">
-                                                        <a class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-5d238e2"
-                                                            target="_blank">
-                                                            <span class="elementor-screen-only">Twitter</span>
-                                                            <svg class="e-font-icon-svg e-fab-twitter"
+                                                            </svg> </a> </span> <span class="elementor-grid-item"> <a
+                                                            class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-5d238e2"
+                                                            target="_blank"> <span
+                                                                class="elementor-screen-only">Twitter</span> <svg
+                                                                class="e-font-icon-svg e-fab-twitter"
                                                                 viewBox="0 0 512 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z">
                                                                 </path>
-                                                            </svg> </a>
-                                                    </span>
-                                                </div>
+                                                            </svg> </a> </span> </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-39e06cbb wdp-sticky-section-no"
                                     data-id="39e06cbb" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -2610,7 +2060,17 @@
             class="elementor-section elementor-top-section elementor-element elementor-element-ed8e0d2 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="ed8e0d2" data-element_type="section"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-            style="background-image: url('http://localhost:5000/images/a5m6ah5uy1_2024-08-27T08-06-08.625Z.jpg'); background-size: cover; background-position: center;">
+            {{-- BG-MAIN --}}
+@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+@foreach ($imageOrders as $order)
+@if (isset($order->image->fileImage) && $order->partName === 'background')
+@php $galleryCount++; @endphp
+@if ($galleryCount === 1)
+    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
+    @break @endif
+@endif
+@endforeach
+@endif
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-14290ba2 wdp-sticky-section-no"
@@ -2635,8 +2095,8 @@
                         <div class="elementor-element elementor-element-14f2ac5c elementor-align-center wdp-sticky-section-no elementor-widget elementor-widget-button"
                             data-id="14f2ac5c" data-element_type="widget" data-widget_type="button.default">
                             <div class="elementor-widget-container">
-                                <div class="elementor-button-wrapper">
-                                    <a class="elementor-button elementor-button-link elementor-size-xs"
+                                <div class="elementor-button-wrapper"> <a
+                                        class="elementor-button elementor-button-link elementor-size-xs"
                                         href="https://calendar.google.com/calendar/u/0/r/eventedit?text={{ urlencode($form->namaPanggilanPria . ' & ' . $form->namaPanggilanWanita) . ' WEDDING' }}&details=Akad+Nikah+%F0%9F%93%8C%F0%9F%93%86+Hari/Tanggal+:+{{ urlencode($datetimeAkad->format('d, F Y')) }}%E2%8F%B0+Jam+:+{{ urlencode($datetimeAkad->format('h:i A')) }}%F0%9F%8F%A0+Tempat+:+
                                                          @if ($form->opsiAkad == 'Pria' || $form->opsiAkad == 'Wanita') {{ urlencode('Rumah Mempelai ' . $form->opsiAkad) }}
                                                         @else
@@ -2647,18 +2107,15 @@
                                                             {{ urlencode($form->opsiResepsi) }} @endif
                                                         %F0%9F%93%8D+Alamat+:+{{ urlencode($form->alamatResepsi) }}&dates={{ $datetimeResepsi->format('Ymd\THis') }}/{{ $datetimeResepsi->copy()->addHours(5)->format('Ymd\THis') }}&location={{ urlencode($form->alamatResepsi) }}&pli=1"
                                         target="_blank">
-                                        <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-icon elementor-align-icon-left">
-                                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-calendar-check"
-                                                    viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                        <span class="elementor-button-content-wrapper"> <span
+                                                class="elementor-button-icon"> <svg aria-hidden="true"
+                                                    class="e-font-icon-svg e-fas-calendar-check" viewBox="0 0 448 512"
+                                                    xmlns="http://www.w3.org/2000/svg">
                                                     <path
                                                         d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z">
                                                     </path>
-                                                </svg> </span>
-                                            <span class="elementor-button-text">Save The Date</span>
-                                        </span>
-                                    </a>
-                                </div>
+                                                </svg> </span> <span class="elementor-button-text">Save The Date</span>
+                                        </span> </a> </div>
                             </div>
                         </div>
                     </div>
@@ -2672,8 +2129,7 @@
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-3f8845e2 wdp-sticky-section-no"
                     data-id="3f8845e2" data-element_type="column">
-                    <div class="elementor-widget-wrap">
-                    </div>
+                    <div class="elementor-widget-wrap"> </div>
                 </div>
                 <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-2bb59d57 wdp-sticky-section-no"
                     data-id="2bb59d57" data-element_type="column">
@@ -2691,7 +2147,7 @@
                             data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:30}"
                             data-widget_type="heading.default">
                             <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">CEREMONY & PARTY</h2>
+                                <h2 class="elementor-heading-title elementor-size-default">CEREMONY &amp; PARTY</h2>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-2595ed9d animated-slow wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
@@ -2714,10 +2170,8 @@
                                             data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:45}"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2744,10 +2198,8 @@
                                             data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:45}"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2759,68 +2211,7 @@
                             data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:50}"
                             data-widget_type="countdown.default">
                             <div class="elementor-widget-container">
-                                <style>
-                                    /*! elementor-pro - v3.19.0 - 29-01-2024 */
-                                    .elementor-widget-countdown .elementor-countdown-expire--message {
-                                        display: none;
-                                        padding: 20px;
-                                        text-align: center
-                                    }
-
-                                    .elementor-widget-countdown .elementor-countdown-wrapper {
-                                        flex-direction: row
-                                    }
-
-                                    .elementor-widget-countdown .elementor-countdown-item {
-                                        padding: 20px 0;
-                                        text-align: center;
-                                        color: #fff
-                                    }
-
-                                    .elementor-widget-countdown .elementor-countdown-digits,
-                                    .elementor-widget-countdown .elementor-countdown-label {
-                                        line-height: 1
-                                    }
-
-                                    .elementor-widget-countdown .elementor-countdown-digits {
-                                        font-size: 69px
-                                    }
-
-                                    .elementor-widget-countdown .elementor-countdown-label {
-                                        font-size: 19px
-                                    }
-
-                                    .elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-wrapper {
-                                        display: flex;
-                                        justify-content: center;
-                                        margin-right: auto;
-                                        margin-left: auto
-                                    }
-
-                                    .elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-digits,
-                                    .elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-label {
-                                        display: block
-                                    }
-
-                                    .elementor-widget-countdown.elementor-countdown--label-block .elementor-countdown-item {
-                                        flex-basis: 0;
-                                        flex-grow: 1
-                                    }
-
-                                    .elementor-widget-countdown.elementor-countdown--label-inline {
-                                        text-align: center
-                                    }
-
-                                    .elementor-widget-countdown.elementor-countdown--label-inline .elementor-countdown-item {
-                                        display: inline-block;
-                                        padding-left: 5px;
-                                        padding-right: 5px
-                                    }
-                                </style>
-                                @php
-
-                                @endphp
-                                <div class="elementor-countdown-wrapper" data-date={{ $timestamp }}>
+                                <div class="elementor-countdown-wrapper" data-date="{{ $timestamp }}">
                                     <div class="elementor-countdown-item"><span
                                             class="elementor-countdown-digits elementor-countdown-days"></span> <span
                                             class="elementor-countdown-label">Days</span></div>
@@ -2867,68 +2258,65 @@
                                             data-id="740e58da" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-757a16a5 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
                                             data-id="757a16a5" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                @php
-                                                @endphp
-                                                <p><b>{{ $datetimeAkad->format('d, F Y') }}<br></b>{{ $datetimeAkad->format('h:i A') }}
-                                                    &#8211; Selesai</p>
+                                                <p>
+                                                    <b>{{ $datetimeAkad->format('d, F Y') }}</b>
+                                                    <br>
+                                                    {{ $datetimeAkad->format('h:i A') }}
+                                                    &#8211; Selesai
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-476e2e55 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
                                             data-id="476e2e55" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-4427c9cf wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
                                             data-id="4427c9cf" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <p><b>
+                                                <p>
+                                                    <b>
                                                         @if ($form->opsiAkad == 'Pria' || $form->opsiAkad == 'Wanita')
                                                             Rumah Mempelai {{ $form->opsiAkad }}
                                                         @else
                                                             {{ $form->opsiAkad }}
                                                         @endif
 
-                                                    </b><br>{{ $form->alamatAkad }}</p>
+                                                    </b>
+                                                    <br>
+                                                    {{ $form->alamatAkad }}
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-f7e5e3d elementor-button-success elementor-align-center wdp-sticky-section-no elementor-widget elementor-widget-button"
                                             data-id="f7e5e3d" data-element_type="widget"
                                             data-widget_type="button.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-button-wrapper">
-                                                    <a class="elementor-button elementor-button-link elementor-size-xs"
-                                                        href={{ $form->linkSherlokAkad }}>
-                                                        <span class="elementor-button-content-wrapper">
-                                                            <span
-                                                                class="elementor-button-icon elementor-align-icon-left">
-                                                                <svg aria-hidden="true"
+                                                <div class="elementor-button-wrapper"> <a
+                                                        class="elementor-button elementor-button-link elementor-size-xs"
+                                                        href="https://www.google.co.id/maps/place/Jl.+Prof.+DR.+Drs+Notonagoro,+Karang+Malang,+Caturtunggal,+Kec.+Depok,+Kabupaten+Sleman,+Daerah+Istimewa+Yogyakarta+55281/@-7.7745013,110.3785049,17z/data=!3m1!4b1!4m5!3m4!1s0x2e7a59b4fe07a7f9:0x2f7c4fd3d72616bb!8m2!3d-7.7745013!4d110.3806936">
+                                                        <span class="elementor-button-content-wrapper"> <span
+                                                                class="elementor-button-icon"> <svg aria-hidden="true"
                                                                     class="e-font-icon-svg e-fas-map-marker-alt"
                                                                     viewBox="0 0 384 512"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <path
                                                                         d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z">
                                                                     </path>
-                                                                </svg> </span>
-                                                            <span class="elementor-button-text">Open Maps</span>
-                                                        </span>
-                                                    </a>
-                                                </div>
+                                                                </svg> </span> <span class="elementor-button-text">Open
+                                                                Maps</span> </span> </a> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-65e9ae45 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
@@ -2959,31 +2347,6 @@
                                             data-settings="{&quot;source&quot;:&quot;external_url&quot;,&quot;source_external_url&quot;:{&quot;url&quot;:&quot;https:\/\/assets8.lottiefiles.com\/packages\/lf20_dj5wyazf.json&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;link_to&quot;:&quot;none&quot;,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}"
                                             data-widget_type="lottie.default">
                                             <div class="elementor-widget-container">
-                                                <style>
-                                                    /*! elementor-pro - v3.19.0 - 29-01-2024 */
-                                                    .e-lottie__container {
-                                                        display: inline-block;
-                                                        max-width: var(--lottie-container-max-width);
-                                                        width: var(--lottie-container-width);
-                                                        opacity: var(--lottie-container-opacity)
-                                                    }
-
-                                                    .e-lottie__container:hover {
-                                                        opacity: var(--lottie-container-opacity-hover);
-                                                        transition-duration: var(--lottie-container-transition-duration-hover)
-                                                    }
-
-                                                    .e-lottie__container svg,
-                                                    .e-lottie__container svg * {
-                                                        transition: none !important
-                                                    }
-
-                                                    .e-lottie__caption {
-                                                        color: var(--caption-color);
-                                                        margin-top: var(--caption-margin-top);
-                                                        text-align: var(--caption-text-align)
-                                                    }
-                                                </style>
                                                 <div class="e-lottie__container">
                                                     <div class="e-lottie__animation"></div>
                                                 </div>
@@ -3015,44 +2378,44 @@
                                             data-id="c76c07f" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-23aca0db wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
                                             data-id="23aca0db" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                @php
-
-                                                @endphp
-                                                <p><b>{{ $datetimeResepsi->format('d, F Y') }}<br></b>{{ $datetimeResepsi->format('h:i A') }}
-                                                    &#8211; Selesai</p>
+                                                <p>
+                                                    <b>{{ $datetimeResepsi->format('d, F Y') }}</b>
+                                                    <br>
+                                                    {{ $datetimeResepsi->format('h:i A') }}
+                                                    &#8211; Selesai
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-16c036c elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
                                             data-id="16c036c" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                    </span>
-                                                </div>
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-7cbfaa61 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
                                             data-id="7cbfaa61" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <p><b>
-                                                        @if ($form->opsiAkad == 'Pria' || $form->opsiAkad == 'Wanita')
-                                                            Rumah Mempelai {{ $form->opsiAkad }}
+                                                <p>
+                                                    <b>
+                                                        @if ($form->opsiResepsi == 'Pria' || $form->opsiResepsi == 'Wanita')
+                                                            Rumah Mempelai {{ $form->opsiResepsi }}
                                                         @else
-                                                            {{ $form->opsiAkad }}
+                                                            {{ $form->opsiResepsi }}
                                                         @endif
-                                                    </b><br />
+
+                                                    </b>
+                                                    <br>
                                                     {{ $form->alamatResepsi }}
                                                 </p>
                                             </div>
@@ -3061,24 +2424,19 @@
                                             data-id="6be3a53e" data-element_type="widget"
                                             data-widget_type="button.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-button-wrapper">
-                                                    <a class="elementor-button elementor-button-link elementor-size-xs"
-                                                        href={{ $form->linkSherlokResepsi }}>
-                                                        <span class="elementor-button-content-wrapper">
-                                                            <span
-                                                                class="elementor-button-icon elementor-align-icon-left">
-                                                                <svg aria-hidden="true"
+                                                <div class="elementor-button-wrapper"> <a
+                                                        class="elementor-button elementor-button-link elementor-size-xs"
+                                                        href="https://www.google.co.id/maps/place/Gowongan,+Kec.+Jetis,+Kota+Yogyakarta,+Daerah+Istimewa+Yogyakarta/@-7.7860401,110.3624416,16z/data=!3m1!4b1!4m5!3m4!1s0x2e7a582ff92a924d:0x5323bda9ddc34e7a!8m2!3d-7.784509!4d110.3651385">
+                                                        <span class="elementor-button-content-wrapper"> <span
+                                                                class="elementor-button-icon"> <svg aria-hidden="true"
                                                                     class="e-font-icon-svg e-fas-map-marker-alt"
                                                                     viewBox="0 0 384 512"
                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                     <path
                                                                         d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z">
                                                                     </path>
-                                                                </svg> </span>
-                                                            <span class="elementor-button-text">Open Maps</span>
-                                                        </span>
-                                                    </a>
-                                                </div>
+                                                                </svg> </span> <span class="elementor-button-text">Open
+                                                                Maps</span> </span> </a> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-37aee506 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
@@ -3123,8 +2481,8 @@
                                             data-id="40d69f43" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <p>*Kepada tamu undangan diharapkan untuk mengisi form kehadiran di
-                                                    bawah ini</p>
+                                                <p>*Kepada tamu undangan diharapkan untuk mengisi&nbsp; form kehadiran
+                                                    di bawah ini</p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-6f7fa07f wdp-sticky-section-no elementor-widget elementor-widget-weddingpress-forms"
@@ -3133,50 +2491,92 @@
                                             <div class="elementor-widget-container">
                                                 <div
                                                     class="elementor-wdp-form-wrapper elementor-wdp-form-button-align-fullwidth">
-                                                    <form method="get" class="wdp-form wdp-wa-form"
-                                                        id="wdp-wa-form-6f7fa07f"
-                                                        data-waapi="https://api.whatsapp.com/send?phone=6282348232526&amp;text=Hai%2C%20saya%20%25nama%25%20ingin%20konfirmasi%20kehadiran%20pada%20undangan%20pernikahan%20digital%20bahwa%20%25option%25%20bersama%20%25jumlah%25%20orang.%20Terima%20kasih%20ya.">
+                                                    <form id="rsvpForm" class="wdp-form wdp-wa-form"
+                                                    id="wdp-wa-form-6f7fa07f" method="post" name="rsvpnilamzen">
+                                                        @csrf
+                                                    
                                                         <div class="wdp-form-fields-wrapper">
-                                                            <div class="wdp-form-field-nama">
-                                                                <label for="wdp-form-nama-6f7fa07f" class="">
-                                                                    Nama </label>
-                                                                <input type="text" name="wdp-form-nama"
-                                                                    class="wdp-form-nama" id="wdp-form-nama-6f7fa07f"
-                                                                    placeholder="" required="1" value="">
+                                                            <div class="wdp-form-field-nama"> <label
+                                                                    for="wdp-form-nama-6f7fa07f" class=""> Nama
+                                                                </label> <input type="text"  name="form_fields[name]" id="form-field-name" class="wdp-form-nama"
+                                                                    placeholder="" value="" required>
                                                             </div>
-                                                            <div class="wdp-form-field-jumlah">
-                                                                <label for="wdp-form-jumlah-6f7fa07f" class="">
-                                                                    Jumlah </label>
-                                                                <input name="wdp-form-jumlah" class="wdp-form-jumlah"
-                                                                    id="wdp-form-jumlah-6f7fa07f" type="text"
-                                                                    placeholder="" required="1" value="">
-                                                            </div>
-                                                            <input name="wdp-form-pesan" class="wdp-form-pesan"
+                                                            <div class="wdp-form-field-jumlah"> <label
+                                                                    for="wdp-form-jumlah-6f7fa07f" class="">
+                                                                    Jumlah </label> 
+                                                                    <input name="form_fields[email]" id="form-field-email"
+                                                                    class="wdp-form-jumlah" type="text"
+                                                                    placeholder="" value="" 
+                                                                    pattern="[0-9]*" required>
+                                                            </div> <input name="wdp-form-pesan" class="wdp-form-pesan"
                                                                 id="wdp-form-pesan-6f7fa07f" type="hidden"
                                                                 value="hide">
                                                             <div class="wdp-form-field-option wdp-option-type-select">
                                                                 <label
                                                                     for="wdp-form-option-6f7fa07f wdp-form-option-6f7fa07f"
-                                                                    class=" ">
-                                                                    Konfirmasi </label>
-
-                                                                <select name="wdp-form-option wdp-form-option"
+                                                                    class=" "> Konfirmasi </label> 
+                                                                    <select
+                                                                    name="form_fields[message]" 
+                                                                    id="form-field-message"
                                                                     class="wdp-form-option wdp-form-option"
-                                                                    id="wdp-form-option-6f7fa07f wdp-form-option-6f7fa07f"
                                                                     required="1">
-                                                                    <option value="Saya Akan Datang"
+                                                                    <option value="1"
                                                                         selected="selected">Saya Akan Datang</option>
-                                                                    <option value="Maaf, Saya Tidak Bisa Datang">Maaf,
+                                                                    <option value="0">Maaf,
                                                                         Saya Tidak Bisa Datang</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="wdp-form-field-submit">
-                                                                <button type="submit" class="wdp-form-button">
-                                                                    Kirim </button>
-                                                            </div>
+                                                            <div class="wdp-form-field-submit"> <button type="button"
+                                                                    class="wdp-form-button" id="submitBtn"> Kirim </button> </div>
                                                         </div>
                                                     </form>
                                                 </div>
+                                                <script>
+                                                    document.getElementById('submitBtn').addEventListener('click', function(event) {
+                                                        event.preventDefault();
+                                                    
+                                                        let form = document.getElementById('rsvpForm');
+                                                        let formData = new FormData(form);
+                                                        let submitBtn = document.getElementById('submitBtn');
+                                                    
+                                                        // Show loading spinner and disable button
+                                                        submitBtn.disabled = true;
+                                                        submitBtn.classList.add('disabled-button');
+                                                        submitBtn.innerHTML = '<span class="loading-spinner"></span> Mengirim...';
+                                                    
+                                                        // Get the slug from the current URL
+                                                        let currentUrl = window.location.href;
+                                                        let slug = currentUrl.split('/').pop(); // Assumes slug is at the end of the URL
+                                                    
+                                                        // Make the fetch request with the slug in the URL
+                                                        fetch(`/submit-rsvp/${slug}`, {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                                                                'Accept': 'application/json',
+                                                            },
+                                                            body: formData
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            if (data.success) {
+                                                                form.reset();  // Clear the form after successful submission
+                                                                document.getElementById('form-field-name').value = '';
+                                                                document.getElementById('form-field-email').value = '';
+                                                                document.getElementById('form-field-message').value = '1'; // Reset to default if needed
+                                                            }
+                                                        })
+                                                        .catch(error => {
+                                                            console.error('Error:', error);
+                                                        })
+                                                        .finally(() => {
+                                                            // Re-enable button and remove loading spinner
+                                                            submitBtn.disabled = false;
+                                                            submitBtn.classList.remove('disabled-button');
+                                                            submitBtn.innerHTML = 'Kirim';
+                                                        });
+                                                    });
+                                                    </script>
                                                 <script>
                                                     ! function(t, r) {
                                                         "use strict";
@@ -3221,8 +2621,7 @@
                 </div>
                 <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-a0c97b5 wdp-sticky-section-no"
                     data-id="a0c97b5" data-element_type="column">
-                    <div class="elementor-widget-wrap">
-                    </div>
+                    <div class="elementor-widget-wrap"> </div>
                 </div>
             </div>
         </section>
@@ -3230,16 +2629,14 @@
             class="elementor-section elementor-top-section elementor-element elementor-element-2aadee23 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="2aadee23" data-element_type="section"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;shape_divider_bottom&quot;:&quot;tilt&quot;}">
-            <div class="elementor-shape elementor-shape-bottom" data-negative="false">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
-                    <path class="elementor-shape-fill" d="M0,6V0h1000v100L0,6z" />
-                </svg>
-            </div>
+            <div class="elementor-shape elementor-shape-bottom" data-negative="false"> <svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                    <path class="elementor-shape-fill" d="M0,6V0h1000v100L0,6z"></path>
+                </svg> </div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-6762ed49 wdp-sticky-section-no"
                     data-id="6762ed49" data-element_type="column">
-                    <div class="elementor-widget-wrap">
-                    </div>
+                    <div class="elementor-widget-wrap"> </div>
                 </div>
                 <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-1d6dbe34 wdp-sticky-section-no"
                     data-id="1d6dbe34" data-element_type="column">
@@ -3278,25 +2675,28 @@
                             data-id="6dd12763" data-element_type="widget"
                             data-widget_type="weddingpress-timeline.default">
                             <div class="elementor-widget-container">
-
                                 <div class="twae-vertical twae-wrapper twae-one-sided-wrapper">
                                     <div
                                         class="twae-timeline-centered twae-timeline-sm twae-line twae-one-sided-timeline">
                                         <article class="twae-timeline-entry twae-right-aligned">
-                                            <div class="twae-timeline-entry-inner">
-                                                <time class="twae-label-extra-label">
-                                                    <span class="twae-label">First Meet</span>
-                                                    <span class="twae-extra-label">Juli 2020</span>
+                                            <div class="twae-timeline-entry-inner"> <time
+                                                    class="twae-label-extra-label"> <span class="twae-label">First
+                                                        Meet</span> <span class="twae-extra-label"></span>
                                                 </time>
                                                 <div class="twae-bg-orange twae-icon"><i aria-hidden="true"
                                                         class="fas fa-heart"></i></div>
-                                                <div class="twae-bg-orange twae-data-container">
-                                                    <span class="twae-title"></span>
+                                                <div class="twae-bg-orange twae-data-container"> <span
+                                                        class="twae-title"></span>
                                                     <div class="twae-timeline-img"><img decoding="async"
-                                                            width="118" height="150"
-                                                            src="https://buka.undanganku.store/wp-content/uploads/2024/03/IMG_4420-scaled-9.jpg"
-                                                            class="attachment-thumbnail size-thumbnail"
-                                                            alt="" /></div>
+                                                            width="118" height="150" class="attachment-thumbnail size-thumbnail" alt=""
+                                                            {{-- AWAL KETEMU --}}
+                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                    @if (isset($order->image->fileImage) && $order->partName === 'awal-ketemu')
+                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> 
+                                                            @endif
+                                                            @endforeach
+                                                            @endif
+                                                    </div>
                                                     <div class="twae-description">
                                                         <p>{{ $form->ceritaAwal }}</p>
                                                     </div>
@@ -3304,20 +2704,26 @@
                                             </div>
                                         </article>
                                         <article class="twae-timeline-entry twae-right-aligned">
-                                            <div class="twae-timeline-entry-inner">
-                                                <time class="twae-label-extra-label">
-                                                    <span class="twae-label">Proposal</span>
-                                                    <span class="twae-extra-label">Juli 2021</span>
-                                                </time>
+                                            <div class="twae-timeline-entry-inner"> <time
+                                                    class="twae-label-extra-label"> <span
+                                                        class="twae-label">Proposal</span> <span
+                                                        class="twae-extra-label"></span> </time>
                                                 <div class="twae-bg-orange twae-icon"><i aria-hidden="true"
                                                         class="fas fa-heart"></i></div>
-                                                <div class="twae-bg-orange twae-data-container">
-                                                    <span class="twae-title"></span>
+                                                <div class="twae-bg-orange twae-data-container"> <span
+                                                        class="twae-title"></span>
                                                     <div class="twae-timeline-img"><img loading="lazy"
                                                             decoding="async" width="131" height="150"
-                                                            src="https://buka.undanganku.store/wp-content/uploads/2024/03/IMG_4539-scaled-10.jpg"
                                                             class="attachment-thumbnail size-thumbnail"
-                                                            alt="" /></div>
+                                                            alt=""
+                                                            {{-- JADIAN --}}
+                                                            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                            @if (isset($order->image->fileImage) && $order->partName === 'jadian')
+                                                                    src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> 
+                                                                    @endif
+                                                                    @endforeach
+                                                                    @endif
+                                                                </div>
                                                     <div class="twae-description">
                                                         <p>{{ $form->ceritaJadian }}</p>
                                                     </div>
@@ -3325,24 +2731,28 @@
                                             </div>
                                         </article>
                                         <article class="twae-timeline-entry twae-right-aligned">
-                                            <div class="twae-timeline-entry-inner">
-                                                <time class="twae-label-extra-label">
-                                                    <span class="twae-label">Engagement</span>
-                                                    <span class="twae-extra-label">Januari 2022</span>
-                                                </time>
+                                            <div class="twae-timeline-entry-inner"> <time
+                                                    class="twae-label-extra-label"> <span
+                                                        class="twae-label">Engagement</span> <span
+                                                        class="twae-extra-label">Januari 2022</span> </time>
                                                 <div class="twae-bg-orange twae-icon"><i aria-hidden="true"
                                                         class="fas fa-heart"></i></div>
-                                                <div class="twae-bg-orange twae-data-container">
-                                                    <span class="twae-title"></span>
+                                                <div class="twae-bg-orange twae-data-container"> <span
+                                                        class="twae-title"></span>
                                                     <div class="twae-timeline-img"><img loading="lazy"
                                                             decoding="async" width="128" height="150"
-                                                            src="https://buka.undanganku.store/wp-content/uploads/2024/03/IMG_4574-scaled-8.jpg"
                                                             class="attachment-thumbnail size-thumbnail"
-                                                            alt="" /></div>
+                                                            alt=""
+                                                        {{-- LAMARAN --}}
+                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                    @if (isset($order->image->fileImage) && $order->partName === 'lamaran')
+                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> 
+                                                            @endif
+                                                            @endforeach
+                                                            @endif
+                                                        </div>
                                                     <div class="twae-description">
-                                                        <p>
-                                                            {{ $form->ceritaLamaran }}
-                                                        </p>
+                                                        {{ $form->ceritaLamaran }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -3355,8 +2765,7 @@
                 </div>
                 <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-3429fccc wdp-sticky-section-no"
                     data-id="3429fccc" data-element_type="column">
-                    <div class="elementor-widget-wrap">
-                    </div>
+                    <div class="elementor-widget-wrap"> </div>
                 </div>
             </div>
         </section>
@@ -3406,8 +2815,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5799e02c wdp-sticky-section-no"
                                     data-id="5799e02c" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7e236863 wdp-sticky-section-no"
                                     data-id="7e236863" data-element_type="column">
@@ -3417,259 +2825,44 @@
                                             data-settings="{&quot;gallery_layout&quot;:&quot;masonry&quot;,&quot;columns_tablet&quot;:3,&quot;columns&quot;:3,&quot;gap_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:5,&quot;sizes&quot;:[]},&quot;columns_mobile&quot;:2,&quot;lazyload&quot;:&quot;yes&quot;,&quot;gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;link_to&quot;:&quot;file&quot;,&quot;overlay_background&quot;:&quot;yes&quot;,&quot;content_hover_animation&quot;:&quot;fade-in&quot;}"
                                             data-widget_type="gallery.default">
                                             <div class="elementor-widget-container">
-                                                <style>
-                                                    /*! elementor-pro - v3.19.0 - 29-01-2024 */
-                                                    .elementor-gallery__container {
-                                                        min-height: 1px
-                                                    }
-
-                                                    .elementor-gallery-item {
-                                                        position: relative;
-                                                        overflow: hidden;
-                                                        display: block;
-                                                        text-decoration: none;
-                                                        border: solid var(--image-border-width) var(--image-border-color);
-                                                        border-radius: var(--image-border-radius)
-                                                    }
-
-                                                    .elementor-gallery-item__content,
-                                                    .elementor-gallery-item__overlay {
-                                                        height: 100%;
-                                                        width: 100%;
-                                                        position: absolute;
-                                                        top: 0;
-                                                        left: 0
-                                                    }
-
-                                                    .elementor-gallery-item__overlay {
-                                                        mix-blend-mode: var(--overlay-mix-blend-mode);
-                                                        transition-duration: var(--overlay-transition-duration);
-                                                        transition-property: mix-blend-mode, transform, opacity, background-color
-                                                    }
-
-                                                    .elementor-gallery-item__image.e-gallery-image {
-                                                        transition-duration: var(--image-transition-duration);
-                                                        transition-property: filter, transform
-                                                    }
-
-                                                    .elementor-gallery-item__content {
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        justify-content: var(--content-justify-content, center);
-                                                        align-items: center;
-                                                        text-align: var(--content-text-align);
-                                                        padding: var(--content-padding)
-                                                    }
-
-                                                    .elementor-gallery-item__content>div {
-                                                        transition-duration: var(--content-transition-duration)
-                                                    }
-
-                                                    .elementor-gallery-item__content.elementor-gallery--sequenced-animation>div:nth-child(2) {
-                                                        transition-delay: calc(var(--content-transition-delay) / 3)
-                                                    }
-
-                                                    .elementor-gallery-item__content.elementor-gallery--sequenced-animation>div:nth-child(3) {
-                                                        transition-delay: calc(var(--content-transition-delay) / 3 * 2)
-                                                    }
-
-                                                    .elementor-gallery-item__content.elementor-gallery--sequenced-animation>div:nth-child(4) {
-                                                        transition-delay: calc(var(--content-transition-delay) / 3 * 3)
-                                                    }
-
-                                                    .elementor-gallery-item__description {
-                                                        color: var(--description-text-color, #fff);
-                                                        width: 100%
-                                                    }
-
-                                                    .elementor-gallery-item__title {
-                                                        color: var(--title-text-color, #fff);
-                                                        font-weight: 700;
-                                                        width: 100%
-                                                    }
-
-                                                    .elementor-gallery__titles-container {
-                                                        display: flex;
-                                                        flex-wrap: wrap;
-                                                        justify-content: var(--titles-container-justify-content, center);
-                                                        margin-bottom: 20px
-                                                    }
-
-                                                    .elementor-gallery__titles-container:not(.e--pointer-framed) .elementor-item:after,
-                                                    .elementor-gallery__titles-container:not(.e--pointer-framed) .elementor-item:before {
-                                                        background-color: var(--galleries-pointer-bg-color-hover)
-                                                    }
-
-                                                    .elementor-gallery__titles-container:not(.e--pointer-framed) .elementor-item.elementor-item-active:after,
-                                                    .elementor-gallery__titles-container:not(.e--pointer-framed) .elementor-item.elementor-item-active:before {
-                                                        background-color: var(--galleries-pointer-bg-color-active)
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed .elementor-item:before {
-                                                        border-color: var(--galleries-pointer-bg-color-hover);
-                                                        border-width: var(--galleries-pointer-border-width)
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed .elementor-item:after {
-                                                        border-color: var(--galleries-pointer-bg-color-hover)
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed .elementor-item.elementor-item-active:after,
-                                                    .elementor-gallery__titles-container.e--pointer-framed .elementor-item.elementor-item-active:before {
-                                                        border-color: var(--galleries-pointer-bg-color-active)
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed.e--animation-draw .elementor-item:before {
-                                                        border-left-width: var(--galleries-pointer-border-width);
-                                                        border-bottom-width: var(--galleries-pointer-border-width);
-                                                        border-right-width: 0;
-                                                        border-top-width: 0
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed.e--animation-draw .elementor-item:after {
-                                                        border-left-width: 0;
-                                                        border-bottom-width: 0;
-                                                        border-right-width: var(--galleries-pointer-border-width);
-                                                        border-top-width: var(--galleries-pointer-border-width)
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed.e--animation-corners .elementor-item:before {
-                                                        border-left-width: var(--galleries-pointer-border-width);
-                                                        border-bottom-width: 0;
-                                                        border-right-width: 0;
-                                                        border-top-width: var(--galleries-pointer-border-width)
-                                                    }
-
-                                                    .elementor-gallery__titles-container.e--pointer-framed.e--animation-corners .elementor-item:after {
-                                                        border-left-width: 0;
-                                                        border-bottom-width: var(--galleries-pointer-border-width);
-                                                        border-right-width: var(--galleries-pointer-border-width);
-                                                        border-top-width: 0
-                                                    }
-
-                                                    .elementor-gallery__titles-container .e--pointer-double-line .elementor-item:after,
-                                                    .elementor-gallery__titles-container .e--pointer-double-line .elementor-item:before,
-                                                    .elementor-gallery__titles-container .e--pointer-overline .elementor-item:before,
-                                                    .elementor-gallery__titles-container .e--pointer-underline .elementor-item:after {
-                                                        height: var(--galleries-pointer-border-width)
-                                                    }
-
-                                                    .elementor-gallery-title {
-                                                        --space-between: 10px;
-                                                        cursor: pointer;
-                                                        color: #6d7882;
-                                                        font-weight: 500;
-                                                        position: relative;
-                                                        padding: 7px 14px;
-                                                        transition: all .3s
-                                                    }
-
-                                                    .elementor-gallery-title--active {
-                                                        color: #495157
-                                                    }
-
-                                                    .elementor-gallery-title:not(:last-child) {
-                                                        margin-right: var(--space-between)
-                                                    }
-
-                                                    .elementor-gallery-item__title+.elementor-gallery-item__description {
-                                                        margin-top: var(--description-margin-top)
-                                                    }
-
-                                                    .e-gallery-item.elementor-gallery-item {
-                                                        transition-property: all
-                                                    }
-
-                                                    .e-gallery-item.elementor-animated-content .elementor-animated-item--enter-from-bottom,
-                                                    .e-gallery-item.elementor-animated-content .elementor-animated-item--enter-from-left,
-                                                    .e-gallery-item.elementor-animated-content .elementor-animated-item--enter-from-right,
-                                                    .e-gallery-item.elementor-animated-content .elementor-animated-item--enter-from-top,
-                                                    .e-gallery-item:focus .elementor-gallery__item-overlay-bg,
-                                                    .e-gallery-item:focus .elementor-gallery__item-overlay-content,
-                                                    .e-gallery-item:focus .elementor-gallery__item-overlay-content__description,
-                                                    .e-gallery-item:focus .elementor-gallery__item-overlay-content__title,
-                                                    .e-gallery-item:hover .elementor-gallery__item-overlay-bg,
-                                                    .e-gallery-item:hover .elementor-gallery__item-overlay-content,
-                                                    .e-gallery-item:hover .elementor-gallery__item-overlay-content__description,
-                                                    .e-gallery-item:hover .elementor-gallery__item-overlay-content__title {
-                                                        opacity: 1
-                                                    }
-
-                                                    a.elementor-item.elementor-gallery-title {
-                                                        color: var(--galleries-title-color-normal)
-                                                    }
-
-                                                    a.elementor-item.elementor-gallery-title.elementor-item-active,
-                                                    a.elementor-item.elementor-gallery-title.highlighted,
-                                                    a.elementor-item.elementor-gallery-title:focus,
-                                                    a.elementor-item.elementor-gallery-title:hover {
-                                                        color: var(--galleries-title-color-hover)
-                                                    }
-
-                                                    a.elementor-item.elementor-gallery-title.elementor-item-active {
-                                                        color: var(--gallery-title-color-active)
-                                                    }
-
-                                                    .e-con-inner>.elementor-widget-gallery,
-                                                    .e-con>.elementor-widget-gallery {
-                                                        width: var(--container-widget-width);
-                                                        --flex-grow: var(--container-widget-flex-grow)
-                                                    }
-                                                </style>
-                                                <div class="elementor-gallery__container">
+                                                <div class="elementor-gallery__container"> 
                                                     @if (isset($imageOrders) && $imageOrders->isNotEmpty())
-                                                        @foreach ($imageOrders as $order)
-                                                            @if (isset($order->image->fileImage))
-                                                                <a class="e-gallery-item elementor-gallery-item elementor-animated-content"
-                                                                    href="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                                                                    data-elementor-open-lightbox="yes"
-                                                                    data-elementor-lightbox-slideshow="4c19c2ea"
-                                                                    data-elementor-lightbox-title="{{ $order->image->fileImage }}"
-                                                                    data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MzUxLCJ1cmwiOiJodHRwczpcL1wvYnVrYS51bmRhbmdhbmt1LnN0b3JlXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDI0XC8wM1wvTVRYWF9NUjIwMjMxMDAzXzEyNDA1MTY0NS1zY2FsZWQtNi5qcGciLCJzbGlkZXNob3ciOiI0YzE5YzJlYSJ9">
-                                                                    <div class="e-gallery-image elementor-gallery-item__image"
-                                                                        data-thumbnail="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                                                                        data-width="2045" data-height="2560"
-                                                                        aria-label="" role="img"></div>
-                                                                    <div class="elementor-gallery-item__overlay">
-                                                                    </div>
-                                                                </a>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-
-                                                    @if (isset($formattedImages) && $formattedImages->isNotEmpty())
-                                                        @foreach ($formattedImages as $image)
+                                                    @foreach ($imageOrders as $order)
+                                                        @if (isset($order->image->fileImage) && $order->partName === 'gallery')
                                                             <a class="e-gallery-item elementor-gallery-item elementor-animated-content"
-                                                                href="{{ env('BACKEND_URL') . '/images/' . $image['fileImage'] }}"
+                                                                href="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
                                                                 data-elementor-open-lightbox="yes"
                                                                 data-elementor-lightbox-slideshow="4c19c2ea"
-                                                                data-elementor-lightbox-title="{{ $image['fileImage'] }}"
+                                                                data-elementor-lightbox-title="{{ $order->image->fileImage }}"
                                                                 data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MzUxLCJ1cmwiOiJodHRwczpcL1wvYnVrYS51bmRhbmdhbmt1LnN0b3JlXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDI0XC8wM1wvTVRYWF9NUjIwMjMxMDAzXzEyNDA1MTY0NS1zY2FsZWQtNi5qcGciLCJzbGlkZXNob3ciOiI0YzE5YzJlYSJ9">
                                                                 <div class="e-gallery-image elementor-gallery-item__image"
-                                                                    data-thumbnail="{{ env('BACKEND_URL') . '/images/' . $image['fileImage'] }}"
-                                                                    data-width="2045" data-height="2560"
-                                                                    aria-label="" role="img"></div>
-                                                                <div class="elementor-gallery-item__overlay"></div>
+                                                                    data-thumbnail="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
+                                                                    data-width="2045"
+                                                                    data-height="2560"
+                                                                    aria-label=""
+                                                                    role="img"></div>
+                                                                <div
+                                                                    class="elementor-gallery-item__overlay">
+                                                                </div>
                                                             </a>
-                                                        @endforeach
-                                                    @endif
+                                                        @endif
+                                                    @endforeach
+                                                @endif
 
-                                                    <script>
-                                                        document.addEventListener("DOMContentLoaded", function() {
-                                                            const galleryItems = document.querySelectorAll('.e-gallery-image');
-                                                            galleryItems.forEach(item => {
-                                                                const thumbnailUrl = item.getAttribute('data-thumbnail');
-                                                                const img = new Image();
-                                                                img.src = thumbnailUrl;
-                                                                img.onload = function() {
-                                                                    item.setAttribute('data-width', img.naturalWidth);
-                                                                    item.setAttribute('data-height', img.naturalHeight);
-                                                                };
-                                                            });
+                                                <script>
+                                                    document.addEventListener("DOMContentLoaded", function() {
+                                                        const galleryItems = document.querySelectorAll('.e-gallery-image');
+                                                        galleryItems.forEach(item => {
+                                                            const thumbnailUrl = item.getAttribute('data-thumbnail');
+                                                            const img = new Image();
+                                                            img.src = thumbnailUrl;
+                                                            img.onload = function() {
+                                                                item.setAttribute('data-width', img.naturalWidth);
+                                                                item.setAttribute('data-height', img.naturalHeight);
+                                                            };
                                                         });
-                                                    </script>
-
-
+                                                    });
+                                                </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -3677,8 +2870,7 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-2fbc5f4e wdp-sticky-section-no"
                                     data-id="2fbc5f4e" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -3690,7 +2882,18 @@
             class="elementor-section elementor-top-section elementor-element elementor-element-5dc46664 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="5dc46664" data-element_type="section"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-            style="background-image: url('http://localhost:5000/images/a5m6ah5uy1_2024-08-27T08-06-08.625Z.jpg'); background-size: cover; background-position: center;">
+            {{-- BG-GIFT --}}
+@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+@foreach ($imageOrders as $order)
+@if (isset($order->image->fileImage) && $order->partName === 'background')
+@php $galleryCount++; @endphp
+@if ($galleryCount === 2)
+    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
+    @break @endif
+@endif
+@endforeach
+@endif
+            
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-3f65e8ec wdp-sticky-section-no"
@@ -3718,14 +2921,15 @@
                             data-widget_type="heading.default">
                             <div class="elementor-widget-container">
                                 <h2 class="elementor-heading-title elementor-size-default">
-                                    @if ($form->penempatanTulisan == 'Pria')
-                                        {{ strtoupper($form->namaPanggilanPria) }} &amp;
-                                        {{ strtoupper($form->namaPanggilanWanita) }}
-                                    @else
-                                        {{ strtoupper($form->namaPanggilanWanita) }} &amp;
-                                        {{ strtoupper($form->namaPanggilanPria) }}
-                                    @endif
-                                </h2>
+                                    <h2 class="elementor-heading-title elementor-size-default">
+                                        @if ($form->penempatanTulisan == 'Pria')
+                                            {{ strtoupper($form->namaPanggilanPria) }} &amp;
+                                            {{ strtoupper($form->namaPanggilanWanita) }}
+                                        @else
+                                            {{ strtoupper($form->namaPanggilanWanita) }} &amp;
+                                            {{ strtoupper($form->namaPanggilanPria) }}
+                                        @endif
+                                    </h2>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-2246a5b1 animated-slow wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
@@ -3739,18 +2943,15 @@
                         <div class="elementor-element elementor-element-23cfb793 elementor-widget-divider--view-line_icon elementor-view-default elementor-widget-divider--element-align-center wdp-sticky-section-no elementor-widget elementor-widget-divider"
                             data-id="23cfb793" data-element_type="widget" data-widget_type="divider.default">
                             <div class="elementor-widget-container">
-                                <div class="elementor-divider">
-                                    <span class="elementor-divider-separator">
-                                        <div class="elementor-icon elementor-divider__element">
-                                            <svg aria-hidden="true" class="e-font-icon-svg e-fas-heart"
+                                <div class="elementor-divider"> <span class="elementor-divider-separator">
+                                        <div class="elementor-icon elementor-divider__element"> <svg
+                                                aria-hidden="true" class="e-font-icon-svg e-fas-heart"
                                                 viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z">
                                                 </path>
-                                            </svg>
-                                        </div>
-                                    </span>
-                                </div>
+                                            </svg></div>
+                                    </span> </div>
                             </div>
                         </div>
                         <section
@@ -3759,8 +2960,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-15c5a68e wdp-sticky-section-no"
                                     data-id="15c5a68e" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5071c55b wdp-sticky-section-no"
                                     data-id="5071c55b" data-element_type="column">
@@ -3778,7 +2978,7 @@
                                             data-id="494cfabb" data-element_type="widget"
                                             data-widget_type="text-editor.default">
                                             <div class="elementor-widget-container">
-                                                <p>Alamat Pengiriman Kado:<br /><br /></p>
+                                                <p>Alamat Pengiriman Kado:<br><br></p>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-251c9651 wdp-sticky-section-no elementor-widget elementor-widget-html"
@@ -3789,15 +2989,15 @@
                                                     data-id="00463b1" data-element_type="widget"
                                                     data-widget_type="html.default">
                                                     <div class="elementor-widget-container">
-                                                        <div class="container">
+                                                        <div class="container"> 
                                                             <select id="dropdown">
-                                                                <option value=" ">PILIH REKENING</option>
-                                                                <option value={{ $form->noRek }}>
-                                                                    {{ $form->alamatHadiah }}
+                                                                <option value=" ">PILIH REKENING
                                                                 </option>
-                                                            </select><button id="copy-btn"
-                                                                onclick="copyDropdown()">COPY</button>
-                                                        </div>
+                                                                <option value="{{ $form->noRek }}">
+                                                                    {{ $form->namaRekening }}</option>
+                                                            </select>
+                                                            <button id="copy-btn"
+                                                                onclick="copyDropdown()">COPY</button></div>
                                                         <script>
                                                             function copyDropdown() {
                                                                 var dropdown = document.getElementById("dropdown");
@@ -3873,8 +3073,7 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-487d367b wdp-sticky-section-no"
                                     data-id="487d367b" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -3924,8 +3123,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1f8bf99 wdp-sticky-section-no"
                                     data-id="1f8bf99" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-2d2af6a1 wdp-sticky-section-no"
                                     data-id="2d2af6a1" data-element_type="column">
@@ -3934,268 +3132,133 @@
                                             data-id="10dab801" data-element_type="widget"
                                             data-widget_type="weddingpress-guestbook.default">
                                             <div class="elementor-widget-container">
-
-
                                                 <div class="guestbook-box-content elementor-comment-box-wrapper"
                                                     data-id="Nama Undangan">
                                                     <div class="comment-form-container">
-                                                        <form id="post-guestbook-box">
-                                                            <div class="guestbook-label">
-                                                                <label class="">
+                                                        <form id="guestbookForm" class="elementor-form" method="post" name="guestbookForm">
+                                                            @csrf
+                                                            <div class="guestbook-label"> <label class="">
                                                                     Nama </label>
-                                                            </div>
-                                                            <input class="form-control" type="text"
-                                                                name="guestbook-name" placeholder="Isikan Nama Anda"
-                                                                required>
-
-                                                            <div class="guestbook-label">
-                                                                <label class="">
-                                                                    Pesan </label>
-                                                            </div>
-                                                            <textarea class="form-control" rows="3" name="guestbook-message"
-                                                                placeholder="Berikan Ucapan Dan Doa Restu" required></textarea>
-                                                            <div class="elementor-button-wrapper">
-                                                                <button type="submit"
-                                                                    class="elementor-button-link elementor-button elementor-size-sm">
-                                                                    Kirimkan Ucapan </button>
-                                                            </div>
+                                                                </div> 
+                                                                <input type="text" id="guestbook-name" name="guestbook_name" class="form-control" placeholder="Isikan Nama Anda" required>
+                                                            <div class="guestbook-label"> <label class="">
+                                                                    Pesan </label></div>
+                                                                    <textarea id="guestbook-message" name="guestbook_message" class="form-control" rows="3" placeholder="Berikan Ucapan Dan Doa Restu" required></textarea>
+                                                            <div class="elementor-button-wrapper"> <button
+                                                                    type="submit"
+                                                                    class="elementor-button-link elementor-button elementor-size-sm" id="submitGuestbookBtn">
+                                                                    Kirimkan Ucapan </button> </div>
                                                         </form>
                                                     </div>
-
                                                     <div id="hidden-avatar" style="display:none;"><img
                                                             decoding="async"
                                                             src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
                                                             title="placeholder.png" alt="placeholder.png"
-                                                            loading="lazy" /></div>
-
+                                                            loading="lazy"></div>
                                                     <div class="guestbook-list">
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">co</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">asda</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">ssd</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">sadsad</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">ssd</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">sadsad</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">okee</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">coyy</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">mnasd</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">sdsad</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">asd</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">sasa</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">Okee</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">leee</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">as</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">dsds</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">as</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">vvv</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">mantam</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">asdsadsa</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">ckck</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">ckckckckckc</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">Rosi</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">MasyaAllah,smga d
-                                                                    lancarkan tuti🥰</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">Fanya &amp; Suami</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">Happy wedding tuik😘
-                                                                    semoga samawah 🔥 menyala tuti ku🥳🔥</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">Mutiara Rahmi</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">Alhamdulillah,, masak
-                                                                    juo gulai cubadak besti ko, semoga sampai hayat
-                                                                    memisahkan 🤗🥰, Bahagia slalu bestiku🤲🙏🥰</div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="user-guestbook">
-                                                            <div><img decoding="async"
-                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
-                                                                    title="placeholder.png" alt="placeholder.png"
-                                                                    loading="lazy" /></div>
-                                                            <div class="guestbook">
-                                                                <a class="guestbook-name">Lasri Meniawati</a><span
-                                                                    class="wdp-confirm"><i
-                                                                        class="fas fa-check-circle"></i> </span>
-                                                                <div class="guestbook-message">Masya Allah,Selamat
-                                                                    Menempuh hidup baru Cekguk Tuti dan Bg Ade Semoga
-                                                                    Sakinah mawaddah warahmah😍😍</div>
-                                                            </div>
-                                                        </div>
-
+                                                        <div id="comments-section"></div>
                                                     </div>
-                                                </div>
 
+                                                    <script>
+                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                            const currentUrl = window.location.href;
+                                                            const slug = currentUrl.split('/').pop();
+                                                        
+                                                            fetchComments();
+                                                        
+                                                            function fetchComments() {
+                                                                fetch(`/comments/${slug}`)
+                                                                    .then(response => {
+                                                                        if (!response.ok) {
+                                                                            throw new Error('Failed to fetch comments');
+                                                                        }
+                                                                        return response.json();
+                                                                    })
+                                                                    .then(comments => {
+                                                                        const commentsContainer = document.getElementById('comments-section');
+                                                                        commentsContainer.innerHTML = '';
+                                                        
+                                                                        comments.forEach(comment => {
+                                                                            appendComment(comment);
+                                                                        });
+                                                                    })
+                                                                    .catch(error => console.error('Error fetching comments:', error));
+                                                            }
+                                                        
+                                                            function appendComment(comment) {
+                                                                const commentsContainer = document.getElementById('comments-section');
+                                                                const commentHTML = `
+                                                                <div class="user-guestbook">
+                                                            <div><img decoding="async"
+                                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/placeholder-18.png"
+                                                                    title="placeholder.png" alt="placeholder.png"
+                                                                    loading="lazy"></div>
+                                                            <div class="guestbook"> <a
+                                                                    class="guestbook-name">${comment.name}</a><span
+                                                                    class="wdp-confirm"><i
+                                                                        class="fas fa-check-circle"></i> </span>
+                                                                <div class="guestbook-message">
+                                                                    ${comment.comment}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                                    
+                                                                `;
+                                                                commentsContainer.insertAdjacentHTML('afterbegin', commentHTML); // Insert at the top
+                                                            }
+                                                        
+                                                            document.getElementById('submitGuestbookBtn').addEventListener('click', function(event) {
+                                                                event.preventDefault();
+                                                        
+                                                                const name = document.getElementById('guestbook-name').value;
+                                                                const message = document.getElementById('guestbook-message').value;
+                                                                const submitBtn = document.getElementById('submitGuestbookBtn');
+                                                        
+                                                                submitBtn.disabled = true;
+                                                                submitBtn.innerHTML = '<span class="loading-spinner"></span> Mengirim...';
+                                                        
+                                                                const formData = {
+                                                                    name: name,
+                                                                    comment: message
+                                                                };
+                                                        
+                                                                fetch(`/comments/${slug}`, {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json',
+                                                                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                                                                        'Accept': 'application/json'
+                                                                    },
+                                                                    body: JSON.stringify(formData)
+                                                                })
+                                                                .then(response => {
+                                                                    if (!response.ok) {
+                                                                        throw new Error('Failed to submit comment');
+                                                                    }
+                                                                    return response.json();
+                                                                })
+                                                                .then(newComment => {
+                                                                    document.getElementById('guestbook-name').value = '';
+                                                                    document.getElementById('guestbook-message').value = '';
+                                                        
+                                                                    appendComment(newComment); // Append the new comment at the top
+                                                                })
+                                                                .catch(error => console.error('Error submitting comment:', error))
+                                                                .finally(() => {
+                                                                    submitBtn.disabled = false;
+                                                                    submitBtn.innerHTML = 'KIRIM UCAPAN';
+                                                                });
+                                                            });
+                                                        });
+                                                        </script>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-35cac875 wdp-sticky-section-no"
                                     data-id="35cac875" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -4203,22 +3266,34 @@
                 </div>
             </div>
         </section>
-        <section {{-- BG-FOOTER --}}
-            class="elementor-section elementor-top-section elementor-element-473d8ecf elementor-element elementor-section-height-min-height elementor-section-items-bottom elementor-section-boxed elementor-section-height-default wdp-sticky-section-no"
+        <section
+            class="elementor-section elementor-top-section elementor-element elementor-element-473d8ecf elementor-section-height-min-height elementor-section-items-bottom elementor-section-boxed elementor-section-height-default wdp-sticky-section-no"
             data-id="473d8ecf" data-element_type="section"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;shape_divider_top&quot;:&quot;mountains&quot;}"
-            style="background-image: url('http://localhost:5000/images/a5m6ah5uy1_2024-08-27T08-06-08.625Z.jpg'); background-size: cover; background-position: center;">
+            {{-- BG-FOOTER --}}
+@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+@foreach ($imageOrders as $order)
+@if (isset($order->image->fileImage) && $order->partName === 'background')
+@php $galleryCount++; @endphp
+@if ($galleryCount === 3)
+    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
+    @break @endif
+@endif
+@endforeach
+@endif
             <div class="elementor-background-overlay"></div>
-            <div class="elementor-shape elementor-shape-top" data-negative="false">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <div class="elementor-shape elementor-shape-top" data-negative="false"> <svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
                     <path class="elementor-shape-fill" opacity="0.33"
-                        d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z" />
+                        d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z">
+                    </path>
                     <path class="elementor-shape-fill" opacity="0.66"
-                        d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z" />
+                        d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z">
+                    </path>
                     <path class="elementor-shape-fill"
-                        d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z" />
-                </svg>
-            </div>
+                        d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z">
+                    </path>
+                </svg> </div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-17feae34 wdp-sticky-section-no"
                     data-id="17feae34" data-element_type="column">
@@ -4229,8 +3304,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-35b95df8 wdp-sticky-section-no"
                                     data-id="35b95df8" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-562d2a70 wdp-sticky-section-no"
                                     data-id="562d2a70" data-element_type="column">
@@ -4277,12 +3351,12 @@
                                             <div class="elementor-widget-container">
                                                 <h2 class="elementor-heading-title elementor-size-default">
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                        {{ $form->namaPanggilanPria }} &
-                                                        {{ $form->namaPanggilanWanita }}
-                                                    @else
-                                                        {{ $form->namaPanggilanWanita }} &
-                                                        {{ $form->namaPanggilanPria }}
-                                                    @endif
+                                                    {{ ucfirst($form->namaPanggilanPria) }} &amp;
+                                                    {{ ucfirst($form->namaPanggilanWanita) }}
+                                                @else
+                                                    {{ ucfirst($form->namaPanggilanWanita) }} &amp;
+                                                    {{ ucfirst($form->namaPanggilanPria) }}
+                                                @endif
 
                                                 </h2>
                                             </div>
@@ -4291,8 +3365,7 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-25be9736 wdp-sticky-section-no"
                                     data-id="25be9736" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -4302,8 +3375,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5db16122 wdp-sticky-section-no"
                                     data-id="5db16122" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-43e88208 wdp-sticky-section-no"
                                     data-id="43e88208" data-element_type="column">
@@ -4313,70 +3385,57 @@
                                             data-settings="{&quot;_position&quot;:&quot;fixed&quot;,&quot;motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_effect&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_direction&quot;:&quot;negative&quot;,&quot;motion_fx_rotateZ_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_mobile&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:1000,&quot;_animation_tablet&quot;:&quot;fadeIn&quot;,&quot;motion_fx_rotateZ_affectedRange&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;]}"
                                             data-widget_type="weddingpress-audio.default">
                                             <div class="elementor-widget-container">
-
                                                 <script>
                                                     var settingAutoplay = '';
                                                     window.settingAutoplay = settingAutoplay === 'disable' ? false : true;
                                                 </script>
-
-                                                <div id="audio-container" class="audio-box">
-
-                                                    <audio id="song" loop>
+                                                <div id="audio-container" class="audio-box"> <audio id="song"
+                                                        loop="">
                                                         <source
                                                             src="https://sewaundangan.online/wp-content/uploads/2024/03/y2mate.com-Pengingat-Good-Morning-Everyone-Lirik-Lagu-1-8.mp3"
                                                             type="audio/mp3">
                                                     </audio>
-
                                                     <div class="elementor-icon-wrapper" id="unmute-sound"
                                                         style="display: none;">
-                                                        <div class="elementor-icon">
-                                                            <svg aria-hidden="true"
+                                                        <div class="elementor-icon"> <svg aria-hidden="true"
                                                                 class="e-font-icon-svg e-far-play-circle"
                                                                 viewBox="0 0 512 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256z">
                                                                 </path>
-                                                            </svg>
-                                                        </div>
+                                                            </svg> </div>
                                                     </div>
-
                                                     <div class="elementor-icon-wrapper" id="mute-sound"
                                                         style="display: none;">
-                                                        <div class="elementor-icon">
-                                                            <svg aria-hidden="true"
+                                                        <div class="elementor-icon"> <svg aria-hidden="true"
                                                                 class="e-font-icon-svg e-fas-compact-disc"
                                                                 viewBox="0 0 496 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zM88 256H56c0-105.9 86.1-192 192-192v32c-88.2 0-160 71.8-160 160zm160 96c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96zm0-128c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z">
                                                                 </path>
-                                                            </svg>
-                                                        </div>
+                                                            </svg> </div>
                                                     </div>
-
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-619e3309 elementor-mobile-align-center elementor-widget-mobile__width-auto elementor-align-center wdp-sticky-section-no elementor-widget elementor-widget-lottie"
                                             data-id="619e3309" data-element_type="widget"
                                             data-settings="{&quot;source&quot;:&quot;external_url&quot;,&quot;source_external_url&quot;:{&quot;url&quot;:&quot;https:\/\/assets10.lottiefiles.com\/packages\/lf20_DYHlIeGOIM.json&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;link_to&quot;:&quot;custom&quot;,&quot;custom_link&quot;:{&quot;url&quot;:&quot;#cover&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}"
                                             data-widget_type="lottie.default">
-                                            <div class="elementor-widget-container">
-                                                <a class="e-lottie__container__link" href="#cover">
+                                            <div class="elementor-widget-container"> <a
+                                                    class="e-lottie__container__link" href="#cover">
                                                     <div class="e-lottie__container">
                                                         <div class="e-lottie__animation"></div>
                                                     </div>
-                                                </a>
-                                            </div>
+                                                </a> </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5f4be4a8 wdp-sticky-section-no"
                                     data-id="5f4be4a8" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -4390,8 +3449,7 @@
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1828ea22 wdp-sticky-section-no"
                     data-id="1828ea22" data-element_type="column">
-                    <div class="elementor-widget-wrap">
-                    </div>
+                    <div class="elementor-widget-wrap"> </div>
                 </div>
             </div>
         </section>
@@ -4415,8 +3473,7 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-c85fbca wdp-sticky-section-no"
                                     data-id="c85fbca" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-61d39cfa wdp-sticky-section-no"
                                     data-id="61d39cfa" data-element_type="column">
@@ -4449,13 +3506,10 @@
                                             data-id="5dd9ce31" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                        <span
+                                                <div class="elementor-divider"> <span
+                                                        class="elementor-divider-separator"> <span
                                                             class="elementor-divider__text elementor-divider__element">
-                                                            & </span>
-                                                    </span>
-                                                </div>
+                                                            &amp; </span> </span> </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-155147f7 wdp-sticky-section-no elementor-widget elementor-widget-heading"
@@ -4478,9 +3532,8 @@
                                             data-id="97d4673" data-element_type="widget"
                                             data-widget_type="heading.default">
                                             <div class="elementor-widget-container">
-
-                                                <h3 class="elementor-heading-title elementor-size-default">
-                                                    {{ $nama_tamu }}</h3>
+                                                <h3 class="elementor-heading-title elementor-size-default">Nama Tamu
+                                                </h3>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-32fc14c close-popup wdp-sticky-section-no elementor-widget elementor-widget-html"
@@ -4513,13 +3566,8 @@
                                                         border: 2px solid #F4F4F4;
                                                     }
                                                 </style>
-
-                                                <center>
-                                                    <button onclick="playAudio()" class="button-undangan"><i
-                                                            class="fa fa-envelope-open"></i> Buka Undangan
-                                                    </button>
-
-
+                                                <center> <button onclick="playAudio()" class="button-undangan"><i
+                                                            class="fa fa-envelope-open"></i> Buka Undangan </button>
                                                 </center>
                                                 <script>
                                                     var x = document.getElementById("song");
@@ -4533,7 +3581,6 @@
                                                         x.pause();
                                                     }
                                                 </script>
-
                                                 <script>
                                                     jQuery(document).ready(function($) {
                                                         $(document).on('click', '.close-popup', function(event) {
@@ -4547,21 +3594,14 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-579d39a2 wdp-sticky-section-no"
                                     data-id="579d39a2" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
                         <div class="elementor-element elementor-element-27f1999a wdp-sticky-section-no elementor-widget elementor-widget-html"
                             data-id="27f1999a" data-element_type="widget" data-widget_type="html.default">
                             <div class="elementor-widget-container">
-                                <html lang="en" class="notranslate" translate="no">
-
-                                <head>
-                                    <meta name="google" content="notranslate" />
-                                </head>
-
-                                </html>
+                                <meta name="google" content="notranslate">
                             </div>
                         </div>
                         <section
@@ -4570,23 +3610,19 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-72be7bca wdp-sticky-section-no"
                                     data-id="72be7bca" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4cd1cdf7 wdp-sticky-section-no"
                                     data-id="4cd1cdf7" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-7e751d30 wdp-sticky-section-no"
                                     data-id="7e751d30" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-260e5a97 wdp-sticky-section-no"
                                     data-id="260e5a97" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                                    <div class="elementor-widget-wrap"> </div>
                                 </div>
                             </div>
                         </section>
@@ -4595,12 +3631,40 @@
             </div>
         </section>
     </div>
-    <link rel='stylesheet' id='elementor-gallery-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/e-gallery/css/e-gallery.min.css?ver=1.2.0'
-        media='all' />
-    <link rel='stylesheet' id='e-animations-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.19.4'
-        media='all' />
+    <script type="text/javascript">
+        const lazyloadRunObserver = () => {
+            const lazyloadBackgrounds = document.querySelectorAll(`.e-con.e-parent:not(.e-lazyloaded)`);
+            const lazyloadBackgroundObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        let lazyloadBackground = entry.target;
+                        if (lazyloadBackground) {
+                            lazyloadBackground.classList.add('e-lazyloaded');
+                        }
+                        lazyloadBackgroundObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '200px 0px 200px 0px'
+            });
+            lazyloadBackgrounds.forEach((lazyloadBackground) => {
+                lazyloadBackgroundObserver.observe(lazyloadBackground);
+            });
+        };
+        const events = [
+            'DOMContentLoaded',
+            'elementor/lazyload/observe',
+        ];
+        events.forEach((event) => {
+            document.addEventListener(event, lazyloadRunObserver);
+        });
+    </script>
+    <link rel="stylesheet" id="e-motion-fx-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/modules/motion-fx.min.css?ver=3.25.0"
+        media="all">
+    <link rel="stylesheet" id="e-popup-css"
+        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=3.25.0"
+        media="all">
     <script id="wp-block-template-skip-link-js-after">
         (function() {
             var skipLinkTarget = document.querySelector('main'),
@@ -4644,7 +3708,7 @@
     <script id="wdp_js_script-js-extra">
         var WDP_WP = {
             "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "wdpNonce": "e069587c03",
+            "wdpNonce": "4df0c53827",
             "jpages": "true",
             "jPagesNum": "5",
             "textCounter": "true",
@@ -4704,19 +3768,13 @@
         src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/e-gallery/js/e-gallery.min.js?ver=1.2.0"
         id="elementor-gallery-js"></script>
     <script
-        src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.19.0"
+        src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.25.0"
         id="elementor-pro-webpack-runtime-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.19.4"
+    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.25.3"
         id="elementor-webpack-runtime-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.19.4"
+    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.25.3"
         id="elementor-frontend-modules-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2"
-        id="wp-polyfill-inert-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.14.0"
-        id="regenerator-runtime-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0"
-        id="wp-polyfill-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/dist/hooks.min.js?ver=2810c76e705dd1a53b18" id="wp-hooks-js">
+    <script src="https://buka.undanganku.store/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js">
     </script>
     <script src="https://buka.undanganku.store/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js">
     </script>
@@ -4728,10 +3786,16 @@
     <script id="elementor-pro-frontend-js-before">
         var ElementorProFrontendConfig = {
             "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "nonce": "ecbb84a1d2",
+            "nonce": "2237e07f4a",
             "urls": {
                 "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor-pro\/assets\/",
                 "rest": "https:\/\/buka.undanganku.store\/wp-json\/"
+            },
+            "settings": {
+                "lazy_load_background_images": true
+            },
+            "popup": {
+                "hasPopUps": true
             },
             "shareButtonsNetworks": {
                 "facebook": {
@@ -4796,6 +3860,12 @@
                 },
                 "print": {
                     "title": "Print"
+                },
+                "x-twitter": {
+                    "title": "X"
+                },
+                "threads": {
+                    "title": "Threads"
                 }
             },
             "facebook_sdk": {
@@ -4807,11 +3877,9 @@
             }
         };
     </script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.19.0"
+    <script src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.25.0"
         id="elementor-pro-frontend-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2"
-        id="elementor-waypoints-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2" id="jquery-ui-core-js">
+    <script src="https://buka.undanganku.store/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js">
     </script>
     <script id="elementor-frontend-js-before">
         var elementorFrontendConfig = {
@@ -4893,30 +3961,35 @@
                         "direction": "min",
                         "is_enabled": false
                     }
-                }
+                },
+                "hasCustomBreakpoints": false
             },
-            "version": "3.19.4",
+            "version": "3.25.3",
             "is_static": false,
             "experimentalFeatures": {
-                "e_optimized_assets_loading": true,
-                "e_optimized_css_loading": true,
                 "e_font_icon_svg": true,
                 "additional_custom_breakpoints": true,
                 "container": true,
                 "e_swiper_latest": true,
+                "e_nested_atomic_repeaters": true,
+                "e_optimized_control_loading": true,
+                "e_onboarding": true,
+                "e_css_smooth_scroll": true,
                 "theme_builder_v2": true,
-                "block_editor_assets_optimize": true,
-                "ai-layout": true,
+                "home_screen": true,
                 "landing-pages": true,
-                "e_image_loading_optimization": true,
-                "e_global_styleguide": true,
-                "page-transitions": true,
-                "notes": true,
-                "form-submissions": true,
-                "e_scroll_snap": true
+                "nested-elements": true,
+                "editor_v2": true,
+                "link-in-bio": true,
+                "floating-buttons": true
             },
             "urls": {
-                "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor\/assets\/"
+                "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor\/assets\/",
+                "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
+                "uploadUrl": "https:\/\/buka.undanganku.store\/wp-content\/uploads"
+            },
+            "nonces": {
+                "floatingButtonsClickTracking": "d7d02b39f9"
             },
             "swiperClass": "swiper",
             "settings": {
@@ -4941,10 +4014,10 @@
             }
         };
     </script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.19.4"
+    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.25.3"
         id="elementor-frontend-js"></script>
     <script
-        src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.19.0"
+        src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.25.0"
         id="pro-elements-handlers-js"></script>
     <script id="weddingpress-wdp-js-extra">
         var cevar = {
@@ -4956,6 +4029,21 @@
         id="weddingpress-wdp-js"></script>
     <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/guest-form.js?ver=3.0.1"
         id="kirim-kit-js"></script>
+</body>
+
+</html>
+</body>
+
+</html>
+        };
+    </script>
+    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp.min.js?ver=3.0.1"
+        id="weddingpress-wdp-js"></script>
+    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/guest-form.js?ver=3.0.1"
+        id="kirim-kit-js"></script>
+</body>
+
+</html>
 </body>
 
 </html>
