@@ -25,4 +25,9 @@ class Form extends Model
     {
         return $this->hasMany(Comments::class, 'idForm');
     }
+
+    public function getTema()
+    {
+        return $this->belongsTo(Tema::class, 'idTema');
+    }
 }

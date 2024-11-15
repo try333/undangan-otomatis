@@ -161,7 +161,7 @@
                             n(e, "\ud83c\uddfa\ud83c\uddf3", "\ud83c\uddfa\u200b\ud83c\uddf3") && !n(e,
                                 "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f",
                                 "\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f"
-                                );
+                            );
                     case "emoji":
                         return !n(e, "\ud83d\udc26\u200d\u2b1b", "\ud83d\udc26\u200b\u2b1b")
                 }
@@ -1443,7 +1443,7 @@
         href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/widget-lottie.min.css?ver=3.25.0'
         media='all' />
     <link rel='stylesheet' id='elementor-post-37573-css'
-        href='https://buka.undanganku.store/wp-content/uploads/elementor/css/post-37573.css?ver=1730620683'
+        href="{{ asset('css/post-37573.css?ver=1730620683') }}"
         media='all' />
     <link rel='stylesheet' id='elementor-post-23160-css'
         href='https://buka.undanganku.store/wp-content/uploads/elementor/css/post-23160.css?ver=1730614620'
@@ -1540,23 +1540,23 @@
     class="post-template post-template-elementor_canvas single single-post postid-37573 single-format-standard wp-embed-responsive elementor-default elementor-template-canvas elementor-kit-7 elementor-page elementor-page-37573">
     <div data-elementor-type="wp-post" data-elementor-id="37573" class="elementor elementor-37573"
         data-elementor-post-type="post">
-                {{-- COVER --}}
-                @if (isset($imageOrders) && $imageOrders->isNotEmpty())
-                @php $backgroundImage = null; @endphp
-                @foreach ($imageOrders as $order)
-                    @if (isset($order->image->fileImage) && $order->partName === 'cover')
-                        @php
-                            $backgroundImage = env('BACKEND_URL') . '/images/' . $order->image->fileImage;
-                            break;
-                        @endphp
-                    @endif
-                @endforeach
-            @endif
-    
-            <section
-                class="elementor-section elementor-top-section elementor-element elementor-element-1630e5b7 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no elementor-invisible"
-                data-id="1630e5b7" data-element_type="section"
-                data-settings='{
+        {{-- COVER --}}
+        @if (isset($imageOrders) && $imageOrders->isNotEmpty())
+            @php $backgroundImage = null; @endphp
+            @foreach ($imageOrders as $order)
+                @if (isset($order->image->fileImage) && $order->partName === 'cover')
+                    @php
+                        $backgroundImage = env('BACKEND_URL') . '/images/' . $order->image->fileImage;
+                        break;
+                    @endphp
+                @endif
+            @endforeach
+        @endif
+
+        <section
+            class="elementor-section elementor-top-section elementor-element elementor-element-1630e5b7 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no elementor-invisible"
+            data-id="1630e5b7" data-element_type="section"
+            data-settings='{
                          "background_background": "slideshow",
                          "animation": "fadeInDown",
                          "animation_mobile": "none",
@@ -1571,7 +1571,7 @@
                          "background_slideshow_transition_duration": 500,
                          "background_slideshow_ken_burns_zoom_direction": "in"
                      }'
-                @if ($backgroundImage) style="background-image: url('{{ $backgroundImage }}'); background-size: cover; background-position: center;"> @endif>
+            @if ($backgroundImage) style="background-image: url('{{ $backgroundImage }}'); background-size: cover; background-position: center;"> @endif>
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-64b773b3 wdp-sticky-section-no"
@@ -1601,7 +1601,7 @@
                                 <div class="elementor-divider">
                                     <span class="elementor-divider-separator">
                                         <span class="elementor-divider__text elementor-divider__element">
-                                            {{ strtoupper($formattedDateAkad) }}     
+                                            {{ strtoupper($formattedDateAkad) }}
                                         </span>
                                     </span>
                                 </div>
@@ -1674,8 +1674,7 @@
             {{-- subcover --}}
             @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                         @if (isset($order->image->fileImage) && $order->partName === 'subcover')
-                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> 
-                                @endif
+                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> @endif
             @endforeach
             @endif
             <div class="elementor-background-overlay"></div>
@@ -1699,7 +1698,7 @@
                                                     <br>
                                                     {{ $datetimeAkad->format('m') }}
                                                     <br>
-                                                    {{ $datetimeAkad->format('y') }}    
+                                                    {{ $datetimeAkad->format('y') }}
                                                 </h2>
                                             </div>
                                         </div>
@@ -1723,10 +1722,10 @@
                                             <div class="elementor-widget-container">
                                                 <h2 class="elementor-heading-title elementor-size-default">
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                    {{ strtoupper($form->namaPanggilanPria) }}
-                                                @else
-                                                    {{ strtoupper($form->namaPanggilanWanita) }}
-                                                @endif
+                                                        {{ strtoupper($form->namaPanggilanPria) }}
+                                                    @else
+                                                        {{ strtoupper($form->namaPanggilanWanita) }}
+                                                    @endif
                                                 </h2>
                                             </div>
                                         </div>
@@ -1761,7 +1760,7 @@
                                             data-widget_type="heading.default">
                                             <div class="elementor-widget-container">
                                                 <h2 class="elementor-heading-title elementor-size-default">
-                                                    {{$form->kota}} | {{$form->provinsi}}
+                                                    {{ $form->kota }} | {{ $form->provinsi }}
                                                 </h2>
                                             </div>
                                         </div>
@@ -1962,16 +1961,15 @@
                                             data-widget_type="image.default">
                                             <div class="elementor-widget-container">
                                                 <img fetchpriority="high" decoding="async" width="903"
-                                                    height="1024"
-                                                    {{-- FOTO MEMPELAI --}}
+                                                    height="1024" {{-- FOTO MEMPELAI --}}
                                                     @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                                                     @if (isset($order->image->fileImage) && $order->partName === 'mempelai-pria-wanita')
                                                             src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
                                                                                     class="attachment-large size-large wp-image-1614" alt=""
                                                                                     srcset="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
                                                                                     sizes="(max-width: 903px) 100vw, 903px" /> @endif
-                                                                                                @endforeach
-                                                                                            @endif
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -1995,10 +1993,10 @@
                                             <div class="elementor-widget-container">
                                                 <h2 class="elementor-heading-title elementor-size-default">
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                    {{ strtoupper($form->namaLengkapPria) }}
-                                                @else
-                                                    {{ strtoupper($form->namaLengkapWanita) }}
-                                                @endif
+                                                        {{ strtoupper($form->namaLengkapPria) }}
+                                                    @else
+                                                        {{ strtoupper($form->namaLengkapWanita) }}
+                                                    @endif
                                                 </h2>
                                             </div>
                                         </div>
@@ -2020,18 +2018,18 @@
                                             <div class="elementor-widget-container">
                                                 <p>
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                                        Putra
-                                                                    @else
-                                                                        Putri
-                                                                    @endif
-                                                                    Dari :
-                                                                </p>
-                                                                <p>
-                                                                    @if ($form->penempatanTulisan == 'Pria')
-                                                                        {{ $form->namaOrtuPria }}
-                                                                    @else
-                                                                        {{ $form->namaOrtuWanita }}
-                                                                    @endif
+                                                        Putra
+                                                    @else
+                                                        Putri
+                                                    @endif
+                                                    Dari :
+                                                </p>
+                                                <p>
+                                                    @if ($form->penempatanTulisan == 'Pria')
+                                                        {{ $form->namaOrtuPria }}
+                                                    @else
+                                                        {{ $form->namaOrtuWanita }}
+                                                    @endif
                                                 </p>
                                             </div>
                                         </div>
@@ -2041,14 +2039,24 @@
                                             <div class="elementor-widget-container">
                                                 <div class="elementor-button-wrapper">
                                                     <a class="elementor-button elementor-button-link elementor-size-sm"
-                                                    href="https://instagram.com{{ $form->usernameIg }}">
+                                                        href="https://instagram.com/{{ $form->usernameIg }}"
+                                                        style="background-color: transparent; color: #A57070; border-color: #A57070; 
+          border-radius: 5px; padding: 10px 20px; display: inline-flex; 
+          align-items: center; justify-content: center; text-decoration: none; 
+          transition: background-color 0.3s ease;">
+
                                                         <span class="elementor-button-content-wrapper">
-                                                            <span class="elementor-button-icon">
-                                                                <i aria-hidden="true"
-                                                                    class="icon icon-instagram-2"></i> </span>
+                                                            <span class="elementor-button-icon"
+                                                                style="margin-right: 10px;">
+                                                                <!-- Instagram Logo removed; no SVG -->
+                                                            </span>
                                                             <span class="elementor-button-text">INSTAGRAM</span>
                                                         </span>
                                                     </a>
+
+
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2059,10 +2067,10 @@
                                             <div class="elementor-widget-container">
                                                 <h2 class="elementor-heading-title elementor-size-default">
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                                        {{ strtoupper($form->namaLengkapWanita) }}
-                                                                    @else
-                                                                        {{ strtoupper($form->namaLengkapPria) }}
-                                                                    @endif
+                                                        {{ strtoupper($form->namaLengkapWanita) }}
+                                                    @else
+                                                        {{ strtoupper($form->namaLengkapPria) }}
+                                                    @endif
                                                 </h2>
                                             </div>
                                         </div>
@@ -2084,18 +2092,18 @@
                                             <div class="elementor-widget-container">
                                                 <p>
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                    Putri
-                                                @else
-                                                    Putra
-                                                @endif
-                                                Dari :
-                                            </p>
-                                            <p>
-                                                @if ($form->penempatanTulisan == 'Pria')
-                                                    {{ $form->namaOrtuWanita }}
-                                                @else
-                                                    {{ $form->namaOrtuPria }}
-                                                @endif
+                                                        Putri
+                                                    @else
+                                                        Putra
+                                                    @endif
+                                                    Dari :
+                                                </p>
+                                                <p>
+                                                    @if ($form->penempatanTulisan == 'Pria')
+                                                        {{ $form->namaOrtuWanita }}
+                                                    @else
+                                                        {{ $form->namaOrtuPria }}
+                                                    @endif
                                                 </p>
                                             </div>
                                         </div>
@@ -2105,14 +2113,22 @@
                                             <div class="elementor-widget-container">
                                                 <div class="elementor-button-wrapper">
                                                     <a class="elementor-button elementor-button-link elementor-size-sm"
-                                                        href="https://instagram.com{{ $form->usernameIg }}">
+                                                        href="https://instagram.com/{{ $form->usernameIg }}"
+                                                        style="background-color: transparent; color: #A57070; border-color: #A57070; 
+                                                           border-radius: 5px; padding: 10px 20px; display: inline-flex; 
+                                                           align-items: center; justify-content: center; text-decoration: none; 
+                                                           transition: background-color 0.3s ease;">
+
                                                         <span class="elementor-button-content-wrapper">
-                                                            <span class="elementor-button-icon">
-                                                                <i aria-hidden="true"
-                                                                    class="icon icon-instagram-2"></i> </span>
+                                                            <span class="elementor-button-icon"
+                                                                style="margin-right: 10px;">
+                                                                <!-- Instagram Logo removed; no SVG -->
+                                                            </span>
                                                             <span class="elementor-button-text">INSTAGRAM</span>
                                                         </span>
                                                     </a>
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2127,8 +2143,7 @@
         <section
             class="elementor-section elementor-top-section elementor-element elementor-element-b11f3c0 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="b11f3c0" data-element_type="section"
-            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-            {{-- BG-COUNTDOWN --}}
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" {{-- BG-COUNTDOWN --}}
             @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
             @foreach ($imageOrders as $order)
                 @if (isset($order->image->fileImage) && $order->partName === 'background')
@@ -2136,9 +2151,9 @@
                     @if ($galleryCount === 1)
                     style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> 
                         @break @endif
-                            @endif
-                            @endforeach
-                            @endif
+            @endif
+            @endforeach
+            @endif
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-269847f2 wdp-sticky-section-no"
@@ -2161,8 +2176,7 @@
                                             data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
                                             data-widget_type="heading.default">
                                             <div class="elementor-widget-container">
-                                                <h2
-                                                    class="elementor-heading-title elementor-size-default">
+                                                <h2 class="elementor-heading-title elementor-size-default">
                                                     WEDDING
                                                     <br>COUNTDOWN
                                                 </h2>
@@ -2182,32 +2196,28 @@
                                                             data-date="{{ $datetimeAkad->format('F d Y g:i:s') }}">
 
                                                             <li class="wpkoi-elements-countdown-item">
-                                                                <div
-                                                                    class="wpkoi-elements-countdown-days">
+                                                                <div class="wpkoi-elements-countdown-days">
                                                                     <span data-days
                                                                         class="wpkoi-elements-countdown-digits">00</span><span
                                                                         class="wpkoi-elements-countdown-label">Hari</span>
                                                                 </div>
                                                             </li>
                                                             <li class="wpkoi-elements-countdown-item">
-                                                                <div
-                                                                    class="wpkoi-elements-countdown-hours">
+                                                                <div class="wpkoi-elements-countdown-hours">
                                                                     <span data-hours
                                                                         class="wpkoi-elements-countdown-digits">00</span><span
                                                                         class="wpkoi-elements-countdown-label">Jam</span>
                                                                 </div>
                                                             </li>
                                                             <li class="wpkoi-elements-countdown-item">
-                                                                <div
-                                                                    class="wpkoi-elements-countdown-minutes">
+                                                                <div class="wpkoi-elements-countdown-minutes">
                                                                     <span data-minutes
                                                                         class="wpkoi-elements-countdown-digits">00</span><span
                                                                         class="wpkoi-elements-countdown-label">Menit</span>
                                                                 </div>
                                                             </li>
                                                             <li class="wpkoi-elements-countdown-item">
-                                                                <div
-                                                                    class="wpkoi-elements-countdown-seconds">
+                                                                <div class="wpkoi-elements-countdown-seconds">
                                                                     <span data-seconds
                                                                         class="wpkoi-elements-countdown-digits">00</span><span
                                                                         class="wpkoi-elements-countdown-label">Detik</span>
@@ -2300,90 +2310,85 @@
                             </div>
                         </div>
                         <section
-                        class="elementor-section elementor-inner-section elementor-element elementor-element-2163e20f elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                        data-id="2163e20f" data-element_type="section">
-                        <div class="elementor-container elementor-column-gap-default">
-                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-63ae679 wdp-sticky-section-no"
-                                data-id="63ae679" data-element_type="column">
-                                <div class="elementor-widget-wrap">
+                            class="elementor-section elementor-inner-section elementor-element elementor-element-2163e20f elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                            data-id="2163e20f" data-element_type="section">
+                            <div class="elementor-container elementor-column-gap-default">
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-63ae679 wdp-sticky-section-no"
+                                    data-id="63ae679" data-element_type="column">
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-297b3ef7 wdp-sticky-section-no"
-                                data-id="297b3ef7" data-element_type="column"
-                                data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-                                <div class="elementor-widget-wrap elementor-element-populated">
-                                    <div class="elementor-element elementor-element-9d30a39 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-counter"
-                                        data-id="9d30a39" data-element_type="widget"
-                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
-                                        data-widget_type="counter.default">
-                                        <div class="elementor-widget-container">
-                                            <style>
-                                                /*! elementor - v3.19.0 - 28-02-2024 */
-                                                .elementor-counter .elementor-counter-number-wrapper {
-                                                    display: flex;
-                                                    font-size: 69px;
-                                                    font-weight: 600;
-                                                    line-height: 1
-                                                }
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-297b3ef7 wdp-sticky-section-no"
+                                    data-id="297b3ef7" data-element_type="column"
+                                    data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-9d30a39 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-counter"
+                                            data-id="9d30a39" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
+                                            data-widget_type="counter.default">
+                                            <div class="elementor-widget-container">
+                                                <style>
+                                                    /*! elementor - v3.19.0 - 28-02-2024 */
+                                                    .elementor-counter .elementor-counter-number-wrapper {
+                                                        display: flex;
+                                                        font-size: 69px;
+                                                        font-weight: 600;
+                                                        line-height: 1
+                                                    }
 
-                                                .elementor-counter .elementor-counter-number-prefix,
-                                                .elementor-counter .elementor-counter-number-suffix {
-                                                    flex-grow: 1;
-                                                    white-space: pre-wrap
-                                                }
+                                                    .elementor-counter .elementor-counter-number-prefix,
+                                                    .elementor-counter .elementor-counter-number-suffix {
+                                                        flex-grow: 1;
+                                                        white-space: pre-wrap
+                                                    }
 
-                                                .elementor-counter .elementor-counter-number-prefix {
-                                                    text-align: right
-                                                }
+                                                    .elementor-counter .elementor-counter-number-prefix {
+                                                        text-align: right
+                                                    }
 
-                                                .elementor-counter .elementor-counter-number-suffix {
-                                                    text-align: left
-                                                }
+                                                    .elementor-counter .elementor-counter-number-suffix {
+                                                        text-align: left
+                                                    }
 
-                                                .elementor-counter .elementor-counter-title {
-                                                    text-align: center;
-                                                    font-size: 19px;
-                                                    font-weight: 400;
-                                                    line-height: 2.5
-                                                }
-                                            </style>
-                                            <div class="elementor-counter">
-                                                <div class="elementor-counter-number-wrapper">
-                                                    <span
-                                                        class="elementor-counter-number-prefix"></span>
-                                                    <span class="elementor-counter-number"
-                                                        data-duration="2000"
-                                                        data-to-value="{{ $datetimeAkad->format('d') }}"
-                                                        data-from-value="0"
-                                                        data-delimiter=",">0</span>
-                                                    <span
-                                                        class="elementor-counter-number-suffix"></span>
+                                                    .elementor-counter .elementor-counter-title {
+                                                        text-align: center;
+                                                        font-size: 19px;
+                                                        font-weight: 400;
+                                                        line-height: 2.5
+                                                    }
+                                                </style>
+                                                <div class="elementor-counter">
+                                                    <div class="elementor-counter-number-wrapper">
+                                                        <span class="elementor-counter-number-prefix"></span>
+                                                        <span class="elementor-counter-number" data-duration="2000"
+                                                            data-to-value="{{ $datetimeAkad->format('d') }}"
+                                                            data-from-value="0" data-delimiter=",">0</span>
+                                                        <span class="elementor-counter-number-suffix"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1ff04669 wdp-sticky-section-no"
-                                data-id="1ff04669" data-element_type="column">
-                                <div class="elementor-widget-wrap elementor-element-populated">
-                                    <div class="elementor-element elementor-element-c7a68ed wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                        data-id="c7a68ed" data-element_type="widget"
-                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
-                                        data-widget_type="heading.default">
-                                        <div class="elementor-widget-container">
-                                            <h2
-                                                class="elementor-heading-title elementor-size-default">
-                                                {{ strtoupper($indonesianMonthAkad) }}
-                                                <br>
-                                                {{ $datetimeAkad->format('Y') }}
-                                            </h2>
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1ff04669 wdp-sticky-section-no"
+                                    data-id="1ff04669" data-element_type="column">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-c7a68ed wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                            data-id="c7a68ed" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
+                                            data-widget_type="heading.default">
+                                            <div class="elementor-widget-container">
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    {{ strtoupper($indonesianMonthAkad) }}
+                                                    <br>
+                                                    {{ $datetimeAkad->format('Y') }}
+                                                </h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
                         <div class="elementor-element elementor-element-6d8c019b wdp-sticky-section-no elementor-widget elementor-widget-spacer"
                             data-id="6d8c019b" data-element_type="widget" data-widget_type="spacer.default">
                             <div class="elementor-widget-container">
@@ -2393,175 +2398,179 @@
                             </div>
                         </div>
                         <section
-                                            class="elementor-section elementor-inner-section elementor-element elementor-element-5341aad5 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                                            data-id="5341aad5" data-element_type="section">
-                                            <div class="elementor-container elementor-column-gap-default">
-                                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-327c01cf wdp-sticky-section-no"
-                                                    data-id="327c01cf" data-element_type="column">
-                                                    <div class="elementor-widget-wrap elementor-element-populated">
-                                                        <div class="elementor-element elementor-element-57e9735d wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                                            data-id="57e9735d" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
-                                                            data-widget_type="heading.default">
-                                                            <div class="elementor-widget-container">
-                                                                <h2
-                                                                    class="elementor-heading-title elementor-size-default">
-                                                                    AKAD NIKAH
-                                                                </h2>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-73f735da elementor-widget-divider--view-line wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-divider"
-                                                            data-id="73f735da" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}"
-                                                            data-widget_type="divider.default">
-                                                            <div class="elementor-widget-container">
-                                                                <div class="elementor-divider">
-                                                                    <span class="elementor-divider-separator">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-36db1406 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
-                                                            data-id="36db1406" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:400}"
-                                                            data-widget_type="text-editor.default">
-                                                            <div class="elementor-widget-container">
-                                                                <p>
-                                                                    {{ $formattedDateAkad }}
-                                                                </p>
-                                                                <p>{{ $datetimeAkad->format('h:i A') }} &#8211; Selesai
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-41e6d957 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
-                                                            data-id="41e6d957" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:500}"
-                                                            data-widget_type="text-editor.default">
-                                                            <div class="elementor-widget-container">
-                                                                <p><strong>
-                                                                        @if ($form->opsiAkad == 'Pria' || $form->opsiAkad == 'Wanita')
-                                                                            Rumah Mempelai {{ $form->opsiAkad }}
-                                                                        @else
-                                                                            {{ $form->opsiAkad }}
-                                                                        @endif
-                                                                    </strong></p>
-                                                                <p>{{ $form->alamatAkad }}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-67b8f2b1 elementor-align-center elementor-mobile-align-center elementor-tablet-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-button"
-                                                            data-id="67b8f2b1" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:600}"
-                                                            data-widget_type="button.default">
-                                                            <div class="elementor-widget-container">
-                                                                <div class="elementor-button-wrapper">
-                                                                    <a class="elementor-button elementor-button-link elementor-size-sm" target="_blank"
-   href="{{ $form->linkSherlokAkad }}" 
-   style="color: #A57070; border-color: #A57070;">
-    <span class="elementor-button-content-wrapper ig">
-        <span class="elementor-button-icon elementor-align-icon-left">
-            <svg aria-hidden="true" 
-                 class="e-font-icon-svg e-fas-map-marker-alt" 
-                 viewBox="0 0 384 512" 
-                 xmlns="http://www.w3.org/2000/svg" 
-                 style="fill: #A57070;">
-                <path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"></path>
-            </svg>
-        </span>
-        <span class="elementor-button-text">OPEN MAPS</span>
-    </span>
-</a>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-3a4a97d9 wdp-sticky-section-no"
-                                                    data-id="3a4a97d9" data-element_type="column">
-                                                    <div class="elementor-widget-wrap">
-                                                    </div>
-                                                </div>
-                                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-25c9bbdb wdp-sticky-section-no"
-                                                    data-id="25c9bbdb" data-element_type="column">
-                                                    <div class="elementor-widget-wrap elementor-element-populated">
-                                                        <div class="elementor-element elementor-element-4236eb0d wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                                            data-id="4236eb0d" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
-                                                            data-widget_type="heading.default">
-                                                            <div class="elementor-widget-container">
-                                                                <h2
-                                                                    class="elementor-heading-title elementor-size-default">
-                                                                    RESEPSI</h2>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-11a9a906 elementor-widget-divider--view-line wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-divider"
-                                                            data-id="11a9a906" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}"
-                                                            data-widget_type="divider.default">
-                                                            <div class="elementor-widget-container">
-                                                                <div class="elementor-divider">
-                                                                    <span class="elementor-divider-separator">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-30911bc0 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
-                                                            data-id="30911bc0" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:900}"
-                                                            data-widget_type="text-editor.default">
-                                                            <div class="elementor-widget-container">
-                                                                <p>
-                                                                    {{ $formattedDateResepsi }}
-                                                                </p>
-                                                                <p>{{ $datetimeResepsi->format('h:i A') }} &#8211;
-                                                                    Selesai</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-2a2e8911 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
-                                                            data-id="2a2e8911" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:900}"
-                                                            data-widget_type="text-editor.default">
-                                                            <div class="elementor-widget-container">
-                                                                <p><strong>
-                                                                        @if ($form->opsiResepsi == 'Pria' || $form->opsiResepsi == 'Wanita')
-                                                                            Rumah Mempelai {{ $form->opsiResepsi }}
-                                                                        @else
-                                                                            {{ $form->opsiResepsi }}
-                                                                        @endif
-                                                                    </strong></p>
-                                                                <p>{{ $form->alamatResepsi }}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="elementor-element elementor-element-7483a378 elementor-align-center elementor-mobile-align-center elementor-tablet-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-button"
-                                                            data-id="7483a378" data-element_type="widget"
-                                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:900}"
-                                                            data-widget_type="button.default">
-                                                            <div class="elementor-widget-container">
-                                                                <div class="elementor-button-wrapper">
-                                                                    <a class="elementor-button elementor-button-link elementor-size-sm" target="_blank"
-                                                                    href="{{ $form->linkSherlokResepsi }}" 
-                                                                    style="color: #A57070; border-color: #A57070;">
-                                                                     <span class="elementor-button-content-wrapper ig">
-                                                                         <span class="elementor-button-icon elementor-align-icon-left">
-                                                                             <svg aria-hidden="true" 
-                                                                                  class="e-font-icon-svg e-fas-map-marker-alt" 
-                                                                                  viewBox="0 0 384 512" 
-                                                                                  xmlns="http://www.w3.org/2000/svg" 
-                                                                                  style="fill: #A57070;">
-                                                                                 <path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"></path>
-                                                                             </svg>
-                                                                         </span>
-                                                                         <span class="elementor-button-text">OPEN MAPS</span>
-                                                                     </span>
-                                                                 </a>
-                                                                 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                            class="elementor-section elementor-inner-section elementor-element elementor-element-5341aad5 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                            data-id="5341aad5" data-element_type="section">
+                            <div class="elementor-container elementor-column-gap-default">
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-327c01cf wdp-sticky-section-no"
+                                    data-id="327c01cf" data-element_type="column">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-57e9735d wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                            data-id="57e9735d" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
+                                            data-widget_type="heading.default">
+                                            <div class="elementor-widget-container">
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    AKAD NIKAH
+                                                </h2>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-73f735da elementor-widget-divider--view-line wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-divider"
+                                            data-id="73f735da" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}"
+                                            data-widget_type="divider.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-divider">
+                                                    <span class="elementor-divider-separator">
+                                                    </span>
                                                 </div>
                                             </div>
-                                        </section>
+                                        </div>
+                                        <div class="elementor-element elementor-element-36db1406 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
+                                            data-id="36db1406" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:400}"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p>
+                                                    {{ $formattedDateAkad }}
+                                                </p>
+                                                <p>{{ $datetimeAkad->format('h:i A') }} &#8211; Selesai
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-41e6d957 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
+                                            data-id="41e6d957" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:500}"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p><strong>
+                                                        @if ($form->opsiAkad == 'Pria' || $form->opsiAkad == 'Wanita')
+                                                            Rumah Mempelai {{ $form->opsiAkad }}
+                                                        @else
+                                                            {{ $form->opsiAkad }}
+                                                        @endif
+                                                    </strong></p>
+                                                <p>{{ $form->alamatAkad }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-67b8f2b1 elementor-align-center elementor-mobile-align-center elementor-tablet-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-button"
+                                            data-id="67b8f2b1" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:600}"
+                                            data-widget_type="button.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-button-wrapper">
+                                                    <a class="elementor-button elementor-button-link elementor-size-sm"
+                                                        target="_blank" href="{{ $form->linkSherlokAkad }}"
+                                                        style="color: #A57070; border-color: #A57070;">
+                                                        <span class="elementor-button-content-wrapper ig">
+                                                            <span
+                                                                class="elementor-button-icon elementor-align-icon-left">
+                                                                <svg aria-hidden="true"
+                                                                    class="e-font-icon-svg e-fas-map-marker-alt"
+                                                                    viewBox="0 0 384 512"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    style="fill: #A57070;">
+                                                                    <path
+                                                                        d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z">
+                                                                    </path>
+                                                                </svg>
+                                                            </span>
+                                                            <span class="elementor-button-text">OPEN MAPS</span>
+                                                        </span>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-3a4a97d9 wdp-sticky-section-no"
+                                    data-id="3a4a97d9" data-element_type="column">
+                                    <div class="elementor-widget-wrap">
+                                    </div>
+                                </div>
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-25c9bbdb wdp-sticky-section-no"
+                                    data-id="25c9bbdb" data-element_type="column">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-4236eb0d wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                            data-id="4236eb0d" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
+                                            data-widget_type="heading.default">
+                                            <div class="elementor-widget-container">
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    RESEPSI</h2>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-11a9a906 elementor-widget-divider--view-line wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-divider"
+                                            data-id="11a9a906" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}"
+                                            data-widget_type="divider.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-divider">
+                                                    <span class="elementor-divider-separator">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-30911bc0 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
+                                            data-id="30911bc0" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:900}"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p>
+                                                    {{ $formattedDateResepsi }}
+                                                </p>
+                                                <p>{{ $datetimeResepsi->format('h:i A') }} &#8211;
+                                                    Selesai</p>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-2a2e8911 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
+                                            data-id="2a2e8911" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:900}"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p><strong>
+                                                        @if ($form->opsiResepsi == 'Pria' || $form->opsiResepsi == 'Wanita')
+                                                            Rumah Mempelai {{ $form->opsiResepsi }}
+                                                        @else
+                                                            {{ $form->opsiResepsi }}
+                                                        @endif
+                                                    </strong></p>
+                                                <p>{{ $form->alamatResepsi }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-7483a378 elementor-align-center elementor-mobile-align-center elementor-tablet-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-button"
+                                            data-id="7483a378" data-element_type="widget"
+                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:900}"
+                                            data-widget_type="button.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-button-wrapper">
+                                                    <a class="elementor-button elementor-button-link elementor-size-sm"
+                                                        target="_blank" href="{{ $form->linkSherlokResepsi }}"
+                                                        style="color: #A57070; border-color: #A57070;">
+                                                        <span class="elementor-button-content-wrapper ig">
+                                                            <span
+                                                                class="elementor-button-icon elementor-align-icon-left">
+                                                                <svg aria-hidden="true"
+                                                                    class="e-font-icon-svg e-fas-map-marker-alt"
+                                                                    viewBox="0 0 384 512"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    style="fill: #A57070;">
+                                                                    <path
+                                                                        d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z">
+                                                                    </path>
+                                                                </svg>
+                                                            </span>
+                                                            <span class="elementor-button-text">OPEN MAPS</span>
+                                                        </span>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                         @if (empty($form->liveYt))
                         @else
                             <section
@@ -2589,8 +2598,7 @@
                                                 data-id="887be4b" data-element_type="widget"
                                                 data-widget_type="heading.default">
                                                 <div class="elementor-widget-container">
-                                                    <h2
-                                                        class="elementor-heading-title elementor-size-default">
+                                                    <h2 class="elementor-heading-title elementor-size-default">
                                                         LIVE<br>STREAMING</h2>
                                                 </div>
                                             </div>
@@ -2613,10 +2621,8 @@
                                                 <div class="elementor-widget-container">
                                                     <div class="elementor-button-wrapper">
                                                         <a class="elementor-button elementor-button-link elementor-size-sm"
-                                                            href="{{ $form->liveYt }}"
-                                                            style="color: #A57070;">
-                                                            <span
-                                                                class="elementor-button-content-wrapper">
+                                                            href="{{ $form->liveYt }}" style="color: #A57070;">
+                                                            <span class="elementor-button-content-wrapper">
                                                                 <span
                                                                     class="elementor-button-icon elementor-align-icon-left">
                                                                     <svg aria-hidden="true"
@@ -2694,116 +2700,113 @@
                                 </div>
                             </div>
                         </div>
-                                                                {{-- LOVE STORY --}}
-                                                                <section
-                                                                class="elementor-section elementor-inner-section elementor-element elementor-element-3f7331b5 animated-fast elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no elementor-invisible"
-                                                                data-id="3f7331b5" data-element_type="section"
-                                                                data-settings="{&quot;animation&quot;:&quot;slideInDown&quot;,&quot;animation_mobile&quot;:&quot;none&quot;}">
-                                                                <div class="elementor-container elementor-column-gap-default">
-                                                                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5b0f6080 animated-slow wdp-sticky-section-no elementor-invisible"
-                                                                        data-id="5b0f6080" data-element_type="column"
-                                                                        data-settings="{&quot;animation&quot;:&quot;slideInLeft&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:30}">
-                                                                        <div class="elementor-widget-wrap elementor-element-populated">
-                                                                            <div class="elementor-element elementor-element-55a5b128 wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                                                                data-id="55a5b128" data-element_type="widget"
-                                                                                data-widget_type="heading.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <h2
-                                                                                        class="elementor-heading-title elementor-size-default">
-                                                                                        First Meet,</h2>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="elementor-element elementor-element-6efd8327 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
-                                                                                data-id="6efd8327" data-element_type="widget"
-                                                                                data-widget_type="divider.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <div class="elementor-divider">
-                                                                                        <span class="elementor-divider-separator">
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="elementor-element elementor-element-1370bf84 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
-                                                                                data-id="1370bf84" data-element_type="widget"
-                                                                                data-widget_type="text-editor.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <p>
-                                                                                        {{ $form->ceritaAwal }}
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5c06b44 animated-slow wdp-sticky-section-no elementor-invisible"
-                                                                        data-id="5c06b44" data-element_type="column"
-                                                                        data-settings="{&quot;animation&quot;:&quot;slideInRight&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:40}">
-                                                                        <div class="elementor-widget-wrap elementor-element-populated">
-                                                                            <div class="elementor-element elementor-element-1957f972 wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                                                                data-id="1957f972" data-element_type="widget"
-                                                                                data-widget_type="heading.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <h2
-                                                                                        class="elementor-heading-title elementor-size-default">
-                                                                                        Proposal,</h2>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="elementor-element elementor-element-1d61ec30 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
-                                                                                data-id="1d61ec30" data-element_type="widget"
-                                                                                data-widget_type="divider.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <div class="elementor-divider">
-                                                                                        <span class="elementor-divider-separator">
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="elementor-element elementor-element-3ebb9aa3 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
-                                                                                data-id="3ebb9aa3" data-element_type="widget"
-                                                                                data-widget_type="text-editor.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <p>
-                                                                                        {{ $form->ceritaJadian }}
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-69f0fcb0 animated-slow wdp-sticky-section-no elementor-invisible"
-                                                                        data-id="69f0fcb0" data-element_type="column"
-                                                                        data-settings="{&quot;animation&quot;:&quot;slideInLeft&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:50}">
-                                                                        <div class="elementor-widget-wrap elementor-element-populated">
-                                                                            <div class="elementor-element elementor-element-272d4dea wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                                                                data-id="272d4dea" data-element_type="widget"
-                                                                                data-widget_type="heading.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <h2
-                                                                                        class="elementor-heading-title elementor-size-default">
-                                                                                        Engagement,</h2>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="elementor-element elementor-element-2915a303 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
-                                                                                data-id="2915a303" data-element_type="widget"
-                                                                                data-widget_type="divider.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <div class="elementor-divider">
-                                                                                        <span class="elementor-divider-separator">
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="elementor-element elementor-element-c8d540f wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
-                                                                                data-id="c8d540f" data-element_type="widget"
-                                                                                data-widget_type="text-editor.default">
-                                                                                <div class="elementor-widget-container">
-                                                                                    <p>
-                                                                                        {{ $form->ceritaLamaran }}
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </section>
+                        {{-- LOVE STORY --}}
+                        <section
+                            class="elementor-section elementor-inner-section elementor-element elementor-element-3f7331b5 animated-fast elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no elementor-invisible"
+                            data-id="3f7331b5" data-element_type="section"
+                            data-settings="{&quot;animation&quot;:&quot;slideInDown&quot;,&quot;animation_mobile&quot;:&quot;none&quot;}">
+                            <div class="elementor-container elementor-column-gap-default">
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5b0f6080 animated-slow wdp-sticky-section-no elementor-invisible"
+                                    data-id="5b0f6080" data-element_type="column"
+                                    data-settings="{&quot;animation&quot;:&quot;slideInLeft&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:30}">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-55a5b128 wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                            data-id="55a5b128" data-element_type="widget"
+                                            data-widget_type="heading.default">
+                                            <div class="elementor-widget-container">
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    First Meet,</h2>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-6efd8327 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
+                                            data-id="6efd8327" data-element_type="widget"
+                                            data-widget_type="divider.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-divider">
+                                                    <span class="elementor-divider-separator">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-1370bf84 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
+                                            data-id="1370bf84" data-element_type="widget"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p>
+                                                    {{ $form->ceritaAwal }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5c06b44 animated-slow wdp-sticky-section-no elementor-invisible"
+                                    data-id="5c06b44" data-element_type="column"
+                                    data-settings="{&quot;animation&quot;:&quot;slideInRight&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:40}">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-1957f972 wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                            data-id="1957f972" data-element_type="widget"
+                                            data-widget_type="heading.default">
+                                            <div class="elementor-widget-container">
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    Proposal,</h2>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-1d61ec30 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
+                                            data-id="1d61ec30" data-element_type="widget"
+                                            data-widget_type="divider.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-divider">
+                                                    <span class="elementor-divider-separator">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-3ebb9aa3 wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
+                                            data-id="3ebb9aa3" data-element_type="widget"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p>
+                                                    {{ $form->ceritaJadian }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-69f0fcb0 animated-slow wdp-sticky-section-no elementor-invisible"
+                                    data-id="69f0fcb0" data-element_type="column"
+                                    data-settings="{&quot;animation&quot;:&quot;slideInLeft&quot;,&quot;animation_mobile&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:50}">
+                                    <div class="elementor-widget-wrap elementor-element-populated">
+                                        <div class="elementor-element elementor-element-272d4dea wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                            data-id="272d4dea" data-element_type="widget"
+                                            data-widget_type="heading.default">
+                                            <div class="elementor-widget-container">
+                                                <h2 class="elementor-heading-title elementor-size-default">
+                                                    Engagement,</h2>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-2915a303 elementor-widget-divider--view-line wdp-sticky-section-no elementor-widget elementor-widget-divider"
+                                            data-id="2915a303" data-element_type="widget"
+                                            data-widget_type="divider.default">
+                                            <div class="elementor-widget-container">
+                                                <div class="elementor-divider">
+                                                    <span class="elementor-divider-separator">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elementor-element elementor-element-c8d540f wdp-sticky-section-no elementor-widget elementor-widget-text-editor"
+                                            data-id="c8d540f" data-element_type="widget"
+                                            data-widget_type="text-editor.default">
+                                            <div class="elementor-widget-container">
+                                                <p>
+                                                    {{ $form->ceritaLamaran }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -2844,145 +2847,175 @@
                                             data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
                                             data-widget_type="image.default">
                                             <div class="elementor-widget-container">
-{{-- BG RSVP --}}
-@if (isset($imageOrders) && $imageOrders->isNotEmpty())
-@php $galleryCount = 0; @endphp
-@foreach ($imageOrders as $order)
-    @if (isset($order->image->fileImage) && $order->partName === 'background')
-        @php $galleryCount++; @endphp
-        @if ($galleryCount === 2)
-            <img decoding="async" width="1024"
-                height="766"
-                src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                class="attachment-large size-large wp-image-1616"
-                alt=""
-                srcset="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                sizes="(max-width: 1024px) 100vw, 1024px" />
-        @break
+                                                {{-- BG RSVP --}}
+                                                @if (isset($imageOrders) && $imageOrders->isNotEmpty())
+                                                    @php $galleryCount = 0; @endphp
+                                                    @foreach ($imageOrders as $order)
+                                                        @if (isset($order->image->fileImage) && $order->partName === 'background')
+                                                            @php $galleryCount++; @endphp
+                                                            @if ($galleryCount === 2)
+                                                                <img decoding="async" width="1024"
+                                                                    height="766"
+                                                                    src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
+                                                                    class="attachment-large size-large wp-image-1616"
+                                                                    alt=""
+                                                                    srcset="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
+                                                                    sizes="(max-width: 1024px) 100vw, 1024px" />
+                                                            @break
 
-    @endif
-@endif
-@endforeach
-@endif
-                                            </div>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-3932281f wdp-sticky-section-no"
-                                    data-id="3932281f" data-element_type="column">
-                                    <div class="elementor-widget-wrap elementor-element-populated">
-                                        <div class="elementor-element elementor-element-778dde7d wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                            data-id="778dde7d" data-element_type="widget"
-                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h2 class="elementor-heading-title elementor-size-default">RSVP</h2>
-                                            </div>
+                            </div>
+                            <div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-3932281f wdp-sticky-section-no"
+                                data-id="3932281f" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-778dde7d wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                        data-id="778dde7d" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h2 class="elementor-heading-title elementor-size-default">RSVP</h2>
                                         </div>
-                                        <div class="elementor-element elementor-element-629e225c wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
-                                            data-id="629e225c" data-element_type="widget"
-                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
-                                            data-widget_type="text-editor.default">
-                                            <div class="elementor-widget-container">
-                                                <p>*Kepada tamu undangan diharapkan untuk mengisi form kehadiran di
-                                                    bawah ini</p>
-                                            </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-629e225c wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
+                                        data-id="629e225c" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
+                                        data-widget_type="text-editor.default">
+                                        <div class="elementor-widget-container">
+                                            <p>*Kepada tamu undangan diharapkan untuk mengisi form kehadiran di
+                                                bawah ini</p>
                                         </div>
-                                        <div class="elementor-element elementor-element-6cc95146 elementor-button-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-form"
-                                            data-id="6cc95146" data-element_type="widget"
-                                            data-settings="{&quot;step_next_label&quot;:&quot;Next&quot;,&quot;step_previous_label&quot;:&quot;Previous&quot;,&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300,&quot;button_width&quot;:&quot;100&quot;,&quot;step_type&quot;:&quot;number_text&quot;,&quot;step_icon_shape&quot;:&quot;circle&quot;}"
-                                            data-widget_type="form.default">
-                                            <div class="elementor-widget-container">
-                                                <style>
-                                                    /* Loading spinner for button */
-                                                    .loading-spinner {
-                                                        border: 2px solid #f3f3f3;
-                                                        border-radius: 50%;
-                                                        border-top: 2px solid #3498db;
-                                                        width: 16px;
-                                                        height: 16px;
-                                                        animation: spin 0.5s linear infinite;
-                                                        display: inline-block;
-                                                        margin-right: 5px;
+                                    </div>
+                                    <div class="elementor-element elementor-element-6cc95146 elementor-button-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-form"
+                                        data-id="6cc95146" data-element_type="widget"
+                                        data-settings="{&quot;step_next_label&quot;:&quot;Next&quot;,&quot;step_previous_label&quot;:&quot;Previous&quot;,&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300,&quot;button_width&quot;:&quot;100&quot;,&quot;step_type&quot;:&quot;number_text&quot;,&quot;step_icon_shape&quot;:&quot;circle&quot;}"
+                                        data-widget_type="form.default">
+                                        <div class="elementor-widget-container">
+                                            <style>
+                                                /* Loading spinner for button */
+                                                .loading-spinner {
+                                                    border: 2px solid #f3f3f3;
+                                                    border-radius: 50%;
+                                                    border-top: 2px solid #3498db;
+                                                    width: 16px;
+                                                    height: 16px;
+                                                    animation: spin 0.5s linear infinite;
+                                                    display: inline-block;
+                                                    margin-right: 5px;
+                                                }
+
+                                                @keyframes spin {
+                                                    0% {
+                                                        transform: rotate(0deg);
                                                     }
-                                                
-                                                    @keyframes spin {
-                                                        0% { transform: rotate(0deg); }
-                                                        100% { transform: rotate(360deg); }
+
+                                                    100% {
+                                                        transform: rotate(360deg);
                                                     }
-                                                
-                                                    /* Disable button style */
-                                                    .disabled-button {
-                                                        opacity: 0.6;
-                                                        cursor: not-allowed;
-                                                    }
-                                                </style>
-                                                <form id="rsvpForm" class="elementor-form" method="post" name="rsvpnilamzen">
-                                                    @csrf
-                                                
-                                                    <div class="elementor-form-fields-wrapper elementor-labels-above">
-                                                        <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-100">
-                                                            <label for="form-field-name" class="elementor-field-label">Nama</label>
-                                                            <input size="1" type="text" name="form_fields[name]" id="form-field-name"
-                                                                   class="elementor-field elementor-size-sm  elementor-field-textual" placeholder="Nama"
-                                                                   value="Nama Tamu">
-                                                        </div>
-                                                        <div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-email elementor-col-100 elementor-field-required">
-                                                            <label for="form-field-email" class="elementor-field-label">Jumlah</label>
-                                                            <input type="number" name="form_fields[email]" id="form-field-email"
-                                                                   class="elementor-field elementor-size-sm  elementor-field-textual" placeholder="Jumlah"
-                                                                   required="required" aria-required="true" min="" max="">
-                                                        </div>
-                                                        <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-message elementor-col-100">
-                                                            <label for="form-field-message" class="elementor-field-label">Konfirmasi</label>
-                                                            <div class="elementor-field elementor-select-wrapper remove-before ">
-                                                                <div class="select-caret-down-wrapper">
-                                                                    <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4"
-                                                                         xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
-                                                                    </svg>
-                                                                </div>
-                                                                <select name="form_fields[message]" id="form-field-message"
-                                                                        class="elementor-field-textual elementor-size-sm">
-                                                                    <option value="1">Saya Akan Datang</option>
-                                                                    <option value="0">Maaf, Saya Tidak Bisa Datang</option>
-                                                                </select>
+                                                }
+
+                                                /* Disable button style */
+                                                .disabled-button {
+                                                    opacity: 0.6;
+                                                    cursor: not-allowed;
+                                                }
+                                            </style>
+                                            <form id="rsvpForm" class="elementor-form" method="post"
+                                                name="rsvpnilamzen">
+                                                @csrf
+
+                                                <div class="elementor-form-fields-wrapper elementor-labels-above">
+                                                    <div
+                                                        class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-100">
+                                                        <label for="form-field-name"
+                                                            class="elementor-field-label">Nama</label>
+                                                        <input size="1" type="text"
+                                                            name="form_fields[name]" id="form-field-name"
+                                                            class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                            placeholder="Nama" value="Nama Tamu">
+                                                    </div>
+                                                    <div
+                                                        class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-email elementor-col-100 elementor-field-required">
+                                                        <label for="form-field-email"
+                                                            class="elementor-field-label">Jumlah</label>
+                                                        <input type="number" name="form_fields[email]"
+                                                            id="form-field-email"
+                                                            class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                            placeholder="Jumlah" required="required"
+                                                            aria-required="true" min=""
+                                                            max="">
+                                                    </div>
+                                                    <div
+                                                        class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-message elementor-col-100">
+                                                        <label for="form-field-message"
+                                                            class="elementor-field-label">Konfirmasi</label>
+                                                        <div
+                                                            class="elementor-field elementor-select-wrapper remove-before ">
+                                                            <div class="select-caret-down-wrapper">
+                                                                <svg aria-hidden="true"
+                                                                    class="e-font-icon-svg e-eicon-caret-down"
+                                                                    viewBox="0 0 571.4 571.4"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <path
+                                                                        d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z">
+                                                                    </path>
+                                                                </svg>
                                                             </div>
-                                                        </div>
-                                                        <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
-                                                            <button id="submitBtn" class="elementor-button elementor-size-sm" type="button"> <!-- Added id="submitBtn" -->
-                                                                <span class="elementor-button-content-wrapper">
-                                                                    <span class="elementor-button-icon">
-                                                                        <svg aria-hidden="true" class="e-font-icon-svg e-far-paper-plane" viewBox="0 0 512 512"
-                                                                             xmlns="http://www.w3.org/2000/svg">
-                                                                            <path d="M440 6.5L24 246.4c-34.4 19.9-31.1 70.8 5.7 85.9L144 379.6V464c0 46.4 59.2 65.5 86.6 28.6l43.8-59.1 111.9 46.2c5.9 2.4 12.1 3.6 18.3 3.6 8.2 0 16.3-2.1 23.6-6.2 12.8-7.2 21.6-20 23.9-34.5l59.4-387.2c6.1-40.1-36.9-68.8-71.5-48.9zM192 464v-64.6l36.6 15.1L192 464zm212.6-28.7l-153.8-63.5L391 169.5c10.7-15.5-9.5-33.5-23.7-21.2L155.8 332.6 48 288 464 48l-59.4 387.3z"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <span class="elementor-button-text">Kirim</span>
-                                                                </span>
-                                                            </button>
+                                                            <select name="form_fields[message]"
+                                                                id="form-field-message"
+                                                                class="elementor-field-textual elementor-size-sm">
+                                                                <option value="1">Saya Akan Datang</option>
+                                                                <option value="0">Maaf, Saya Tidak Bisa
+                                                                    Datang</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                </form>
-                                                <script>
-                                                    document.getElementById('submitBtn').addEventListener('click', function(event) {
-                                                        event.preventDefault();
-                                                    
-                                                        let form = document.getElementById('rsvpForm');
-                                                        let formData = new FormData(form);
-                                                        let submitBtn = document.getElementById('submitBtn');
-                                                    
-                                                        // Show loading spinner and disable button
-                                                        submitBtn.disabled = true;
-                                                        submitBtn.classList.add('disabled-button');
-                                                        submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
-                                                    
-                                                        // Get the slug from the current URL
-                                                        let currentUrl = window.location.href;
-                                                        let slug = currentUrl.split('/').pop(); // Assumes slug is at the end of the URL
-                                                    
-                                                        // Make the fetch request with the slug in the URL
-                                                        fetch(`/submit-rsvp/${slug}`, {
+                                                    <div
+                                                        class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
+                                                        <button id="submitBtn"
+                                                            class="elementor-button elementor-size-sm"
+                                                            type="button"> <!-- Added id="submitBtn" -->
+                                                            <span class="elementor-button-content-wrapper">
+                                                                <span class="elementor-button-icon">
+                                                                    <svg aria-hidden="true"
+                                                                        class="e-font-icon-svg e-far-paper-plane"
+                                                                        viewBox="0 0 512 512"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M440 6.5L24 246.4c-34.4 19.9-31.1 70.8 5.7 85.9L144 379.6V464c0 46.4 59.2 65.5 86.6 28.6l43.8-59.1 111.9 46.2c5.9 2.4 12.1 3.6 18.3 3.6 8.2 0 16.3-2.1 23.6-6.2 12.8-7.2 21.6-20 23.9-34.5l59.4-387.2c6.1-40.1-36.9-68.8-71.5-48.9zM192 464v-64.6l36.6 15.1L192 464zm212.6-28.7l-153.8-63.5L391 169.5c10.7-15.5-9.5-33.5-23.7-21.2L155.8 332.6 48 288 464 48l-59.4 387.3z">
+                                                                        </path>
+                                                                    </svg>
+                                                                </span>
+                                                                <span class="elementor-button-text">Kirim</span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <script>
+                                                document.getElementById('submitBtn').addEventListener('click', function(event) {
+                                                    event.preventDefault();
+
+                                                    let form = document.getElementById('rsvpForm');
+                                                    let formData = new FormData(form);
+                                                    let submitBtn = document.getElementById('submitBtn');
+
+                                                    // Show loading spinner and disable button
+                                                    submitBtn.disabled = true;
+                                                    submitBtn.classList.add('disabled-button');
+                                                    submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
+
+                                                    // Get the slug from the current URL
+                                                    let currentUrl = window.location.href;
+                                                    let slug = currentUrl.split('/').pop(); // Assumes slug is at the end of the URL
+
+                                                    // Make the fetch request with the slug in the URL
+                                                    fetch(`/submit-rsvp/${slug}`, {
                                                             method: 'POST',
                                                             headers: {
                                                                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
@@ -2993,7 +3026,7 @@
                                                         .then(response => response.json())
                                                         .then(data => {
                                                             if (data.success) {
-                                                                form.reset();  // Clear the form after successful submission
+                                                                form.reset(); // Clear the form after successful submission
                                                                 document.getElementById('form-field-name').value = '';
                                                                 document.getElementById('form-field-email').value = '';
                                                                 document.getElementById('form-field-message').value = '1'; // Reset to default if needed
@@ -3008,62 +3041,62 @@
                                                             submitBtn.classList.remove('disabled-button');
                                                             submitBtn.innerHTML = 'SEND';
                                                         });
-                                                    });
-                                                    </script>
-                                            </div>
+                                                });
+                                            </script>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section
-            class="elementor-section elementor-top-section elementor-element elementor-element-3740f3b9 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
-            data-id="3740f3b9" data-element_type="section"
-            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-            <div class="elementor-container elementor-column-gap-default">
-                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-32af913 wdp-sticky-section-no"
-                    data-id="32af913" data-element_type="column">
-                    <div class="elementor-widget-wrap elementor-element-populated">
-                        <div class="elementor-element elementor-element-5115f890 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
-                            data-id="5115f890" data-element_type="widget" data-widget_type="spacer.default">
-                            <div class="elementor-widget-container">
-                                <div class="elementor-spacer">
-                                    <div class="elementor-spacer-inner"></div>
                                 </div>
                             </div>
                         </div>
-                        <section
-                            class="elementor-section elementor-inner-section elementor-element elementor-element-649b297b elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                            data-id="649b297b" data-element_type="section">
-                            <div class="elementor-container elementor-column-gap-default">
-                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7f7f6d24 wdp-sticky-section-no"
-                                    data-id="7f7f6d24" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        class="elementor-section elementor-top-section elementor-element elementor-element-3740f3b9 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
+        data-id="3740f3b9" data-element_type="section"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-32af913 wdp-sticky-section-no"
+                data-id="32af913" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-5115f890 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
+                        data-id="5115f890" data-element_type="widget" data-widget_type="spacer.default">
+                        <div class="elementor-widget-container">
+                            <div class="elementor-spacer">
+                                <div class="elementor-spacer-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <section
+                        class="elementor-section elementor-inner-section elementor-element elementor-element-649b297b elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                        data-id="649b297b" data-element_type="section">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7f7f6d24 wdp-sticky-section-no"
+                                data-id="7f7f6d24" data-element_type="column">
+                                <div class="elementor-widget-wrap">
                                 </div>
-                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7aa82aee wdp-sticky-section-no"
-                                    data-id="7aa82aee" data-element_type="column">
-                                    <div class="elementor-widget-wrap elementor-element-populated">
-                                        <div class="elementor-element elementor-element-4b44bdce wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                            data-id="4b44bdce" data-element_type="widget"
-                                            data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h2 class="elementor-heading-title elementor-size-default">OUR GALLERY
-                                                </h2>
-                                            </div>
+                            </div>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7aa82aee wdp-sticky-section-no"
+                                data-id="7aa82aee" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-4b44bdce wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                        data-id="4b44bdce" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h2 class="elementor-heading-title elementor-size-default">OUR GALLERY
+                                            </h2>
                                         </div>
-                                        <div class="elementor-element elementor-element-4d5a9ed9 wdp-sticky-section-no elementor-widget elementor-widget-gallery"
-                                            data-id="4d5a9ed9" data-element_type="widget"
-                                            data-settings="{&quot;gallery_layout&quot;:&quot;masonry&quot;,&quot;columns_tablet&quot;:3,&quot;columns&quot;:3,&quot;gap_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:5,&quot;sizes&quot;:[]},&quot;lazyload&quot;:&quot;yes&quot;,&quot;columns_mobile&quot;:1,&quot;gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;link_to&quot;:&quot;file&quot;,&quot;overlay_background&quot;:&quot;yes&quot;,&quot;content_hover_animation&quot;:&quot;fade-in&quot;}"
-                                            data-widget_type="gallery.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="elementor-gallery__container">
-                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty())
+                                    </div>
+                                    <div class="elementor-element elementor-element-4d5a9ed9 wdp-sticky-section-no elementor-widget elementor-widget-gallery"
+                                        data-id="4d5a9ed9" data-element_type="widget"
+                                        data-settings="{&quot;gallery_layout&quot;:&quot;masonry&quot;,&quot;columns_tablet&quot;:3,&quot;columns&quot;:3,&quot;gap_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:5,&quot;sizes&quot;:[]},&quot;lazyload&quot;:&quot;yes&quot;,&quot;columns_mobile&quot;:1,&quot;gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;link_to&quot;:&quot;file&quot;,&quot;overlay_background&quot;:&quot;yes&quot;,&quot;content_hover_animation&quot;:&quot;fade-in&quot;}"
+                                        data-widget_type="gallery.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-gallery__container">
+                                                @if (isset($imageOrders) && $imageOrders->isNotEmpty())
                                                     @foreach ($imageOrders as $order)
                                                         @if (isset($order->image->fileImage) && $order->partName === 'gallery')
                                                             <a class="e-gallery-item elementor-gallery-item elementor-animated-content"
@@ -3074,12 +3107,9 @@
                                                                 data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MzUxLCJ1cmwiOiJodHRwczpcL1wvYnVrYS51bmRhbmdhbmt1LnN0b3JlXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDI0XC8wM1wvTVRYWF9NUjIwMjMxMDAzXzEyNDA1MTY0NS1zY2FsZWQtNi5qcGciLCJzbGlkZXNob3ciOiI0YzE5YzJlYSJ9">
                                                                 <div class="e-gallery-image elementor-gallery-item__image"
                                                                     data-thumbnail="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                                                                    data-width="2045"
-                                                                    data-height="2560"
-                                                                    aria-label=""
-                                                                    role="img"></div>
-                                                                <div
-                                                                    class="elementor-gallery-item__overlay">
+                                                                    data-width="2045" data-height="2560"
+                                                                    aria-label="" role="img"></div>
+                                                                <div class="elementor-gallery-item__overlay">
                                                                 </div>
                                                             </a>
                                                         @endif
@@ -3101,27 +3131,26 @@
                                                         });
                                                     });
                                                 </script>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-457d3d70 wdp-sticky-section-no"
-                                    data-id="457d3d70" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
+                            </div>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-457d3d70 wdp-sticky-section-no"
+                                data-id="457d3d70" data-element_type="column">
+                                <div class="elementor-widget-wrap">
                                 </div>
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
-        </section>
-        <section
+        </div>
+    </section>
+    <section
         class="elementor-section elementor-top-section elementor-element elementor-element-599855c5 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
         data-id="599855c5" data-element_type="section"
-        data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-        {{-- BG-GIFT --}}
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" {{-- BG-GIFT --}}
         @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
 @foreach ($imageOrders as $order)
     @if (isset($order->image->fileImage) && $order->partName === 'background')
@@ -3150,8 +3179,7 @@
                                         data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
                                         data-widget_type="heading.default">
                                         <div class="elementor-widget-container">
-                                            <h2
-                                                class="elementor-heading-title elementor-size-default">
+                                            <h2 class="elementor-heading-title elementor-size-default">
                                                 LOVE<br>GIFT</h2>
                                         </div>
                                     </div>
@@ -3270,8 +3298,7 @@
                                             <div class="elementor-button-wrapper">
                                                 <a class="elementor-button elementor-button-link elementor-size-sm"
                                                     href="#">
-                                                    <span
-                                                        class="elementor-button-content-wrapper">
+                                                    <span class="elementor-button-content-wrapper">
                                                         <span class="elementor-button-icon">
                                                             <svg aria-hidden="true"
                                                                 class="e-font-icon-svg e-fas-wallet"
@@ -3302,141 +3329,147 @@
         </div>
     </section>
     <section
-    class="elementor-section elementor-top-section elementor-element elementor-element-7bdb1c2 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
-    data-id="7bdb1c2" data-element_type="section">
-    <div class="elementor-container elementor-column-gap-default">
-        <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-24be3530 wdp-sticky-section-no"
-            data-id="24be3530" data-element_type="column">
-            <div class="elementor-widget-wrap elementor-element-populated">
-                <section
-                    class="elementor-section elementor-inner-section elementor-element elementor-element-3a4911b0 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                    data-id="3a4911b0" data-element_type="section">
-                    <div class="elementor-container elementor-column-gap-default">
-                        <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4552fbb7 wdp-sticky-section-no"
-                            data-id="4552fbb7" data-element_type="column">
-                            <div class="elementor-widget-wrap">
+        class="elementor-section elementor-top-section elementor-element elementor-element-7bdb1c2 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
+        data-id="7bdb1c2" data-element_type="section">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-24be3530 wdp-sticky-section-no"
+                data-id="24be3530" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <section
+                        class="elementor-section elementor-inner-section elementor-element elementor-element-3a4911b0 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                        data-id="3a4911b0" data-element_type="section">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4552fbb7 wdp-sticky-section-no"
+                                data-id="4552fbb7" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
                             </div>
-                        </div>
-                        <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-39e9633f wdp-sticky-section-no"
-                            data-id="39e9633f" data-element_type="column">
-                            <div class="elementor-widget-wrap elementor-element-populated">
-                                <div class="elementor-element elementor-element-1ecbd228 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
-                                    data-id="1ecbd228" data-element_type="widget"
-                                    data-widget_type="spacer.default">
-                                    <div class="elementor-widget-container">
-                                        <div class="elementor-spacer">
-                                            <div class="elementor-spacer-inner"></div>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-39e9633f wdp-sticky-section-no"
+                                data-id="39e9633f" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-1ecbd228 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
+                                        data-id="1ecbd228" data-element_type="widget"
+                                        data-widget_type="spacer.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-spacer">
+                                                <div class="elementor-spacer-inner"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="elementor-element elementor-element-328a019c wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                    data-id="328a019c" data-element_type="widget"
-                                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                    data-widget_type="heading.default">
-                                    <div class="elementor-widget-container">
-                                        <h2
-                                            class="elementor-heading-title elementor-size-default">
-                                            BEST WISHES FOR
-                                        </h2>
+                                    <div class="elementor-element elementor-element-328a019c wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                        data-id="328a019c" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h2 class="elementor-heading-title elementor-size-default">
+                                                BEST WISHES FOR
+                                            </h2>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="elementor-element elementor-element-2c73acea elementor-widget-divider--view-line_text elementor-widget-divider--element-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-divider"
-                                    data-id="2c73acea" data-element_type="widget"
-                                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
-                                    data-widget_type="divider.default">
-                                    <div class="elementor-widget-container">
-                                        <div class="elementor-divider">
-                                            <span class="elementor-divider-separator">
-                                                <span
-                                                    class="elementor-divider__text elementor-divider__element">
-                                                    {{-- BEST WISHES --}}
-                                                    @if ($form->penempatanTulisan == 'Pria')
-                                                        {{ strtoupper($form->namaPanggilanPria) }}
-                                                        &
-                                                        {{ strtoupper($form->namaPanggilanWanita) }}
-                                                    @else
-                                                        {{ strtoupper($form->namaPanggilanWanita) }}
-                                                        &
-                                                        {{ strtoupper($form->namaPanggilanPria) }}
-                                                    @endif
+                                    <div class="elementor-element elementor-element-2c73acea elementor-widget-divider--view-line_text elementor-widget-divider--element-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-divider"
+                                        data-id="2c73acea" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
+                                        data-widget_type="divider.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-divider">
+                                                <span class="elementor-divider-separator">
+                                                    <span
+                                                        class="elementor-divider__text elementor-divider__element">
+                                                        {{-- BEST WISHES --}}
+                                                        @if ($form->penempatanTulisan == 'Pria')
+                                                            {{ strtoupper($form->namaPanggilanPria) }}
+                                                            &
+                                                            {{ strtoupper($form->namaPanggilanWanita) }}
+                                                        @else
+                                                            {{ strtoupper($form->namaPanggilanWanita) }}
+                                                            &
+                                                            {{ strtoupper($form->namaPanggilanPria) }}
+                                                        @endif
 
+                                                    </span>
                                                 </span>
-                                            </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="elementor-element elementor-element-40870981 elementor-mobile-align-center elementor-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-weddingpress-guestbook"
-                                    data-id="40870981" data-element_type="widget"
-                                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
-                                    data-widget_type="weddingpress-guestbook.default">
-                                    <div class="elementor-widget-container">
+                                    <div class="elementor-element elementor-element-40870981 elementor-mobile-align-center elementor-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-weddingpress-guestbook"
+                                        data-id="40870981" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
+                                        data-widget_type="weddingpress-guestbook.default">
+                                        <div class="elementor-widget-container">
 
 
-                                        <div class="guestbook-box-content elementor-comment-box-wrapper"
-                                            data-id="template11">
-                                            <div class="comment-form-container">
-                                                <form id="guestbookForm" class="elementor-form" method="post" name="guestbookForm">
-                                                    @csrf
-                                                    <div class="guestbook-label">
-                                                        <label for="guestbook-name" class="">Tamu Undangan</label>
-                                                    </div>
-                                                    <input type="text" id="guestbook-name" name="guestbook_name" class="form-control" placeholder="Isikan Nama Anda" required>
-                                                
-                                                    <div class="guestbook-label">
-                                                        <label for="guestbook-message" class="">Pesan</label>
-                                                    </div>
-                                                    <textarea id="guestbook-message" name="guestbook_message" class="form-control" rows="3" placeholder="Berikan Ucapan Dan Doa Restu" required></textarea>
-                                                
-                                                    <div class="elementor-button-wrapper">
-                                                        <button id="submitGuestbookBtn" class="elementor-button-link elementor-button elementor-size-sm" type="button">
-                                                            KIRIM UCAPAN
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                                
-                                            </div>
+                                            <div class="guestbook-box-content elementor-comment-box-wrapper"
+                                                data-id="template11">
+                                                <div class="comment-form-container">
+                                                    <form id="guestbookForm" class="elementor-form"
+                                                        method="post" name="guestbookForm">
+                                                        @csrf
+                                                        <div class="guestbook-label">
+                                                            <label for="guestbook-name" class="">Tamu
+                                                                Undangan</label>
+                                                        </div>
+                                                        <input type="text" id="guestbook-name"
+                                                            name="guestbook_name" class="form-control"
+                                                            placeholder="Isikan Nama Anda" required>
 
-                                            <div id="hidden-avatar" style="display:none;">
-                                                <img decoding="async"
-                                                    src="https://buka.undanganku.store/wp-content/uploads/2024/03/avatardefault_92824-2.png"
-                                                    title="avatardefault_92824-2.png"
-                                                    alt="avatardefault_92824-2.png"
-                                                    loading="lazy" />
-                                            </div>
+                                                        <div class="guestbook-label">
+                                                            <label for="guestbook-message"
+                                                                class="">Pesan</label>
+                                                        </div>
+                                                        <textarea id="guestbook-message" name="guestbook_message" class="form-control" rows="3"
+                                                            placeholder="Berikan Ucapan Dan Doa Restu" required></textarea>
 
-                                            <div class="guestbook-list">
-                                                <div id="comments-section"></div>
-                                            </div>
-                                            
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function () {
-                                                    const currentUrl = window.location.href;
-                                                    const slug = currentUrl.split('/').pop();
-                                                
-                                                    fetchComments();
-                                                
-                                                    function fetchComments() {
-                                                        fetch(`/comments/${slug}`)
-                                                            .then(response => {
-                                                                if (!response.ok) {
-                                                                    throw new Error('Failed to fetch comments');
-                                                                }
-                                                                return response.json();
-                                                            })
-                                                            .then(comments => {
-                                                                const commentsContainer = document.getElementById('comments-section');
-                                                                commentsContainer.innerHTML = '';
-                                                
-                                                                comments.forEach(comment => {
-                                                                    appendComment(comment);
-                                                                });
-                                                            })
-                                                            .catch(error => console.error('Error fetching comments:', error));
-                                                    }
-                                                
-                                                    function appendComment(comment) {
-                                                        const commentsContainer = document.getElementById('comments-section');
-                                                        const commentHTML = `
+                                                        <div class="elementor-button-wrapper">
+                                                            <button id="submitGuestbookBtn"
+                                                                class="elementor-button-link elementor-button elementor-size-sm"
+                                                                type="button">
+                                                                KIRIM UCAPAN
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+
+                                                <div id="hidden-avatar" style="display:none;">
+                                                    <img decoding="async"
+                                                        src="https://buka.undanganku.store/wp-content/uploads/2024/03/avatardefault_92824-2.png"
+                                                        title="avatardefault_92824-2.png"
+                                                        alt="avatardefault_92824-2.png" loading="lazy" />
+                                                </div>
+
+                                                <div class="guestbook-list">
+                                                    <div id="comments-section"></div>
+                                                </div>
+
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        const currentUrl = window.location.href;
+                                                        const slug = currentUrl.split('/').pop();
+
+                                                        fetchComments();
+
+                                                        function fetchComments() {
+                                                            fetch(`/comments/${slug}`)
+                                                                .then(response => {
+                                                                    if (!response.ok) {
+                                                                        throw new Error('Failed to fetch comments');
+                                                                    }
+                                                                    return response.json();
+                                                                })
+                                                                .then(comments => {
+                                                                    const commentsContainer = document.getElementById('comments-section');
+                                                                    commentsContainer.innerHTML = '';
+
+                                                                    comments.forEach(comment => {
+                                                                        appendComment(comment);
+                                                                    });
+                                                                })
+                                                                .catch(error => console.error('Error fetching comments:', error));
+                                                        }
+
+                                                        function appendComment(comment) {
+                                                            const commentsContainer = document.getElementById('comments-section');
+                                                            const commentHTML = `
                                                             <div class="user-guestbook">
                                                                 <div>
                                                                     <img decoding="async" src="https://buka.undanganku.store/wp-content/uploads/2024/03/avatardefault_92824-2.png" title="avatardefault_92824-2.png" alt="avatardefault_92824-2.png" loading="lazy" />
@@ -3448,835 +3481,832 @@
                                                                 </div>
                                                             </div>
                                                         `;
-                                                        commentsContainer.insertAdjacentHTML('afterbegin', commentHTML); // Insert at the top
-                                                    }
-                                                
-                                                    document.getElementById('submitGuestbookBtn').addEventListener('click', function(event) {
-                                                        event.preventDefault();
-                                                
-                                                        const name = document.getElementById('guestbook-name').value;
-                                                        const message = document.getElementById('guestbook-message').value;
-                                                        const submitBtn = document.getElementById('submitGuestbookBtn');
-                                                
-                                                        submitBtn.disabled = true;
-                                                        submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
-                                                
-                                                        const formData = {
-                                                            name: name,
-                                                            comment: message
-                                                        };
-                                                
-                                                        fetch(`/comments/${slug}`, {
-                                                            method: 'POST',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                                                                'Accept': 'application/json'
-                                                            },
-                                                            body: JSON.stringify(formData)
-                                                        })
-                                                        .then(response => {
-                                                            if (!response.ok) {
-                                                                throw new Error('Failed to submit comment');
-                                                            }
-                                                            return response.json();
-                                                        })
-                                                        .then(newComment => {
-                                                            document.getElementById('guestbook-name').value = '';
-                                                            document.getElementById('guestbook-message').value = '';
-                                                
-                                                            appendComment(newComment); // Append the new comment at the top
-                                                        })
-                                                        .catch(error => console.error('Error submitting comment:', error))
-                                                        .finally(() => {
-                                                            submitBtn.disabled = false;
-                                                            submitBtn.innerHTML = 'KIRIM UCAPAN';
+                                                            commentsContainer.insertAdjacentHTML('afterbegin', commentHTML); // Insert at the top
+                                                        }
+
+                                                        document.getElementById('submitGuestbookBtn').addEventListener('click', function(event) {
+                                                            event.preventDefault();
+
+                                                            const name = document.getElementById('guestbook-name').value;
+                                                            const message = document.getElementById('guestbook-message').value;
+                                                            const submitBtn = document.getElementById('submitGuestbookBtn');
+
+                                                            submitBtn.disabled = true;
+                                                            submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
+
+                                                            const formData = {
+                                                                name: name,
+                                                                comment: message
+                                                            };
+
+                                                            fetch(`/comments/${slug}`, {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json',
+                                                                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                                                                        'Accept': 'application/json'
+                                                                    },
+                                                                    body: JSON.stringify(formData)
+                                                                })
+                                                                .then(response => {
+                                                                    if (!response.ok) {
+                                                                        throw new Error('Failed to submit comment');
+                                                                    }
+                                                                    return response.json();
+                                                                })
+                                                                .then(newComment => {
+                                                                    document.getElementById('guestbook-name').value = '';
+                                                                    document.getElementById('guestbook-message').value = '';
+
+                                                                    appendComment(newComment); // Append the new comment at the top
+                                                                })
+                                                                .catch(error => console.error('Error submitting comment:', error))
+                                                                .finally(() => {
+                                                                    submitBtn.disabled = false;
+                                                                    submitBtn.innerHTML = 'KIRIM UCAPAN';
+                                                                });
                                                         });
                                                     });
-                                                });
                                                 </script>
-                                            
-                                        </div>
 
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7a8e6944 wdp-sticky-section-no"
-                            data-id="7a8e6944" data-element_type="column">
-                            <div class="elementor-widget-wrap">
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7a8e6944 wdp-sticky-section-no"
+                                data-id="7a8e6944" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<section
-class="elementor-section elementor-top-section elementor-element elementor-element-50375fbc elementor-section-height-min-height elementor-section-items-bottom elementor-section-boxed elementor-section-height-default wdp-sticky-section-no"
-data-id="50375fbc" data-element_type="section"
-data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-{{-- BG-FOOTER --}}
-@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+    </section>
+    <section
+        class="elementor-section elementor-top-section elementor-element elementor-element-50375fbc elementor-section-height-min-height elementor-section-items-bottom elementor-section-boxed elementor-section-height-default wdp-sticky-section-no"
+        data-id="50375fbc" data-element_type="section"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" {{-- BG-FOOTER --}}
+        @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
 @foreach ($imageOrders as $order)
 @if (isset($order->image->fileImage) && $order->partName === 'background')
 @php $galleryCount++; @endphp
 @if ($galleryCount === 4)
     style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
     @break @endif
-@endif
-@endforeach
-@endif
-<div class="elementor-background-overlay"></div>
-<div class="elementor-container elementor-column-gap-default">
-    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-792a3bf1 wdp-sticky-section-no"
-        data-id="792a3bf1" data-element_type="column">
-        <div class="elementor-widget-wrap elementor-element-populated">
-            <section
-                class="elementor-section elementor-inner-section elementor-element elementor-element-13e5537f elementor-section-content-bottom elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                data-id="13e5537f" data-element_type="section">
-                <div class="elementor-container elementor-column-gap-default">
-                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7faedd27 wdp-sticky-section-no"
-                        data-id="7faedd27" data-element_type="column">
-                        <div class="elementor-widget-wrap elementor-element-populated">
-                            <div class="elementor-element elementor-element-43308e2 elementor-widget__width-auto elementor-widget-mobile__width-auto elementor-fixed animated-slow elementor-view-stacked elementor-shape-circle wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-weddingpress-audio"
-                                data-id="43308e2" data-element_type="widget"
-                                data-settings="{&quot;_position&quot;:&quot;fixed&quot;,&quot;motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_effect&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_direction&quot;:&quot;negative&quot;,&quot;motion_fx_rotateZ_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_mobile&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:1000,&quot;_animation_tablet&quot;:&quot;fadeIn&quot;,&quot;motion_fx_rotateZ_affectedRange&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;]}"
-                                data-widget_type="weddingpress-audio.default">
-                                <div class="elementor-widget-container">
+        @endif
+        @endforeach
+        @endif
+        <div class="elementor-background-overlay"></div>
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-792a3bf1 wdp-sticky-section-no"
+                data-id="792a3bf1" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <section
+                        class="elementor-section elementor-inner-section elementor-element elementor-element-13e5537f elementor-section-content-bottom elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                        data-id="13e5537f" data-element_type="section">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-7faedd27 wdp-sticky-section-no"
+                                data-id="7faedd27" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-43308e2 elementor-widget__width-auto elementor-widget-mobile__width-auto elementor-fixed animated-slow elementor-view-stacked elementor-shape-circle wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-weddingpress-audio"
+                                        data-id="43308e2" data-element_type="widget"
+                                        data-settings="{&quot;_position&quot;:&quot;fixed&quot;,&quot;motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_effect&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_direction&quot;:&quot;negative&quot;,&quot;motion_fx_rotateZ_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_mobile&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:1000,&quot;_animation_tablet&quot;:&quot;fadeIn&quot;,&quot;motion_fx_rotateZ_affectedRange&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;]}"
+                                        data-widget_type="weddingpress-audio.default">
+                                        <div class="elementor-widget-container">
 
-                                    <script>
-                                        var settingAutoplay = '';
-                                        window.settingAutoplay = settingAutoplay === 'disable' ? false : true;
-                                    </script>
+                                            <script>
+                                                var settingAutoplay = '';
+                                                window.settingAutoplay = settingAutoplay === 'disable' ? false : true;
+                                            </script>
 
-                                    <div id="audio-container" class="audio-box">
+                                            <div id="audio-container" class="audio-box">
 
-                                        <audio id="song" loop>
-                                            <source
-                                                src="https://buka.undanganku.store/wp-content/uploads/2024/03/y2mate.com-Pengingat-Good-Morning-Everyone-Lirik-Lagu-1-1.mp3"
-                                                type="audio/mp3">
-                                        </audio>
+                                                <audio id="song" loop>
+                                                    <source
+                                                        src="https://buka.undanganku.store/wp-content/uploads/2024/03/y2mate.com-Pengingat-Good-Morning-Everyone-Lirik-Lagu-1-1.mp3"
+                                                        type="audio/mp3">
+                                                </audio>
 
-                                        <div class="elementor-icon-wrapper"
-                                            id="unmute-sound" style="display: none;">
-                                            <div class="elementor-icon">
-                                                <svg aria-hidden="true"
-                                                    class="e-font-icon-svg e-far-play-circle"
-                                                    viewBox="0 0 512 512"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                        <div class="elementor-icon-wrapper"
-                                            id="mute-sound" style="display: none;">
-                                            <div class="elementor-icon">
-                                                <svg aria-hidden="true"
-                                                    class="e-font-icon-svg e-fas-compact-disc"
-                                                    viewBox="0 0 496 512"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zM88 256H56c0-105.9 86.1-192 192-192v32c-88.2 0-160 71.8-160 160zm160 96c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96zm0-128c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5839055a wdp-sticky-section-no"
-                        data-id="5839055a" data-element_type="column">
-                        <div class="elementor-widget-wrap elementor-element-populated">
-                            <div class="elementor-element elementor-element-3559afc6 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
-                                data-id="3559afc6" data-element_type="widget"
-                                data-widget_type="spacer.default">
-                                <div class="elementor-widget-container">
-                                    <div class="elementor-spacer">
-                                        <div class="elementor-spacer-inner"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-1ad37163 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
-                                data-id="1ad37163" data-element_type="widget"
-                                data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                data-widget_type="text-editor.default">
-                                <div class="elementor-widget-container">
-                                    <p>Merupakan suatu kebahagiaan dan kehormatan bagi kami,
-                                        apabila Bapak/Ibu/Saudara/i, berkenan hadir dan
-                                        memberikan do’a restu kepada Kami.</p>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-5912a7c7 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
-                                data-id="5912a7c7" data-element_type="widget"
-                                data-widget_type="spacer.default">
-                                <div class="elementor-widget-container">
-                                    <div class="elementor-spacer">
-                                        <div class="elementor-spacer-inner"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-45ea6ca1 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                data-id="45ea6ca1" data-element_type="widget"
-                                data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
-                                data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <h2
-                                        class="elementor-heading-title elementor-size-default">
-                                        See You on Our Big Day</h2>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-5c48a401 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
-                                data-id="5c48a401" data-element_type="widget"
-                                data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
-                                data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <h2
-                                        class="elementor-heading-title elementor-size-default">
-                                        @if ($form->penempatanTulisan == 'Pria')
-                                            {{ strtoupper($form->namaPanggilanPria) }}
-                                            &amp;
-                                            {{ strtoupper($form->namaPanggilanWanita) }}
-                                        @else
-                                            {{ strtoupper($form->namaPanggilanWanita) }}
-                                            &amp;
-                                            {{ strtoupper($form->namaPanggilanPria) }}
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-537494d9 wdp-sticky-section-no"
-                        data-id="537494d9" data-element_type="column">
-                        <div class="elementor-widget-wrap elementor-element-populated">
-                            <div class="elementor-element elementor-element-168aeba5 elementor-mobile-align-center elementor-widget-mobile__width-auto elementor-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-lottie"
-                                data-id="168aeba5" data-element_type="widget"
-                                data-settings="{&quot;source&quot;:&quot;external_url&quot;,&quot;source_external_url&quot;:{&quot;url&quot;:&quot;https:\/\/assets9.lottiefiles.com\/packages\/lf20_33oraRDqRH.json&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;link_to&quot;:&quot;custom&quot;,&quot;custom_link&quot;:{&quot;url&quot;:&quot;#cover&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}"
-                                data-widget_type="lottie.default">
-                                <div class="elementor-widget-container">
-                                    <a class="e-lottie__container__link" href="#cover">
-                                        <div class="e-lottie__container">
-                                            <div class="e-lottie__animation"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-</section>
-    </div>
-    <div data-elementor-type="popup" data-elementor-id="23160"
-        class="elementor elementor-23160 elementor-location-popup"
-        data-elementor-settings="{&quot;entrance_animation&quot;:&quot;fadeIn&quot;,&quot;exit_animation&quot;:&quot;slideInUp&quot;,&quot;entrance_animation_duration&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1.2,&quot;sizes&quot;:[]},&quot;a11y_navigation&quot;:&quot;yes&quot;,&quot;triggers&quot;:[],&quot;timing&quot;:[]}"
-        data-elementor-post-type="elementor_library">
-        <section
-            class="elementor-section elementor-top-section elementor-element elementor-element-569c51b3 elementor-section-height-min-height animated-slow notranslate elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no elementor-invisible"
-            data-id="569c51b3" data-element_type="section"
-            data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:1000}">
-            <div class="elementor-background-overlay"></div>
-            <div class="elementor-container elementor-column-gap-default">
-                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-29a68c7b wdp-sticky-section-no"
-                    data-id="29a68c7b" data-element_type="column">
-                    <div class="elementor-widget-wrap elementor-element-populated">
-                        <section
-                            class="elementor-section elementor-inner-section elementor-element elementor-element-3b717344 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                            data-id="3b717344" data-element_type="section">
-                            <div class="elementor-container elementor-column-gap-default">
-                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-c85fbca wdp-sticky-section-no"
-                                    data-id="c85fbca" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
-                                </div>
-                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-61d39cfa wdp-sticky-section-no"
-                                    data-id="61d39cfa" data-element_type="column">
-                                    <div class="elementor-widget-wrap elementor-element-populated">
-                                        <div class="elementor-element elementor-element-2d1d28e5 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
-                                            data-id="2d1d28e5" data-element_type="widget"
-                                            data-widget_type="spacer.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="elementor-spacer">
-                                                    <div class="elementor-spacer-inner"></div>
+                                                <div class="elementor-icon-wrapper" id="unmute-sound"
+                                                    style="display: none;">
+                                                    <div class="elementor-icon">
+                                                        <svg aria-hidden="true"
+                                                            class="e-font-icon-svg e-far-play-circle"
+                                                            viewBox="0 0 512 512"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="elementor-element elementor-element-222b978 wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                            data-id="222b978" data-element_type="widget"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h2 class="elementor-heading-title elementor-size-default">THE WEDDING
-                                                    OF</h2>
-                                            </div>
-                                        </div>
-                                        <div class="elementor-element elementor-element-7bef1bad wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                            data-id="7bef1bad" data-element_type="widget"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h3 class="elementor-heading-title elementor-size-default">Imron</h3>
-                                            </div>
-                                        </div>
-                                        <div class="elementor-element elementor-element-5dd9ce31 elementor-widget-divider--view-line_text elementor-widget-divider--element-align-center wdp-sticky-section-no elementor-widget elementor-widget-divider"
-                                            data-id="5dd9ce31" data-element_type="widget"
-                                            data-widget_type="divider.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="elementor-divider">
-                                                    <span class="elementor-divider-separator">
-                                                        <span
-                                                            class="elementor-divider__text elementor-divider__element">
-                                                            & </span>
-                                                    </span>
+
+                                                <div class="elementor-icon-wrapper" id="mute-sound"
+                                                    style="display: none;">
+                                                    <div class="elementor-icon">
+                                                        <svg aria-hidden="true"
+                                                            class="e-font-icon-svg e-fas-compact-disc"
+                                                            viewBox="0 0 496 512"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zM88 256H56c0-105.9 86.1-192 192-192v32c-88.2 0-160 71.8-160 160zm160 96c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96zm0-128c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
                                                 </div>
+
                                             </div>
+
                                         </div>
-                                        <div class="elementor-element elementor-element-155147f7 wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                            data-id="155147f7" data-element_type="widget"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h3 class="elementor-heading-title elementor-size-default">Musyahadah
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="elementor-element elementor-element-a05e124 wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                            data-id="a05e124" data-element_type="widget"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h3 class="elementor-heading-title elementor-size-default">Kpd Yth:
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="elementor-element elementor-element-97d4673 wdp-sticky-section-no elementor-widget elementor-widget-heading"
-                                            data-id="97d4673" data-element_type="widget"
-                                            data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <h3 class="elementor-heading-title elementor-size-default">Nama Tamu
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="elementor-element elementor-element-32fc14c close-popup wdp-sticky-section-no elementor-widget elementor-widget-html"
-                                            data-id="32fc14c" data-element_type="widget"
-                                            data-widget_type="html.default">
-                                            <div class="elementor-widget-container">
-                                                <style>
-                                                    .button-undangan {
-                                                        border: none;
-                                                        color: white;
-                                                        padding: 5px 10px;
-                                                        text-align: center;
-                                                        text-decoration: none;
-                                                        display: inline-block;
-                                                        font-size: 16px;
-                                                        margin: 5px 10px;
-                                                        transition-duration: 0.4s;
-                                                        cursor: pointer;
-                                                    }
-
-                                                    .button-undangan {
-                                                        background-color: #7a7a7a;
-                                                        color: #EEEEEE;
-                                                        border: 3px solid #7a7a7a;
-                                                    }
-
-                                                    .button-undangan:hover {
-                                                        background-color: #F4F4F4;
-                                                        color: #7a7a7a;
-                                                        border: 2px solid #F4F4F4;
-                                                    }
-                                                </style>
-
-                                                <center>
-                                                    <button onclick="playAudio()" class="button-undangan"><i
-                                                            class="fa fa-envelope-open"></i> Buka Undangan
-                                                    </button>
-
-
-                                                </center>
-                                                <script>
-                                                    var x = document.getElementById("song");
-                                                    var y = document.elementorProFrontend.modules.popup.closePopup("{}, event ");
-
-                                                    function playAudio() {
-                                                        x.play();
-                                                    }
-
-                                                    function pauseAudio() {
-                                                        x.pause();
-                                                    }
-                                                </script>
-
-                                                <script>
-                                                    jQuery(document).ready(function($) {
-                                                        $(document).on('click', '.close-popup', function(event) {
-                                                            elementorProFrontend.modules.popup.closePopup({}, event);
-                                                        });
-                                                    });
-                                                </script>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-579d39a2 wdp-sticky-section-no"
-                                    data-id="579d39a2" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                        <div class="elementor-element elementor-element-27f1999a wdp-sticky-section-no elementor-widget elementor-widget-html"
-                            data-id="27f1999a" data-element_type="widget" data-widget_type="html.default">
-                            <div class="elementor-widget-container">
-                                <html lang="en" class="notranslate" translate="no">
-
-                                <head>
-                                    <meta name="google" content="notranslate" />
-                                </head>
-
-                                </html>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5839055a wdp-sticky-section-no"
+                                data-id="5839055a" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-3559afc6 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
+                                        data-id="3559afc6" data-element_type="widget"
+                                        data-widget_type="spacer.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-spacer">
+                                                <div class="elementor-spacer-inner"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-1ad37163 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-text-editor"
+                                        data-id="1ad37163" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                                        data-widget_type="text-editor.default">
+                                        <div class="elementor-widget-container">
+                                            <p>Merupakan suatu kebahagiaan dan kehormatan bagi kami,
+                                                apabila Bapak/Ibu/Saudara/i, berkenan hadir dan
+                                                memberikan do’a restu kepada Kami.</p>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-5912a7c7 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
+                                        data-id="5912a7c7" data-element_type="widget"
+                                        data-widget_type="spacer.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-spacer">
+                                                <div class="elementor-spacer-inner"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-45ea6ca1 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                        data-id="45ea6ca1" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h2 class="elementor-heading-title elementor-size-default">
+                                                See You on Our Big Day</h2>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-5c48a401 wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-heading"
+                                        data-id="5c48a401" data-element_type="widget"
+                                        data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h2 class="elementor-heading-title elementor-size-default">
+                                                @if ($form->penempatanTulisan == 'Pria')
+                                                    {{ strtoupper($form->namaPanggilanPria) }}
+                                                    &amp;
+                                                    {{ strtoupper($form->namaPanggilanWanita) }}
+                                                @else
+                                                    {{ strtoupper($form->namaPanggilanWanita) }}
+                                                    &amp;
+                                                    {{ strtoupper($form->namaPanggilanPria) }}
+                                                @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-537494d9 wdp-sticky-section-no"
+                                data-id="537494d9" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-168aeba5 elementor-mobile-align-center elementor-widget-mobile__width-auto elementor-align-center wdp-sticky-section-no elementor-invisible elementor-widget elementor-widget-lottie"
+                                        data-id="168aeba5" data-element_type="widget"
+                                        data-settings="{&quot;source&quot;:&quot;external_url&quot;,&quot;source_external_url&quot;:{&quot;url&quot;:&quot;https:\/\/assets9.lottiefiles.com\/packages\/lf20_33oraRDqRH.json&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;link_to&quot;:&quot;custom&quot;,&quot;custom_link&quot;:{&quot;url&quot;:&quot;#cover&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}"
+                                        data-widget_type="lottie.default">
+                                        <div class="elementor-widget-container">
+                                            <a class="e-lottie__container__link" href="#cover">
+                                                <div class="e-lottie__container">
+                                                    <div class="e-lottie__animation"></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <section
-                            class="elementor-section elementor-inner-section elementor-element elementor-element-6f4a0116 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
-                            data-id="6f4a0116" data-element_type="section">
-                            <div class="elementor-container elementor-column-gap-default">
-                                <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-72be7bca wdp-sticky-section-no"
-                                    data-id="72be7bca" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
-                                </div>
-                                <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4cd1cdf7 wdp-sticky-section-no"
-                                    data-id="4cd1cdf7" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
-                                </div>
-                                <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-7e751d30 wdp-sticky-section-no"
-                                    data-id="7e751d30" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
-                                </div>
-                                <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-260e5a97 wdp-sticky-section-no"
-                                    data-id="260e5a97" data-element_type="column">
-                                    <div class="elementor-widget-wrap">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+                    </section>
                 </div>
             </div>
-        </section>
-    </div>
-    <script type='text/javascript'>
-        const lazyloadRunObserver = () => {
-            const lazyloadBackgrounds = document.querySelectorAll(`.e-con.e-parent:not(.e-lazyloaded)`);
-            const lazyloadBackgroundObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        let lazyloadBackground = entry.target;
-                        if (lazyloadBackground) {
-                            lazyloadBackground.classList.add('e-lazyloaded');
-                        }
-                        lazyloadBackgroundObserver.unobserve(entry.target);
+        </div>
+    </section>
+</div>
+<div data-elementor-type="popup" data-elementor-id="23160"
+    class="elementor elementor-23160 elementor-location-popup"
+    data-elementor-settings="{&quot;entrance_animation&quot;:&quot;fadeIn&quot;,&quot;exit_animation&quot;:&quot;slideInUp&quot;,&quot;entrance_animation_duration&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1.2,&quot;sizes&quot;:[]},&quot;a11y_navigation&quot;:&quot;yes&quot;,&quot;triggers&quot;:[],&quot;timing&quot;:[]}"
+    data-elementor-post-type="elementor_library">
+    <section
+        class="elementor-section elementor-top-section elementor-element elementor-element-569c51b3 elementor-section-height-min-height animated-slow notranslate elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no elementor-invisible"
+        data-id="569c51b3" data-element_type="section"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:1000}">
+        <div class="elementor-background-overlay"></div>
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-29a68c7b wdp-sticky-section-no"
+                data-id="29a68c7b" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <section
+                        class="elementor-section elementor-inner-section elementor-element elementor-element-3b717344 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                        data-id="3b717344" data-element_type="section">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-c85fbca wdp-sticky-section-no"
+                                data-id="c85fbca" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
+                            </div>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-61d39cfa wdp-sticky-section-no"
+                                data-id="61d39cfa" data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-element-2d1d28e5 wdp-sticky-section-no elementor-widget elementor-widget-spacer"
+                                        data-id="2d1d28e5" data-element_type="widget"
+                                        data-widget_type="spacer.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-spacer">
+                                                <div class="elementor-spacer-inner"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-222b978 wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                        data-id="222b978" data-element_type="widget"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h2 class="elementor-heading-title elementor-size-default">THE WEDDING
+                                                OF</h2>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-7bef1bad wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                        data-id="7bef1bad" data-element_type="widget"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h3 class="elementor-heading-title elementor-size-default">Imron</h3>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-5dd9ce31 elementor-widget-divider--view-line_text elementor-widget-divider--element-align-center wdp-sticky-section-no elementor-widget elementor-widget-divider"
+                                        data-id="5dd9ce31" data-element_type="widget"
+                                        data-widget_type="divider.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-divider">
+                                                <span class="elementor-divider-separator">
+                                                    <span
+                                                        class="elementor-divider__text elementor-divider__element">
+                                                        & </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-155147f7 wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                        data-id="155147f7" data-element_type="widget"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h3 class="elementor-heading-title elementor-size-default">Musyahadah
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-a05e124 wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                        data-id="a05e124" data-element_type="widget"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h3 class="elementor-heading-title elementor-size-default">Kpd Yth:
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-97d4673 wdp-sticky-section-no elementor-widget elementor-widget-heading"
+                                        data-id="97d4673" data-element_type="widget"
+                                        data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <h3 class="elementor-heading-title elementor-size-default">Nama Tamu
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-32fc14c close-popup wdp-sticky-section-no elementor-widget elementor-widget-html"
+                                        data-id="32fc14c" data-element_type="widget"
+                                        data-widget_type="html.default">
+                                        <div class="elementor-widget-container">
+                                            <style>
+                                                .button-undangan {
+                                                    border: none;
+                                                    color: white;
+                                                    padding: 5px 10px;
+                                                    text-align: center;
+                                                    text-decoration: none;
+                                                    display: inline-block;
+                                                    font-size: 16px;
+                                                    margin: 5px 10px;
+                                                    transition-duration: 0.4s;
+                                                    cursor: pointer;
+                                                }
+
+                                                .button-undangan {
+                                                    background-color: #7a7a7a;
+                                                    color: #EEEEEE;
+                                                    border: 3px solid #7a7a7a;
+                                                }
+
+                                                .button-undangan:hover {
+                                                    background-color: #F4F4F4;
+                                                    color: #7a7a7a;
+                                                    border: 2px solid #F4F4F4;
+                                                }
+                                            </style>
+
+                                            <center>
+                                                <button onclick="playAudio()" class="button-undangan"><i
+                                                        class="fa fa-envelope-open"></i> Buka Undangan
+                                                </button>
+
+
+                                            </center>
+                                            <script>
+                                                var x = document.getElementById("song");
+                                                var y = document.elementorProFrontend.modules.popup.closePopup("{}, event ");
+
+                                                function playAudio() {
+                                                    x.play();
+                                                }
+
+                                                function pauseAudio() {
+                                                    x.pause();
+                                                }
+                                            </script>
+
+                                            <script>
+                                                jQuery(document).ready(function($) {
+                                                    $(document).on('click', '.close-popup', function(event) {
+                                                        elementorProFrontend.modules.popup.closePopup({}, event);
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-579d39a2 wdp-sticky-section-no"
+                                data-id="579d39a2" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="elementor-element elementor-element-27f1999a wdp-sticky-section-no elementor-widget elementor-widget-html"
+                        data-id="27f1999a" data-element_type="widget" data-widget_type="html.default">
+                        <div class="elementor-widget-container">
+                            <html lang="en" class="notranslate" translate="no">
+
+                            <head>
+                                <meta name="google" content="notranslate" />
+                            </head>
+
+                            </html>
+                        </div>
+                    </div>
+                    <section
+                        class="elementor-section elementor-inner-section elementor-element elementor-element-6f4a0116 elementor-section-boxed elementor-section-height-default elementor-section-height-default wdp-sticky-section-no"
+                        data-id="6f4a0116" data-element_type="section">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-72be7bca wdp-sticky-section-no"
+                                data-id="72be7bca" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
+                            </div>
+                            <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4cd1cdf7 wdp-sticky-section-no"
+                                data-id="4cd1cdf7" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
+                            </div>
+                            <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-7e751d30 wdp-sticky-section-no"
+                                data-id="7e751d30" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
+                            </div>
+                            <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-260e5a97 wdp-sticky-section-no"
+                                data-id="260e5a97" data-element_type="column">
+                                <div class="elementor-widget-wrap">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type='text/javascript'>
+    const lazyloadRunObserver = () => {
+        const lazyloadBackgrounds = document.querySelectorAll(`.e-con.e-parent:not(.e-lazyloaded)`);
+        const lazyloadBackgroundObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    let lazyloadBackground = entry.target;
+                    if (lazyloadBackground) {
+                        lazyloadBackground.classList.add('e-lazyloaded');
                     }
-                });
-            }, {
-                rootMargin: '200px 0px 200px 0px'
+                    lazyloadBackgroundObserver.unobserve(entry.target);
+                }
             });
-            lazyloadBackgrounds.forEach((lazyloadBackground) => {
-                lazyloadBackgroundObserver.observe(lazyloadBackground);
-            });
-        };
-        const events = [
-            'DOMContentLoaded',
-            'elementor/lazyload/observe',
-        ];
-        events.forEach((event) => {
-            document.addEventListener(event, lazyloadRunObserver);
+        }, {
+            rootMargin: '200px 0px 200px 0px'
         });
-    </script>
-    <link rel='stylesheet' id='e-motion-fx-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/modules/motion-fx.min.css?ver=3.25.0'
-        media='all' />
-    <link rel='stylesheet' id='e-popup-css'
-        href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=3.25.0'
-        media='all' />
-    <script id="wp-block-template-skip-link-js-after">
-        (function() {
-            var skipLinkTarget = document.querySelector('main'),
-                sibling,
-                skipLinkTargetID,
-                skipLink;
-
-            // Early exit if a skip-link target can't be located.
-            if (!skipLinkTarget) {
-                return;
-            }
-
-            /*
-             * Get the site wrapper.
-             * The skip-link will be injected in the beginning of it.
-             */
-            sibling = document.querySelector('.wp-site-blocks');
-
-            // Early exit if the root element was not found.
-            if (!sibling) {
-                return;
-            }
-
-            // Get the skip-link target's ID, and generate one if it doesn't exist.
-            skipLinkTargetID = skipLinkTarget.id;
-            if (!skipLinkTargetID) {
-                skipLinkTargetID = 'wp--skip-link--target';
-                skipLinkTarget.id = skipLinkTargetID;
-            }
-
-            // Create the skip link.
-            skipLink = document.createElement('a');
-            skipLink.classList.add('skip-link', 'screen-reader-text');
-            skipLink.href = '#' + skipLinkTargetID;
-            skipLink.innerHTML = 'Skip to content';
-
-            // Inject the skip link.
-            sibling.parentElement.insertBefore(skipLink, sibling);
-        }());
-    </script>
-    <script id="wdp_js_script-js-extra">
-        var WDP_WP = {
-            "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "wdpNonce": "4a4c929660",
-            "jpages": "true",
-            "jPagesNum": "5",
-            "textCounter": "true",
-            "textCounterNum": "500",
-            "widthWrap": "",
-            "autoLoad": "true",
-            "thanksComment": "Terima kasih atas ucapan & doanya!",
-            "thanksReplyComment": "Terima kasih atas balasannya!",
-            "duplicateComment": "You might have left one of the fields blank, or duplicate comments",
-            "insertImage": "Insert image",
-            "insertVideo": "Insert video",
-            "insertLink": "Insert link",
-            "checkVideo": "Check video",
-            "accept": "Accept",
-            "cancel": "Cancel",
-            "reply": "Balas",
-            "textWriteComment": "Tulis Ucapan & Doa",
-            "classPopularComment": "wdp-popular-comment",
-            "textUrlImage": "Url image",
-            "textUrlVideo": "Url video youtube or vimeo",
-            "textUrlLink": "Url link",
-            "textToDisplay": "Text to display",
-            "textCharacteresMin": "Minimal 2 karakter",
-            "textNavNext": "Selanjutnya",
-            "textNavPrev": "Sebelumnya",
-            "textMsgDeleteComment": "Do you want delete this comment?",
-            "textLoadMore": "Load more",
-            "textLikes": "Likes"
-        };
-    </script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/wdp_script.js?ver=2.7.6"
-        id="wdp_js_script-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/jquery.jPages.min.js?ver=0.7"
-        id="wdp_jPages-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/jquery.textareaCounter.js?ver=2.0"
-        id="wdp_textCounter-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/jquery.placeholder.min.js?ver=2.0.7"
-        id="wdp_placeholder-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/autosize.min.js?ver=1.14"
-        id="wdp_autosize-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp-swiper.min.js"
-        id="wdp-swiper-js-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/qr-code.js"
-        id="weddingpress-qr-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp-horizontal.js"
-        id="wdp-horizontal-js-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/exad-scripts.min.js?ver=3.0.1"
-        id="exad-main-script-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js?ver=0.2.1"
-        id="jquery-numerator-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/e-gallery/js/e-gallery.min.js?ver=1.2.0"
-        id="elementor-gallery-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/lib/lottie/lottie.min.js?ver=5.6.6"
-        id="lottie-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.25.0"
-        id="elementor-pro-webpack-runtime-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.25.3"
-        id="elementor-webpack-runtime-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.25.3"
-        id="elementor-frontend-modules-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/dist/hooks.min.js?ver=2810c76e705dd1a53b18" id="wp-hooks-js">
-    </script>
-    <script src="https://buka.undanganku.store/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js">
-    </script>
-    <script id="wp-i18n-js-after">
-        wp.i18n.setLocaleData({
-            'text direction\u0004ltr': ['ltr']
+        lazyloadBackgrounds.forEach((lazyloadBackground) => {
+            lazyloadBackgroundObserver.observe(lazyloadBackground);
         });
-    </script>
-    <script id="elementor-pro-frontend-js-before">
-        var ElementorProFrontendConfig = {
-            "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "nonce": "f010c0ba4c",
-            "urls": {
-                "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor-pro\/assets\/",
-                "rest": "https:\/\/buka.undanganku.store\/wp-json\/"
+    };
+    const events = [
+        'DOMContentLoaded',
+        'elementor/lazyload/observe',
+    ];
+    events.forEach((event) => {
+        document.addEventListener(event, lazyloadRunObserver);
+    });
+</script>
+<link rel='stylesheet' id='e-motion-fx-css'
+    href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/modules/motion-fx.min.css?ver=3.25.0'
+    media='all' />
+<link rel='stylesheet' id='e-popup-css'
+    href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=3.25.0'
+    media='all' />
+<script id="wp-block-template-skip-link-js-after">
+    (function() {
+        var skipLinkTarget = document.querySelector('main'),
+            sibling,
+            skipLinkTargetID,
+            skipLink;
+
+        // Early exit if a skip-link target can't be located.
+        if (!skipLinkTarget) {
+            return;
+        }
+
+        /*
+         * Get the site wrapper.
+         * The skip-link will be injected in the beginning of it.
+         */
+        sibling = document.querySelector('.wp-site-blocks');
+
+        // Early exit if the root element was not found.
+        if (!sibling) {
+            return;
+        }
+
+        // Get the skip-link target's ID, and generate one if it doesn't exist.
+        skipLinkTargetID = skipLinkTarget.id;
+        if (!skipLinkTargetID) {
+            skipLinkTargetID = 'wp--skip-link--target';
+            skipLinkTarget.id = skipLinkTargetID;
+        }
+
+        // Create the skip link.
+        skipLink = document.createElement('a');
+        skipLink.classList.add('skip-link', 'screen-reader-text');
+        skipLink.href = '#' + skipLinkTargetID;
+        skipLink.innerHTML = 'Skip to content';
+
+        // Inject the skip link.
+        sibling.parentElement.insertBefore(skipLink, sibling);
+    }());
+</script>
+<script id="wdp_js_script-js-extra">
+    var WDP_WP = {
+        "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
+        "wdpNonce": "4a4c929660",
+        "jpages": "true",
+        "jPagesNum": "5",
+        "textCounter": "true",
+        "textCounterNum": "500",
+        "widthWrap": "",
+        "autoLoad": "true",
+        "thanksComment": "Terima kasih atas ucapan & doanya!",
+        "thanksReplyComment": "Terima kasih atas balasannya!",
+        "duplicateComment": "You might have left one of the fields blank, or duplicate comments",
+        "insertImage": "Insert image",
+        "insertVideo": "Insert video",
+        "insertLink": "Insert link",
+        "checkVideo": "Check video",
+        "accept": "Accept",
+        "cancel": "Cancel",
+        "reply": "Balas",
+        "textWriteComment": "Tulis Ucapan & Doa",
+        "classPopularComment": "wdp-popular-comment",
+        "textUrlImage": "Url image",
+        "textUrlVideo": "Url video youtube or vimeo",
+        "textUrlLink": "Url link",
+        "textToDisplay": "Text to display",
+        "textCharacteresMin": "Minimal 2 karakter",
+        "textNavNext": "Selanjutnya",
+        "textNavPrev": "Sebelumnya",
+        "textMsgDeleteComment": "Do you want delete this comment?",
+        "textLoadMore": "Load more",
+        "textLikes": "Likes"
+    };
+</script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/wdp_script.js?ver=2.7.6"
+    id="wdp_js_script-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/jquery.jPages.min.js?ver=0.7"
+    id="wdp_jPages-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/jquery.textareaCounter.js?ver=2.0"
+    id="wdp_textCounter-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/jquery.placeholder.min.js?ver=2.0.7"
+    id="wdp_placeholder-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/weddingpress/addons/comment-kit//js/libs/autosize.min.js?ver=1.14"
+    id="wdp_autosize-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp-swiper.min.js"
+    id="wdp-swiper-js-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/qr-code.js"
+    id="weddingpress-qr-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp-horizontal.js"
+    id="wdp-horizontal-js-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/exad-scripts.min.js?ver=3.0.1"
+    id="exad-main-script-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js?ver=0.2.1"
+    id="jquery-numerator-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/lib/e-gallery/js/e-gallery.min.js?ver=1.2.0"
+    id="elementor-gallery-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/lib/lottie/lottie.min.js?ver=5.6.6"
+    id="lottie-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.25.0"
+    id="elementor-pro-webpack-runtime-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.25.3"
+    id="elementor-webpack-runtime-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.25.3"
+    id="elementor-frontend-modules-js"></script>
+<script src="https://buka.undanganku.store/wp-includes/js/dist/hooks.min.js?ver=2810c76e705dd1a53b18" id="wp-hooks-js">
+</script>
+<script src="https://buka.undanganku.store/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js">
+</script>
+<script id="wp-i18n-js-after">
+    wp.i18n.setLocaleData({
+        'text direction\u0004ltr': ['ltr']
+    });
+</script>
+<script id="elementor-pro-frontend-js-before">
+    var ElementorProFrontendConfig = {
+        "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
+        "nonce": "f010c0ba4c",
+        "urls": {
+            "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor-pro\/assets\/",
+            "rest": "https:\/\/buka.undanganku.store\/wp-json\/"
+        },
+        "settings": {
+            "lazy_load_background_images": true
+        },
+        "popup": {
+            "hasPopUps": true
+        },
+        "shareButtonsNetworks": {
+            "facebook": {
+                "title": "Facebook",
+                "has_counter": true
             },
-            "settings": {
-                "lazy_load_background_images": true
+            "twitter": {
+                "title": "Twitter"
             },
-            "popup": {
-                "hasPopUps": true
+            "linkedin": {
+                "title": "LinkedIn",
+                "has_counter": true
             },
-            "shareButtonsNetworks": {
-                "facebook": {
-                    "title": "Facebook",
-                    "has_counter": true
+            "pinterest": {
+                "title": "Pinterest",
+                "has_counter": true
+            },
+            "reddit": {
+                "title": "Reddit",
+                "has_counter": true
+            },
+            "vk": {
+                "title": "VK",
+                "has_counter": true
+            },
+            "odnoklassniki": {
+                "title": "OK",
+                "has_counter": true
+            },
+            "tumblr": {
+                "title": "Tumblr"
+            },
+            "digg": {
+                "title": "Digg"
+            },
+            "skype": {
+                "title": "Skype"
+            },
+            "stumbleupon": {
+                "title": "StumbleUpon",
+                "has_counter": true
+            },
+            "mix": {
+                "title": "Mix"
+            },
+            "telegram": {
+                "title": "Telegram"
+            },
+            "pocket": {
+                "title": "Pocket",
+                "has_counter": true
+            },
+            "xing": {
+                "title": "XING",
+                "has_counter": true
+            },
+            "whatsapp": {
+                "title": "WhatsApp"
+            },
+            "email": {
+                "title": "Email"
+            },
+            "print": {
+                "title": "Print"
+            },
+            "x-twitter": {
+                "title": "X"
+            },
+            "threads": {
+                "title": "Threads"
+            }
+        },
+        "facebook_sdk": {
+            "lang": "en_US",
+            "app_id": ""
+        },
+        "lottie": {
+            "defaultAnimationUrl": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"
+        }
+    };
+</script>
+<script src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.25.0"
+    id="elementor-pro-frontend-js"></script>
+<script src="https://buka.undanganku.store/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js">
+</script>
+<script id="elementor-frontend-js-before">
+    var elementorFrontendConfig = {
+        "environmentMode": {
+            "edit": false,
+            "wpPreview": false,
+            "isScriptDebug": false
+        },
+        "i18n": {
+            "shareOnFacebook": "Share on Facebook",
+            "shareOnTwitter": "Share on Twitter",
+            "pinIt": "Pin it",
+            "download": "Download",
+            "downloadImage": "Download image",
+            "fullscreen": "Fullscreen",
+            "zoom": "Zoom",
+            "share": "Share",
+            "playVideo": "Play Video",
+            "previous": "Previous",
+            "next": "Next",
+            "close": "Close",
+            "a11yCarouselWrapperAriaLabel": "Carousel | Horizontal scrolling: Arrow Left & Right",
+            "a11yCarouselPrevSlideMessage": "Previous slide",
+            "a11yCarouselNextSlideMessage": "Next slide",
+            "a11yCarouselFirstSlideMessage": "This is the first slide",
+            "a11yCarouselLastSlideMessage": "This is the last slide",
+            "a11yCarouselPaginationBulletMessage": "Go to slide"
+        },
+        "is_rtl": false,
+        "breakpoints": {
+            "xs": 0,
+            "sm": 480,
+            "md": 768,
+            "lg": 1025,
+            "xl": 1440,
+            "xxl": 1600
+        },
+        "responsive": {
+            "breakpoints": {
+                "mobile": {
+                    "label": "Mobile Portrait",
+                    "value": 767,
+                    "default_value": 767,
+                    "direction": "max",
+                    "is_enabled": true
                 },
-                "twitter": {
-                    "title": "Twitter"
+                "mobile_extra": {
+                    "label": "Mobile Landscape",
+                    "value": 880,
+                    "default_value": 880,
+                    "direction": "max",
+                    "is_enabled": false
                 },
-                "linkedin": {
-                    "title": "LinkedIn",
-                    "has_counter": true
+                "tablet": {
+                    "label": "Tablet Portrait",
+                    "value": 1024,
+                    "default_value": 1024,
+                    "direction": "max",
+                    "is_enabled": true
                 },
-                "pinterest": {
-                    "title": "Pinterest",
-                    "has_counter": true
+                "tablet_extra": {
+                    "label": "Tablet Landscape",
+                    "value": 1200,
+                    "default_value": 1200,
+                    "direction": "max",
+                    "is_enabled": false
                 },
-                "reddit": {
-                    "title": "Reddit",
-                    "has_counter": true
+                "laptop": {
+                    "label": "Laptop",
+                    "value": 1366,
+                    "default_value": 1366,
+                    "direction": "max",
+                    "is_enabled": false
                 },
-                "vk": {
-                    "title": "VK",
-                    "has_counter": true
-                },
-                "odnoklassniki": {
-                    "title": "OK",
-                    "has_counter": true
-                },
-                "tumblr": {
-                    "title": "Tumblr"
-                },
-                "digg": {
-                    "title": "Digg"
-                },
-                "skype": {
-                    "title": "Skype"
-                },
-                "stumbleupon": {
-                    "title": "StumbleUpon",
-                    "has_counter": true
-                },
-                "mix": {
-                    "title": "Mix"
-                },
-                "telegram": {
-                    "title": "Telegram"
-                },
-                "pocket": {
-                    "title": "Pocket",
-                    "has_counter": true
-                },
-                "xing": {
-                    "title": "XING",
-                    "has_counter": true
-                },
-                "whatsapp": {
-                    "title": "WhatsApp"
-                },
-                "email": {
-                    "title": "Email"
-                },
-                "print": {
-                    "title": "Print"
-                },
-                "x-twitter": {
-                    "title": "X"
-                },
-                "threads": {
-                    "title": "Threads"
+                "widescreen": {
+                    "label": "Widescreen",
+                    "value": 2400,
+                    "default_value": 2400,
+                    "direction": "min",
+                    "is_enabled": false
                 }
             },
-            "facebook_sdk": {
-                "lang": "en_US",
-                "app_id": ""
-            },
-            "lottie": {
-                "defaultAnimationUrl": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"
-            }
-        };
-    </script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.25.0"
-        id="elementor-pro-frontend-js"></script>
-    <script src="https://buka.undanganku.store/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js">
-    </script>
-    <script id="elementor-frontend-js-before">
-        var elementorFrontendConfig = {
-            "environmentMode": {
-                "edit": false,
-                "wpPreview": false,
-                "isScriptDebug": false
-            },
-            "i18n": {
-                "shareOnFacebook": "Share on Facebook",
-                "shareOnTwitter": "Share on Twitter",
-                "pinIt": "Pin it",
-                "download": "Download",
-                "downloadImage": "Download image",
-                "fullscreen": "Fullscreen",
-                "zoom": "Zoom",
-                "share": "Share",
-                "playVideo": "Play Video",
-                "previous": "Previous",
-                "next": "Next",
-                "close": "Close",
-                "a11yCarouselWrapperAriaLabel": "Carousel | Horizontal scrolling: Arrow Left & Right",
-                "a11yCarouselPrevSlideMessage": "Previous slide",
-                "a11yCarouselNextSlideMessage": "Next slide",
-                "a11yCarouselFirstSlideMessage": "This is the first slide",
-                "a11yCarouselLastSlideMessage": "This is the last slide",
-                "a11yCarouselPaginationBulletMessage": "Go to slide"
-            },
-            "is_rtl": false,
-            "breakpoints": {
-                "xs": 0,
-                "sm": 480,
-                "md": 768,
-                "lg": 1025,
-                "xl": 1440,
-                "xxl": 1600
-            },
-            "responsive": {
-                "breakpoints": {
-                    "mobile": {
-                        "label": "Mobile Portrait",
-                        "value": 767,
-                        "default_value": 767,
-                        "direction": "max",
-                        "is_enabled": true
-                    },
-                    "mobile_extra": {
-                        "label": "Mobile Landscape",
-                        "value": 880,
-                        "default_value": 880,
-                        "direction": "max",
-                        "is_enabled": false
-                    },
-                    "tablet": {
-                        "label": "Tablet Portrait",
-                        "value": 1024,
-                        "default_value": 1024,
-                        "direction": "max",
-                        "is_enabled": true
-                    },
-                    "tablet_extra": {
-                        "label": "Tablet Landscape",
-                        "value": 1200,
-                        "default_value": 1200,
-                        "direction": "max",
-                        "is_enabled": false
-                    },
-                    "laptop": {
-                        "label": "Laptop",
-                        "value": 1366,
-                        "default_value": 1366,
-                        "direction": "max",
-                        "is_enabled": false
-                    },
-                    "widescreen": {
-                        "label": "Widescreen",
-                        "value": 2400,
-                        "default_value": 2400,
-                        "direction": "min",
-                        "is_enabled": false
-                    }
-                },
-                "hasCustomBreakpoints": false
-            },
-            "version": "3.25.3",
-            "is_static": false,
-            "experimentalFeatures": {
-                "e_font_icon_svg": true,
-                "additional_custom_breakpoints": true,
-                "container": true,
-                "e_swiper_latest": true,
-                "e_nested_atomic_repeaters": true,
-                "e_optimized_control_loading": true,
-                "e_onboarding": true,
-                "e_css_smooth_scroll": true,
-                "theme_builder_v2": true,
-                "home_screen": true,
-                "landing-pages": true,
-                "nested-elements": true,
-                "editor_v2": true,
-                "link-in-bio": true,
-                "floating-buttons": true
-            },
-            "urls": {
-                "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor\/assets\/",
-                "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-                "uploadUrl": "https:\/\/buka.undanganku.store\/wp-content\/uploads"
-            },
-            "nonces": {
-                "floatingButtonsClickTracking": "3f137af5ae"
-            },
-            "swiperClass": "swiper",
-            "settings": {
-                "page": [],
-                "editorPreferences": []
-            },
-            "kit": {
-                "active_breakpoints": ["viewport_mobile", "viewport_tablet"],
-                "global_image_lightbox": "yes",
-                "lightbox_enable_counter": "yes",
-                "lightbox_enable_fullscreen": "yes",
-                "lightbox_enable_zoom": "yes",
-                "lightbox_enable_share": "yes",
-                "lightbox_title_src": "title",
-                "lightbox_description_src": "description"
-            },
-            "post": {
-                "id": 37573,
-                "title": "Thema%2024%20-",
-                "excerpt": "",
-                "featuredImage": false
-            }
-        };
-    </script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.25.3"
-        id="elementor-frontend-js"></script>
-    <script
-        src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.25.0"
-        id="pro-elements-handlers-js"></script>
-    <script id="weddingpress-wdp-js-extra">
-        var cevar = {
-            "ajax_url": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "plugin_url": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/weddingpress\/"
-        };
-    </script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp.min.js?ver=3.0.1"
-        id="weddingpress-wdp-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/guest-form.js?ver=3.0.1"
-        id="kirim-kit-js"></script>
+            "hasCustomBreakpoints": false
+        },
+        "version": "3.25.3",
+        "is_static": false,
+        "experimentalFeatures": {
+            "e_font_icon_svg": true,
+            "additional_custom_breakpoints": true,
+            "container": true,
+            "e_swiper_latest": true,
+            "e_nested_atomic_repeaters": true,
+            "e_optimized_control_loading": true,
+            "e_onboarding": true,
+            "e_css_smooth_scroll": true,
+            "theme_builder_v2": true,
+            "home_screen": true,
+            "landing-pages": true,
+            "nested-elements": true,
+            "editor_v2": true,
+            "link-in-bio": true,
+            "floating-buttons": true
+        },
+        "urls": {
+            "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor\/assets\/",
+            "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
+            "uploadUrl": "https:\/\/buka.undanganku.store\/wp-content\/uploads"
+        },
+        "nonces": {
+            "floatingButtonsClickTracking": "3f137af5ae"
+        },
+        "swiperClass": "swiper",
+        "settings": {
+            "page": [],
+            "editorPreferences": []
+        },
+        "kit": {
+            "active_breakpoints": ["viewport_mobile", "viewport_tablet"],
+            "global_image_lightbox": "yes",
+            "lightbox_enable_counter": "yes",
+            "lightbox_enable_fullscreen": "yes",
+            "lightbox_enable_zoom": "yes",
+            "lightbox_enable_share": "yes",
+            "lightbox_title_src": "title",
+            "lightbox_description_src": "description"
+        },
+        "post": {
+            "id": 37573,
+            "title": "Thema%2024%20-",
+            "excerpt": "",
+            "featuredImage": false
+        }
+    };
+</script>
+<script src="https://buka.undanganku.store/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.25.3"
+    id="elementor-frontend-js"></script>
+<script
+    src="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.25.0"
+    id="pro-elements-handlers-js"></script>
+<script id="weddingpress-wdp-js-extra">
+    var cevar = {
+        "ajax_url": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
+        "plugin_url": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/weddingpress\/"
+    };
+</script>
+<script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp.min.js?ver=3.0.1"
+    id="weddingpress-wdp-js"></script>
+<script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/guest-form.js?ver=3.0.1"
+    id="kirim-kit-js"></script>
 </body>
 
 </html>

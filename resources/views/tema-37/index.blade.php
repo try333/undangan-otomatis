@@ -98,13 +98,12 @@
     <meta property="og:url" content="https://buka.undanganku.store/thema-37/">
     <meta property="article:published_time" content="2024-09-02T09:12:20+00:00">
     <meta property="article:modified_time" content="2024-09-02T09:12:59+00:00">
-    <meta property="og:image" content="
-    @if (isset($imageOrders) && $imageOrders->isNotEmpty())
-        @foreach ($imageOrders as $order)
+    <meta property="og:image"
+        content="
+    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
             @if (isset($order->image->fileImage) && $order->partName === 'cover')
                 {{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}
-                @break
-            @endif
+                @break @endif
         @endforeach
     @endif
 ">
@@ -1372,7 +1371,8 @@
     <link rel="stylesheet" id="e-transitions-css"
         href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/transitions.min.css?ver=3.25.0"
         media="all">
-    <link rel="stylesheet" id="elementor-post-42019-css" href="{{ asset('css/post-42019.css') }}" media="all">
+    <link rel="stylesheet" id="elementor-post-42019-css" href="{{ asset('css/post-42019.css?ver=1730614857') }}"
+        media="all">
     <link rel="stylesheet" id="elementor-post-23160-css"
         href="https://buka.undanganku.store/wp-content/uploads/elementor/css/post-23160.css?ver=1730614620"
         media="all">
@@ -1474,7 +1474,7 @@
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeInDown&quot;,&quot;animation_mobile&quot;:&quot;none&quot;,&quot;animation_delay&quot;:200}"
             @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                         @if (isset($order->image->fileImage) && $order->partName === 'cover')
-                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> @endif
+                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}');"> @endif
             @endforeach
             @endif
             <div class="elementor-background-overlay"></div>
@@ -1592,7 +1592,7 @@
             {{-- subcover --}}
             @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                         @if (isset($order->image->fileImage) && $order->partName === 'subcover')
-                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;"> @endif
+                                style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}');"> @endif
             @endforeach
             @endif
 
@@ -1905,8 +1905,9 @@
                                             data-widget_type="social-icons.default">
                                             <div class="elementor-widget-container">
                                                 <div class="elementor-social-icons-wrapper elementor-grid"> <span
-                                                        class="elementor-grid-item"> <a
-                                                            class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
+                                                        class="elementor-grid-item">
+                                                        <a class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
+                                                            href="https://instagram.com/{{ $form->usernameIg }}"
                                                             target="_blank"> <span
                                                                 class="elementor-screen-only">Instagram</span> <svg
                                                                 class="e-font-icon-svg e-fab-instagram"
@@ -1915,7 +1916,8 @@
                                                                 <path
                                                                     d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
                                                                 </path>
-                                                            </svg> </a> </span> <span class="elementor-grid-item"> <a
+                                                            </svg> </a> </span>
+                                                    {{-- <span class="elementor-grid-item"> <a
                                                             class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-5d238e2"
                                                             target="_blank"> <span
                                                                 class="elementor-screen-only">Twitter</span> <svg
@@ -1925,7 +1927,8 @@
                                                                 <path
                                                                     d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z">
                                                                 </path>
-                                                            </svg> </a> </span> </div>
+                                                            </svg> </a> </span>  --}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2023,6 +2026,7 @@
                                                 <div class="elementor-social-icons-wrapper elementor-grid"> <span
                                                         class="elementor-grid-item"> <a
                                                             class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-96b8df3"
+                                                            href="https://instagram.com/{{ $form->usernameIg }}"
                                                             target="_blank"> <span
                                                                 class="elementor-screen-only">Instagram</span> <svg
                                                                 class="e-font-icon-svg e-fab-instagram"
@@ -2031,7 +2035,8 @@
                                                                 <path
                                                                     d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
                                                                 </path>
-                                                            </svg> </a> </span> <span class="elementor-grid-item"> <a
+                                                            </svg> </a> </span>
+                                                    {{-- <span class="elementor-grid-item"> <a
                                                             class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-5d238e2"
                                                             target="_blank"> <span
                                                                 class="elementor-screen-only">Twitter</span> <svg
@@ -2041,7 +2046,8 @@
                                                                 <path
                                                                     d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z">
                                                                 </path>
-                                                            </svg> </a> </span> </div>
+                                                            </svg> </a> </span>  --}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2059,18 +2065,17 @@
         <section
             class="elementor-section elementor-top-section elementor-element elementor-element-ed8e0d2 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="ed8e0d2" data-element_type="section"
-            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-            {{-- BG-MAIN --}}
-@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" {{-- BG-MAIN --}}
+            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
 @foreach ($imageOrders as $order)
 @if (isset($order->image->fileImage) && $order->partName === 'background')
 @php $galleryCount++; @endphp
 @if ($galleryCount === 1)
-    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
+    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}');">
     @break @endif
-@endif
-@endforeach
-@endif
+            @endif
+            @endforeach
+            @endif
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-14290ba2 wdp-sticky-section-no"
@@ -2492,91 +2497,93 @@
                                                 <div
                                                     class="elementor-wdp-form-wrapper elementor-wdp-form-button-align-fullwidth">
                                                     <form id="rsvpForm" class="wdp-form wdp-wa-form"
-                                                    id="wdp-wa-form-6f7fa07f" method="post" name="rsvpnilamzen">
+                                                        id="wdp-wa-form-6f7fa07f" method="post" name="rsvpnilamzen">
                                                         @csrf
-                                                    
+
                                                         <div class="wdp-form-fields-wrapper">
                                                             <div class="wdp-form-field-nama"> <label
                                                                     for="wdp-form-nama-6f7fa07f" class=""> Nama
-                                                                </label> <input type="text"  name="form_fields[name]" id="form-field-name" class="wdp-form-nama"
-                                                                    placeholder="" value="" required>
+                                                                </label> <input type="text"
+                                                                    name="form_fields[name]" id="form-field-name"
+                                                                    class="wdp-form-nama" placeholder=""
+                                                                    value="" required>
                                                             </div>
                                                             <div class="wdp-form-field-jumlah"> <label
                                                                     for="wdp-form-jumlah-6f7fa07f" class="">
-                                                                    Jumlah </label> 
-                                                                    <input name="form_fields[email]" id="form-field-email"
+                                                                    Jumlah </label>
+                                                                <input name="form_fields[email]" id="form-field-email"
                                                                     class="wdp-form-jumlah" type="text"
-                                                                    placeholder="" value="" 
-                                                                    pattern="[0-9]*" required>
+                                                                    placeholder="" value="" pattern="[0-9]*"
+                                                                    required>
                                                             </div> <input name="wdp-form-pesan" class="wdp-form-pesan"
                                                                 id="wdp-form-pesan-6f7fa07f" type="hidden"
                                                                 value="hide">
                                                             <div class="wdp-form-field-option wdp-option-type-select">
                                                                 <label
                                                                     for="wdp-form-option-6f7fa07f wdp-form-option-6f7fa07f"
-                                                                    class=" "> Konfirmasi </label> 
-                                                                    <select
-                                                                    name="form_fields[message]" 
+                                                                    class=" "> Konfirmasi </label>
+                                                                <select name="form_fields[message]"
                                                                     id="form-field-message"
                                                                     class="wdp-form-option wdp-form-option"
                                                                     required="1">
-                                                                    <option value="1"
-                                                                        selected="selected">Saya Akan Datang</option>
+                                                                    <option value="1" selected="selected">Saya
+                                                                        Akan Datang</option>
                                                                     <option value="0">Maaf,
                                                                         Saya Tidak Bisa Datang</option>
                                                                 </select>
                                                             </div>
                                                             <div class="wdp-form-field-submit"> <button type="button"
-                                                                    class="wdp-form-button" id="submitBtn"> Kirim </button> </div>
+                                                                    class="wdp-form-button" id="submitBtn"> Kirim
+                                                                </button> </div>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <script>
                                                     document.getElementById('submitBtn').addEventListener('click', function(event) {
                                                         event.preventDefault();
-                                                    
+
                                                         let form = document.getElementById('rsvpForm');
                                                         let formData = new FormData(form);
                                                         let submitBtn = document.getElementById('submitBtn');
-                                                    
+
                                                         // Show loading spinner and disable button
                                                         submitBtn.disabled = true;
                                                         submitBtn.classList.add('disabled-button');
                                                         submitBtn.innerHTML = '<span class="loading-spinner"></span> Mengirim...';
-                                                    
+
                                                         // Get the slug from the current URL
                                                         let currentUrl = window.location.href;
                                                         let slug = currentUrl.split('/').pop(); // Assumes slug is at the end of the URL
-                                                    
+
                                                         // Make the fetch request with the slug in the URL
                                                         fetch(`/submit-rsvp/${slug}`, {
-                                                            method: 'POST',
-                                                            headers: {
-                                                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                                                                'Accept': 'application/json',
-                                                            },
-                                                            body: formData
-                                                        })
-                                                        .then(response => response.json())
-                                                        .then(data => {
-                                                            if (data.success) {
-                                                                form.reset();  // Clear the form after successful submission
-                                                                document.getElementById('form-field-name').value = '';
-                                                                document.getElementById('form-field-email').value = '';
-                                                                document.getElementById('form-field-message').value = '1'; // Reset to default if needed
-                                                            }
-                                                        })
-                                                        .catch(error => {
-                                                            console.error('Error:', error);
-                                                        })
-                                                        .finally(() => {
-                                                            // Re-enable button and remove loading spinner
-                                                            submitBtn.disabled = false;
-                                                            submitBtn.classList.remove('disabled-button');
-                                                            submitBtn.innerHTML = 'Kirim';
-                                                        });
+                                                                method: 'POST',
+                                                                headers: {
+                                                                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                                                                    'Accept': 'application/json',
+                                                                },
+                                                                body: formData
+                                                            })
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                if (data.success) {
+                                                                    form.reset(); // Clear the form after successful submission
+                                                                    document.getElementById('form-field-name').value = '';
+                                                                    document.getElementById('form-field-email').value = '';
+                                                                    document.getElementById('form-field-message').value = '1'; // Reset to default if needed
+                                                                }
+                                                            })
+                                                            .catch(error => {
+                                                                console.error('Error:', error);
+                                                            })
+                                                            .finally(() => {
+                                                                // Re-enable button and remove loading spinner
+                                                                submitBtn.disabled = false;
+                                                                submitBtn.classList.remove('disabled-button');
+                                                                submitBtn.innerHTML = 'Kirim';
+                                                            });
                                                     });
-                                                    </script>
+                                                </script>
                                                 <script>
                                                     ! function(t, r) {
                                                         "use strict";
@@ -2688,14 +2695,14 @@
                                                 <div class="twae-bg-orange twae-data-container"> <span
                                                         class="twae-title"></span>
                                                     <div class="twae-timeline-img"><img decoding="async"
-                                                            width="118" height="150" class="attachment-thumbnail size-thumbnail" alt=""
-                                                            {{-- AWAL KETEMU --}}
-                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                            width="118" height="150"
+                                                            class="attachment-thumbnail size-thumbnail"
+                                                            alt="" {{-- AWAL KETEMU --}}
+                                                            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                                                     @if (isset($order->image->fileImage) && $order->partName === 'awal-ketemu')
-                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> 
-                                                            @endif
+                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> @endif
                                                             @endforeach
-                                                            @endif
+                                                        @endif
                                                     </div>
                                                     <div class="twae-description">
                                                         <p>{{ $form->ceritaAwal }}</p>
@@ -2715,15 +2722,13 @@
                                                     <div class="twae-timeline-img"><img loading="lazy"
                                                             decoding="async" width="131" height="150"
                                                             class="attachment-thumbnail size-thumbnail"
-                                                            alt=""
-                                                            {{-- JADIAN --}}
+                                                            alt="" {{-- JADIAN --}}
                                                             @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                                                             @if (isset($order->image->fileImage) && $order->partName === 'jadian')
-                                                                    src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> 
-                                                                    @endif
-                                                                    @endforeach
-                                                                    @endif
-                                                                </div>
+                                                                    src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> @endif
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
                                                     <div class="twae-description">
                                                         <p>{{ $form->ceritaJadian }}</p>
                                                     </div>
@@ -2742,15 +2747,13 @@
                                                     <div class="twae-timeline-img"><img loading="lazy"
                                                             decoding="async" width="128" height="150"
                                                             class="attachment-thumbnail size-thumbnail"
-                                                            alt=""
-                                                        {{-- LAMARAN --}}
-                                                    @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
+                                                            alt="" {{-- LAMARAN --}}
+                                                            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @foreach ($imageOrders as $order)
                                                     @if (isset($order->image->fileImage) && $order->partName === 'lamaran')
-                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> 
-                                                            @endif
+                                                            src="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"> @endif
                                                             @endforeach
-                                                            @endif
-                                                        </div>
+                                                        @endif
+                                                    </div>
                                                     <div class="twae-description">
                                                         {{ $form->ceritaLamaran }}
                                                     </div>
@@ -2825,44 +2828,41 @@
                                             data-settings="{&quot;gallery_layout&quot;:&quot;masonry&quot;,&quot;columns_tablet&quot;:3,&quot;columns&quot;:3,&quot;gap_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:5,&quot;sizes&quot;:[]},&quot;columns_mobile&quot;:2,&quot;lazyload&quot;:&quot;yes&quot;,&quot;gap&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;gap_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;link_to&quot;:&quot;file&quot;,&quot;overlay_background&quot;:&quot;yes&quot;,&quot;content_hover_animation&quot;:&quot;fade-in&quot;}"
                                             data-widget_type="gallery.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-gallery__container"> 
+                                                <div class="elementor-gallery__container">
                                                     @if (isset($imageOrders) && $imageOrders->isNotEmpty())
-                                                    @foreach ($imageOrders as $order)
-                                                        @if (isset($order->image->fileImage) && $order->partName === 'gallery')
-                                                            <a class="e-gallery-item elementor-gallery-item elementor-animated-content"
-                                                                href="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-slideshow="4c19c2ea"
-                                                                data-elementor-lightbox-title="{{ $order->image->fileImage }}"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MzUxLCJ1cmwiOiJodHRwczpcL1wvYnVrYS51bmRhbmdhbmt1LnN0b3JlXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDI0XC8wM1wvTVRYWF9NUjIwMjMxMDAzXzEyNDA1MTY0NS1zY2FsZWQtNi5qcGciLCJzbGlkZXNob3ciOiI0YzE5YzJlYSJ9">
-                                                                <div class="e-gallery-image elementor-gallery-item__image"
-                                                                    data-thumbnail="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
-                                                                    data-width="2045"
-                                                                    data-height="2560"
-                                                                    aria-label=""
-                                                                    role="img"></div>
-                                                                <div
-                                                                    class="elementor-gallery-item__overlay">
-                                                                </div>
-                                                            </a>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
+                                                        @foreach ($imageOrders as $order)
+                                                            @if (isset($order->image->fileImage) && $order->partName === 'gallery')
+                                                                <a class="e-gallery-item elementor-gallery-item elementor-animated-content"
+                                                                    href="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
+                                                                    data-elementor-open-lightbox="yes"
+                                                                    data-elementor-lightbox-slideshow="4c19c2ea"
+                                                                    data-elementor-lightbox-title="{{ $order->image->fileImage }}"
+                                                                    data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MzUxLCJ1cmwiOiJodHRwczpcL1wvYnVrYS51bmRhbmdhbmt1LnN0b3JlXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDI0XC8wM1wvTVRYWF9NUjIwMjMxMDAzXzEyNDA1MTY0NS1zY2FsZWQtNi5qcGciLCJzbGlkZXNob3ciOiI0YzE5YzJlYSJ9">
+                                                                    <div class="e-gallery-image elementor-gallery-item__image"
+                                                                        data-thumbnail="{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}"
+                                                                        data-width="2045" data-height="2560"
+                                                                        aria-label="" role="img"></div>
+                                                                    <div class="elementor-gallery-item__overlay">
+                                                                    </div>
+                                                                </a>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
 
-                                                <script>
-                                                    document.addEventListener("DOMContentLoaded", function() {
-                                                        const galleryItems = document.querySelectorAll('.e-gallery-image');
-                                                        galleryItems.forEach(item => {
-                                                            const thumbnailUrl = item.getAttribute('data-thumbnail');
-                                                            const img = new Image();
-                                                            img.src = thumbnailUrl;
-                                                            img.onload = function() {
-                                                                item.setAttribute('data-width', img.naturalWidth);
-                                                                item.setAttribute('data-height', img.naturalHeight);
-                                                            };
+                                                    <script>
+                                                        document.addEventListener("DOMContentLoaded", function() {
+                                                            const galleryItems = document.querySelectorAll('.e-gallery-image');
+                                                            galleryItems.forEach(item => {
+                                                                const thumbnailUrl = item.getAttribute('data-thumbnail');
+                                                                const img = new Image();
+                                                                img.src = thumbnailUrl;
+                                                                img.onload = function() {
+                                                                    item.setAttribute('data-width', img.naturalWidth);
+                                                                    item.setAttribute('data-height', img.naturalHeight);
+                                                                };
+                                                            });
                                                         });
-                                                    });
-                                                </script>
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -2881,19 +2881,18 @@
         <section
             class="elementor-section elementor-top-section elementor-element elementor-element-5dc46664 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle wdp-sticky-section-no"
             data-id="5dc46664" data-element_type="section"
-            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}"
-            {{-- BG-GIFT --}}
-@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" {{-- BG-GIFT --}}
+            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
 @foreach ($imageOrders as $order)
 @if (isset($order->image->fileImage) && $order->partName === 'background')
 @php $galleryCount++; @endphp
 @if ($galleryCount === 2)
-    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
+    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}');">
     @break @endif
-@endif
-@endforeach
-@endif
-            
+            @endif
+            @endforeach
+            @endif
+
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-3f65e8ec wdp-sticky-section-no"
@@ -2989,7 +2988,7 @@
                                                     data-id="00463b1" data-element_type="widget"
                                                     data-widget_type="html.default">
                                                     <div class="elementor-widget-container">
-                                                        <div class="container"> 
+                                                        <div class="container">
                                                             <select id="dropdown">
                                                                 <option value=" ">PILIH REKENING
                                                                 </option>
@@ -2997,7 +2996,8 @@
                                                                     {{ $form->namaRekening }}</option>
                                                             </select>
                                                             <button id="copy-btn"
-                                                                onclick="copyDropdown()">COPY</button></div>
+                                                                onclick="copyDropdown()">COPY</button>
+                                                        </div>
                                                         <script>
                                                             function copyDropdown() {
                                                                 var dropdown = document.getElementById("dropdown");
@@ -3135,18 +3135,23 @@
                                                 <div class="guestbook-box-content elementor-comment-box-wrapper"
                                                     data-id="Nama Undangan">
                                                     <div class="comment-form-container">
-                                                        <form id="guestbookForm" class="elementor-form" method="post" name="guestbookForm">
+                                                        <form id="guestbookForm" class="elementor-form"
+                                                            method="post" name="guestbookForm">
                                                             @csrf
                                                             <div class="guestbook-label"> <label class="">
                                                                     Nama </label>
-                                                                </div> 
-                                                                <input type="text" id="guestbook-name" name="guestbook_name" class="form-control" placeholder="Isikan Nama Anda" required>
+                                                            </div>
+                                                            <input type="text" id="guestbook-name"
+                                                                name="guestbook_name" class="form-control"
+                                                                placeholder="Isikan Nama Anda" required>
                                                             <div class="guestbook-label"> <label class="">
                                                                     Pesan </label></div>
-                                                                    <textarea id="guestbook-message" name="guestbook_message" class="form-control" rows="3" placeholder="Berikan Ucapan Dan Doa Restu" required></textarea>
+                                                            <textarea id="guestbook-message" name="guestbook_message" class="form-control" rows="3"
+                                                                placeholder="Berikan Ucapan Dan Doa Restu" required></textarea>
                                                             <div class="elementor-button-wrapper"> <button
                                                                     type="submit"
-                                                                    class="elementor-button-link elementor-button elementor-size-sm" id="submitGuestbookBtn">
+                                                                    class="elementor-button-link elementor-button elementor-size-sm"
+                                                                    id="submitGuestbookBtn">
                                                                     Kirimkan Ucapan </button> </div>
                                                         </form>
                                                     </div>
@@ -3160,12 +3165,12 @@
                                                     </div>
 
                                                     <script>
-                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                        document.addEventListener('DOMContentLoaded', function() {
                                                             const currentUrl = window.location.href;
                                                             const slug = currentUrl.split('/').pop();
-                                                        
+
                                                             fetchComments();
-                                                        
+
                                                             function fetchComments() {
                                                                 fetch(`/comments/${slug}`)
                                                                     .then(response => {
@@ -3177,14 +3182,14 @@
                                                                     .then(comments => {
                                                                         const commentsContainer = document.getElementById('comments-section');
                                                                         commentsContainer.innerHTML = '';
-                                                        
+
                                                                         comments.forEach(comment => {
                                                                             appendComment(comment);
                                                                         });
                                                                     })
                                                                     .catch(error => console.error('Error fetching comments:', error));
                                                             }
-                                                        
+
                                                             function appendComment(comment) {
                                                                 const commentsContainer = document.getElementById('comments-section');
                                                                 const commentHTML = `
@@ -3206,51 +3211,51 @@
                                                                 `;
                                                                 commentsContainer.insertAdjacentHTML('afterbegin', commentHTML); // Insert at the top
                                                             }
-                                                        
+
                                                             document.getElementById('submitGuestbookBtn').addEventListener('click', function(event) {
                                                                 event.preventDefault();
-                                                        
+
                                                                 const name = document.getElementById('guestbook-name').value;
                                                                 const message = document.getElementById('guestbook-message').value;
                                                                 const submitBtn = document.getElementById('submitGuestbookBtn');
-                                                        
+
                                                                 submitBtn.disabled = true;
                                                                 submitBtn.innerHTML = '<span class="loading-spinner"></span> Mengirim...';
-                                                        
+
                                                                 const formData = {
                                                                     name: name,
                                                                     comment: message
                                                                 };
-                                                        
+
                                                                 fetch(`/comments/${slug}`, {
-                                                                    method: 'POST',
-                                                                    headers: {
-                                                                        'Content-Type': 'application/json',
-                                                                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                                                                        'Accept': 'application/json'
-                                                                    },
-                                                                    body: JSON.stringify(formData)
-                                                                })
-                                                                .then(response => {
-                                                                    if (!response.ok) {
-                                                                        throw new Error('Failed to submit comment');
-                                                                    }
-                                                                    return response.json();
-                                                                })
-                                                                .then(newComment => {
-                                                                    document.getElementById('guestbook-name').value = '';
-                                                                    document.getElementById('guestbook-message').value = '';
-                                                        
-                                                                    appendComment(newComment); // Append the new comment at the top
-                                                                })
-                                                                .catch(error => console.error('Error submitting comment:', error))
-                                                                .finally(() => {
-                                                                    submitBtn.disabled = false;
-                                                                    submitBtn.innerHTML = 'KIRIM UCAPAN';
-                                                                });
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json',
+                                                                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                                                                            'Accept': 'application/json'
+                                                                        },
+                                                                        body: JSON.stringify(formData)
+                                                                    })
+                                                                    .then(response => {
+                                                                        if (!response.ok) {
+                                                                            throw new Error('Failed to submit comment');
+                                                                        }
+                                                                        return response.json();
+                                                                    })
+                                                                    .then(newComment => {
+                                                                        document.getElementById('guestbook-name').value = '';
+                                                                        document.getElementById('guestbook-message').value = '';
+
+                                                                        appendComment(newComment); // Append the new comment at the top
+                                                                    })
+                                                                    .catch(error => console.error('Error submitting comment:', error))
+                                                                    .finally(() => {
+                                                                        submitBtn.disabled = false;
+                                                                        submitBtn.innerHTML = 'KIRIM UCAPAN';
+                                                                    });
                                                             });
                                                         });
-                                                        </script>
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -3271,16 +3276,16 @@
             data-id="473d8ecf" data-element_type="section"
             data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;shape_divider_top&quot;:&quot;mountains&quot;}"
             {{-- BG-FOOTER --}}
-@if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
+            @if (isset($imageOrders) && $imageOrders->isNotEmpty()) @php $galleryCount = 0; @endphp
 @foreach ($imageOrders as $order)
 @if (isset($order->image->fileImage) && $order->partName === 'background')
 @php $galleryCount++; @endphp
 @if ($galleryCount === 3)
-    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}'); background-size: cover; background-position: center;">
+    style="background-image: url('{{ env('BACKEND_URL') . '/images/' . $order->image->fileImage }}');">
     @break @endif
-@endif
-@endforeach
-@endif
+            @endif
+            @endforeach
+            @endif
             <div class="elementor-background-overlay"></div>
             <div class="elementor-shape elementor-shape-top" data-negative="false"> <svg
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
@@ -3351,12 +3356,12 @@
                                             <div class="elementor-widget-container">
                                                 <h2 class="elementor-heading-title elementor-size-default">
                                                     @if ($form->penempatanTulisan == 'Pria')
-                                                    {{ ucfirst($form->namaPanggilanPria) }} &amp;
-                                                    {{ ucfirst($form->namaPanggilanWanita) }}
-                                                @else
-                                                    {{ ucfirst($form->namaPanggilanWanita) }} &amp;
-                                                    {{ ucfirst($form->namaPanggilanPria) }}
-                                                @endif
+                                                        {{ ucfirst($form->namaPanggilanPria) }} &amp;
+                                                        {{ ucfirst($form->namaPanggilanWanita) }}
+                                                    @else
+                                                        {{ ucfirst($form->namaPanggilanWanita) }} &amp;
+                                                        {{ ucfirst($form->namaPanggilanPria) }}
+                                                    @endif
 
                                                 </h2>
                                             </div>
@@ -3365,7 +3370,8 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-25be9736 wdp-sticky-section-no"
                                     data-id="25be9736" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -3375,7 +3381,8 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5db16122 wdp-sticky-section-no"
                                     data-id="5db16122" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-43e88208 wdp-sticky-section-no"
                                     data-id="43e88208" data-element_type="column">
@@ -3385,57 +3392,70 @@
                                             data-settings="{&quot;_position&quot;:&quot;fixed&quot;,&quot;motion_fx_motion_fx_scrolling&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_effect&quot;:&quot;yes&quot;,&quot;motion_fx_rotateZ_direction&quot;:&quot;negative&quot;,&quot;motion_fx_rotateZ_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_mobile&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:1000,&quot;_animation_tablet&quot;:&quot;fadeIn&quot;,&quot;motion_fx_rotateZ_affectedRange&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;motion_fx_devices&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;]}"
                                             data-widget_type="weddingpress-audio.default">
                                             <div class="elementor-widget-container">
+
                                                 <script>
                                                     var settingAutoplay = '';
                                                     window.settingAutoplay = settingAutoplay === 'disable' ? false : true;
                                                 </script>
-                                                <div id="audio-container" class="audio-box"> <audio id="song"
-                                                        loop="">
+
+                                                <div id="audio-container" class="audio-box">
+
+                                                    <audio id="song" loop>
                                                         <source
                                                             src="https://sewaundangan.online/wp-content/uploads/2024/03/y2mate.com-Pengingat-Good-Morning-Everyone-Lirik-Lagu-1-8.mp3"
                                                             type="audio/mp3">
                                                     </audio>
+
                                                     <div class="elementor-icon-wrapper" id="unmute-sound"
                                                         style="display: none;">
-                                                        <div class="elementor-icon"> <svg aria-hidden="true"
+                                                        <div class="elementor-icon">
+                                                            <svg aria-hidden="true"
                                                                 class="e-font-icon-svg e-far-play-circle"
                                                                 viewBox="0 0 512 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256z">
                                                                 </path>
-                                                            </svg> </div>
+                                                            </svg>
+                                                        </div>
                                                     </div>
+
                                                     <div class="elementor-icon-wrapper" id="mute-sound"
                                                         style="display: none;">
-                                                        <div class="elementor-icon"> <svg aria-hidden="true"
+                                                        <div class="elementor-icon">
+                                                            <svg aria-hidden="true"
                                                                 class="e-font-icon-svg e-fas-compact-disc"
                                                                 viewBox="0 0 496 512"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zM88 256H56c0-105.9 86.1-192 192-192v32c-88.2 0-160 71.8-160 160zm160 96c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96zm0-128c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z">
                                                                 </path>
-                                                            </svg> </div>
+                                                            </svg>
+                                                        </div>
                                                     </div>
+
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-619e3309 elementor-mobile-align-center elementor-widget-mobile__width-auto elementor-align-center wdp-sticky-section-no elementor-widget elementor-widget-lottie"
                                             data-id="619e3309" data-element_type="widget"
                                             data-settings="{&quot;source&quot;:&quot;external_url&quot;,&quot;source_external_url&quot;:{&quot;url&quot;:&quot;https:\/\/assets10.lottiefiles.com\/packages\/lf20_DYHlIeGOIM.json&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;link_to&quot;:&quot;custom&quot;,&quot;custom_link&quot;:{&quot;url&quot;:&quot;#cover&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;loop&quot;:&quot;yes&quot;,&quot;trigger&quot;:&quot;arriving_to_viewport&quot;,&quot;viewport&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:{&quot;start&quot;:0,&quot;end&quot;:100}},&quot;play_speed&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;start_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;end_point&quot;:{&quot;unit&quot;:&quot;%&quot;,&quot;size&quot;:100,&quot;sizes&quot;:[]},&quot;renderer&quot;:&quot;svg&quot;}"
                                             data-widget_type="lottie.default">
-                                            <div class="elementor-widget-container"> <a
-                                                    class="e-lottie__container__link" href="#cover">
+                                            <div class="elementor-widget-container">
+                                                <a class="e-lottie__container__link" href="#cover">
                                                     <div class="e-lottie__container">
                                                         <div class="e-lottie__animation"></div>
                                                     </div>
-                                                </a> </div>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5f4be4a8 wdp-sticky-section-no"
                                     data-id="5f4be4a8" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -3449,7 +3469,8 @@
             <div class="elementor-container elementor-column-gap-default">
                 <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1828ea22 wdp-sticky-section-no"
                     data-id="1828ea22" data-element_type="column">
-                    <div class="elementor-widget-wrap"> </div>
+                    <div class="elementor-widget-wrap">
+                    </div>
                 </div>
             </div>
         </section>
@@ -3473,7 +3494,8 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-c85fbca wdp-sticky-section-no"
                                     data-id="c85fbca" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-61d39cfa wdp-sticky-section-no"
                                     data-id="61d39cfa" data-element_type="column">
@@ -3506,10 +3528,13 @@
                                             data-id="5dd9ce31" data-element_type="widget"
                                             data-widget_type="divider.default">
                                             <div class="elementor-widget-container">
-                                                <div class="elementor-divider"> <span
-                                                        class="elementor-divider-separator"> <span
+                                                <div class="elementor-divider">
+                                                    <span class="elementor-divider-separator">
+                                                        <span
                                                             class="elementor-divider__text elementor-divider__element">
-                                                            &amp; </span> </span> </div>
+                                                            & </span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="elementor-element elementor-element-155147f7 wdp-sticky-section-no elementor-widget elementor-widget-heading"
@@ -3566,8 +3591,13 @@
                                                         border: 2px solid #F4F4F4;
                                                     }
                                                 </style>
-                                                <center> <button onclick="playAudio()" class="button-undangan"><i
-                                                            class="fa fa-envelope-open"></i> Buka Undangan </button>
+
+                                                <center>
+                                                    <button onclick="playAudio()" class="button-undangan"><i
+                                                            class="fa fa-envelope-open"></i> Buka Undangan
+                                                    </button>
+
+
                                                 </center>
                                                 <script>
                                                     var x = document.getElementById("song");
@@ -3581,6 +3611,7 @@
                                                         x.pause();
                                                     }
                                                 </script>
+
                                                 <script>
                                                     jQuery(document).ready(function($) {
                                                         $(document).on('click', '.close-popup', function(event) {
@@ -3594,14 +3625,21 @@
                                 </div>
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-579d39a2 wdp-sticky-section-no"
                                     data-id="579d39a2" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                             </div>
                         </section>
                         <div class="elementor-element elementor-element-27f1999a wdp-sticky-section-no elementor-widget elementor-widget-html"
                             data-id="27f1999a" data-element_type="widget" data-widget_type="html.default">
                             <div class="elementor-widget-container">
-                                <meta name="google" content="notranslate">
+                                <html lang="en" class="notranslate" translate="no">
+
+                                <head>
+                                    <meta name="google" content="notranslate" />
+                                </head>
+
+                                </html>
                             </div>
                         </div>
                         <section
@@ -3610,19 +3648,23 @@
                             <div class="elementor-container elementor-column-gap-default">
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-72be7bca wdp-sticky-section-no"
                                     data-id="72be7bca" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4cd1cdf7 wdp-sticky-section-no"
                                     data-id="4cd1cdf7" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-7e751d30 wdp-sticky-section-no"
                                     data-id="7e751d30" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                                 <div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-260e5a97 wdp-sticky-section-no"
                                     data-id="260e5a97" data-element_type="column">
-                                    <div class="elementor-widget-wrap"> </div>
+                                    <div class="elementor-widget-wrap">
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -3631,7 +3673,7 @@
             </div>
         </section>
     </div>
-    <script type="text/javascript">
+    <script type='text/javascript'>
         const lazyloadRunObserver = () => {
             const lazyloadBackgrounds = document.querySelectorAll(`.e-con.e-parent:not(.e-lazyloaded)`);
             const lazyloadBackgroundObserver = new IntersectionObserver((entries) => {
@@ -3659,12 +3701,12 @@
             document.addEventListener(event, lazyloadRunObserver);
         });
     </script>
-    <link rel="stylesheet" id="e-motion-fx-css"
-        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/modules/motion-fx.min.css?ver=3.25.0"
-        media="all">
-    <link rel="stylesheet" id="e-popup-css"
-        href="https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=3.25.0"
-        media="all">
+    <link rel='stylesheet' id='e-motion-fx-css'
+        href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/modules/motion-fx.min.css?ver=3.25.0'
+        media='all' />
+    <link rel='stylesheet' id='e-popup-css'
+        href='https://buka.undanganku.store/wp-content/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=3.25.0'
+        media='all' />
     <script id="wp-block-template-skip-link-js-after">
         (function() {
             var skipLinkTarget = document.querySelector('main'),
@@ -3708,7 +3750,7 @@
     <script id="wdp_js_script-js-extra">
         var WDP_WP = {
             "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "wdpNonce": "4df0c53827",
+            "wdpNonce": "2014ec01c7",
             "jpages": "true",
             "jPagesNum": "5",
             "textCounter": "true",
@@ -3786,7 +3828,7 @@
     <script id="elementor-pro-frontend-js-before">
         var ElementorProFrontendConfig = {
             "ajaxurl": "https:\/\/buka.undanganku.store\/wp-admin\/admin-ajax.php",
-            "nonce": "2237e07f4a",
+            "nonce": "7504a8affc",
             "urls": {
                 "assets": "https:\/\/buka.undanganku.store\/wp-content\/plugins\/elementor-pro\/assets\/",
                 "rest": "https:\/\/buka.undanganku.store\/wp-json\/"
@@ -3989,7 +4031,7 @@
                 "uploadUrl": "https:\/\/buka.undanganku.store\/wp-content\/uploads"
             },
             "nonces": {
-                "floatingButtonsClickTracking": "d7d02b39f9"
+                "floatingButtonsClickTracking": "3f27077ec4"
             },
             "swiperClass": "swiper",
             "settings": {
@@ -4029,21 +4071,6 @@
         id="weddingpress-wdp-js"></script>
     <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/guest-form.js?ver=3.0.1"
         id="kirim-kit-js"></script>
-</body>
-
-</html>
-</body>
-
-</html>
-        };
-    </script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/wdp.min.js?ver=3.0.1"
-        id="weddingpress-wdp-js"></script>
-    <script src="https://buka.undanganku.store/wp-content/plugins/weddingpress/assets/js/guest-form.js?ver=3.0.1"
-        id="kirim-kit-js"></script>
-</body>
-
-</html>
 </body>
 
 </html>
